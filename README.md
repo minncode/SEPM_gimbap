@@ -1,1 +1,0 @@
-# SEPM_gimbap
