@@ -34,11 +34,11 @@
   display: flex;
 }
 
-.major, .grade{
+#major, #grade{
   font-size: 10px;
 }
 .student-name{
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 800;
 }
 
@@ -51,16 +51,25 @@
 .mobileId-profile img{
   background-color: #E3E5E0;
   border-radius: 70%;
-  width: 100%;
-  max-width: 90px;
-  filter: brightness(60%);
+  width: 40px;
+  margin-top: 5px;
 }
 
+.edit-icon {
+  padding-top: 20px;
+  width: 20px;
+  height: 20px;
+  color: #BFC1BB;
+}
+
+.edit-icon:hover{
+  color: #797b76;
+}
+
+/* menu list */
 .profile-menulist{
   background-color: #2427602b;
   margin: 20px;
-  display: flex;
-  justify-content: center;
   border-radius: 5px;
 }
 
@@ -68,16 +77,130 @@
   list-style: none;
 }
 
-.profile-menulist ul li {
-  margin-bottom: 10px;
-
+.profile-menulist li {
+  display: flex;
+  margin: 10px;
 }
 
 .profile-menulist a {
   text-decoration: none;
   color: #333;
   display: block;
-  padding: 15px;
-  margin: 20px 10px 10px 10px;
+  padding: 10px;
   border-radius: 5px;
 }
+
+.profile-menulist li:hover{
+  opacity: 0.3;
+}
+
+.profile-menulist p{
+  font-size: 15px;
+}
+
+.profile-menu-icon{
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
+}
+
+/* popup */
+/* 
+.open-form {
+  margin-top: 50px;
+  margin-left: 50px;
+  cursor: pointer;
+  padding-top: 20px;
+  background-color: none;
+  text-transform: uppercase;
+  font-size: 14px;
+  transition: .3s;
+  color: #BFC1BB;
+  width: 20px;
+  height: 20px;
+}
+
+.form-popup{
+  display: none;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, .5);
+  transition: .5s;
+}
+.form-popup .form-wrapper {
+  top: 2em;
+  max-width: 700px;
+  background: white;
+  padding: 50px;
+  padding-top: 50px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+.form-title {
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.profile-edit{
+padding: 15px;
+display:flex;
+flex-direction:column;
+justify-content: center;
+}
+
+.profile-img{
+width:100px;
+height:100px;
+margin:10px;
+}
+
+.profile-edit-btn{
+padding: 5px 10px;
+font-size:15px;
+background-color:#ffff;
+border:2px solid black;
+border-radius:15px;
+width:50px;
+}
+
+.close-form {
+  background-color: #ffff;
+  color :#E3E5E0;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  cursor: pointer;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: .3s;
+}
+.close-form ion-icon {
+  width:25px;
+  height:25px;
+}
+.send-form {
+  cursor: pointer;
+  padding: 10px 30px;
+  background-color: #222160;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  border-radius: 20px;
+  transition: .3s;
+}
+.form-control:focus {
+  border-color: #83b566;
+  box-shadow: 0 0 0 0.2rem rgba(131, 181, 102, 0.25);
+}
+.form-btn:hover {
+opacity:0.8;
+} */

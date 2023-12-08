@@ -4,17 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href='https://fonts.googleapis.com/css?family=Sofia Sans' rel='stylesheet'>
-  <link rel="icon" href="../images/icons/rmitlogo.png" sizes = "16*16">
+  <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
   <link rel="stylesheet" href="../css/header.css">
   <link rel="stylesheet" href="../css/profile.css">
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script type="text/javascript" src="../js/popupEditform.js""></script>
   <title>RMITdays</title>
 </head>
 <body>
   <!-- Header -->
   <header>
-    <a href="../html/main.html"><img class="logo" src="../images/rmitlogo.png" alt="RMIT logo" ></a>
+    <a href="../html/"><img class="logo" src="../images/rmitlogo.png" alt="RMIT logo" ></a>
     <nav>
       <ul>
         <li><a href="#"><ion-icon class="header-icon" name="home-outline"></ion-icon></a></li>
@@ -24,6 +25,7 @@
     </nav>
   </header>
     <!-- main contents -->
+  <body>
     <div id="profile-component">
       <div id="profile-id">
         <div class="student-card-container">
@@ -37,16 +39,49 @@
             </div>
             <p class="student-name">Student Name (s1234567)</p>
           </div>
-          <a href=""><img id="edit-btn" src="../images/icons/edit-button.png" alt="" width="35px"></a>
+          <ion-icon class ="btn open-form" name="create-outline"></ion-icon>
         </div>
       </div>
       <div class="profile-menulist">
         <ul>
-          <li><a href="#"><img src="" alt="">Delete Account</a></li>
-          <li><a href="#"><img src="" alt="">My Bank Account</a></li>
-          <li><a href="#"><img src="" alt="">Logout</a></li>
+          <a href=""><li><ion-icon class="profile-menu-icon" name="trash-outline"></ion-icon><p>Delete account</p></li></a>
+          <a href=""><li><ion-icon class="profile-menu-icon" name="cash-outline"></ion-icon><p>My Bank Account</p></li></a>
+          <a href=""><li><ion-icon class="profile-menu-icon" name="log-out-outline"></ion-icon><p>Logout</p></li></a>
         </ul>
       </div>
     </div>
+<!-- popup -->
+    <!-- <ion-icon class ="btn open-form" name="create-outline"></ion-icon>
+    <div class="form-popup">
+			<div class="container form-wrapper">
+				<button class="form-btn close-form"><ion-icon name="close-outline"></ion-icon></button>
+				<form id="my-form" novalidate="novalidate">
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<h1 class="form-title">Edit Profile</h1>
+              <div class="profile-edit">
+                <ion-icon class="profile-img" name="person-circle-outline"></ion-icon>
+                <button class="profile-edit-btn">Edit</button>
+              </div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label for="name">Nickname</label>
+							<input type="text" class="form-control" id="name" name="name" required="">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="email">Major</label>
+							<input type="text" class="form-control" id="email" name="email" required="">
+						</div>
+					</div>
+          <div class="row">
+            <div class="form-group col-md-12">
+						</div>
+          </div>
+					<button type="submit" class="form-btn send-form">Submit</button>
+				</form>
+			</div>
+		</div> -->
   </body>
 </html>

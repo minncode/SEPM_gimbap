@@ -1,0 +1,63 @@
+.bank-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bank-header h1{
+  font-size: 20px;
+  margin: 10px 20px;
+}
+
+.bank-delete-icon{
+  margin: 10px;
+  width: 30px;
+  height: 30px;
+  color: #E3E5E0;
+}
+
+.bank-delete-icon:hover{
+  color: #222160;
+}
+
+#addBank-form{
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+#addBank-form input{
+  padding: 15px;
+  font-size: 15px;
+  border: 1.5px solid #E3E5E0;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+
+#addBank-form input::placeholder{
+  color: black;
+  font-weight: 500;
+}
+
+#form-btns{
+  margin: 0px 15px;
+}
+
+#save{
+  text-align: center;
+  justify-content: center;
+  border: none;
+  background-color: #EB0A0A;
+  border-radius: 10px;
+  padding:  10px 15px;
+  color: white;
+  font-weight: 600;
+}
+#reset{
+  text-decoration: none;
+  color: #7D7F7A;
+  background-color: #E3E5E0;
+  font-weight: 600;
+  border: 1.5px solid #C0C2BD;
+  border-radius: 10px;
+  padding:  10px 15px;
+}
