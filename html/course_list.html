@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/course_list.css">
+</head>
+<body>
+    <header>
+        <h1>Courses</h1>
+        <a href="#"><img class="icon" src="free-icon-x-657059.png" alt=""></a>
+    </header>
+    <div class="courseItem">
+        <h3>CS101 - Introduction to Computer Science</h3>
+        <p>Classroom: 2.4.002</p>
+        <p>Schedule: MON 8H</p>
+        <p>Professor: Tuan Tran Minh</p>
+        <!-- 추가 버튼 -->
+        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
+    </div>
+    <div class="courseItem">
+        <h3>CS101 - Introduction to Computer Science</h3>
+        <p>Classroom: 2.4.002</p>
+        <p>Schedule: MON 8H</p>
+        <p>Professor: Tuan Tran Minh</p>
+        <!-- 추가 버튼 -->
+        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
+    </div>
+    <div class="courseItem">
+        <h3>CS101 - Introduction to Computer Science</h3>
+        <p>Classroom: 2.4.002</p>
+        <p>Schedule: MON 8H</p>
+        <p>Professor: Tuan Tran Minh</p>
+        <!-- 추가 버튼 -->
+        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
+    </div>
+    <div class="courseItem">
+        <h3>CS101 - Introduction to Computer Science</h3>
+        <p>Classroom: 2.4.002</p>
+        <p>Schedule: MON 8H</p>
+        <p>Professor: Tuan Tran Minh</p>
+        <!-- 추가 버튼 -->
+        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
+    </div>
+    <div class="courseItem">
+        <h3>CS101 - Introduction to Computer Science</h3>
+        <p>Classroom: 2.4.002</p>
+        <p>Schedule: MON 8H</p>
+        <p>Professor: Tuan Tran Minh</p>
+        <!-- 추가 버튼 -->
+        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
+    </div>
+    <div class="courseItem">
+        <h3>CS101 - Introduction to Computer Science</h3>
+        <p>Classroom: 2.4.002</p>
+        <p>Schedule: MON 8H</p>
+        <p>Professor: Tuan Tran Minh</p>
+        <!-- 추가 버튼 -->
+        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
+    </div>
+    <!-- 다른 코스들도 유사한 구조로 나열될 것입니다 -->
+  
+    <script>
+        function addToTimetable(courseCode, courseName, classroom, schedule, professor) {
+            const urlParams = new URLSearchParams();
+            urlParams.set('courseCode', courseCode);
+            urlParams.set('courseName', courseName);
+            urlParams.set('classroom', classroom);
+            urlParams.set('schedule', schedule);
+            urlParams.set('professor', professor);
+            
+            const url = `timetable.html?${urlParams.toString()}`;
+            window.location.href = url;
+        }
+        const schedule = 'MON 8H';
+        const encodedSchedule = encodeURIComponent(schedule); // 결과: MON%208H
+
+    </script>
+</body>
+</html>
