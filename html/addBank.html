@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Sofia Sans' rel='stylesheet'>
+  <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
+  <link rel="stylesheet" href="../css/addBank.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <title>RMITdays</title>
+</head>
+<body>
+  <div class="bank-header">
+    <h1>My Bank Account</h1>
+    <a href="bankManage.html">    <ion-icon class="bank-delete-icon" name="close-outline"></ion-icon></a>
+  </div>
+  <form id="addBank-form">
+    <input type="text" id="cardname" placeholder="Card Name" required>
+    <input type="number" id="cardNum" placeholder="Card Number" required>
+    <input type="month" id="date" placeholder="MM/YY" required>
+    <input type="cvv" id="cvv" placeholder="CVV">
+  </form>
+  <div id="form-btns">
+    <input type="submit" id="save" value="Save">
+    <input type="reset" id="reset" value="reset">
+  </div>
+</body>
+</html>

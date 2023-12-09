@@ -1,0 +1,75 @@
+.bank-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bank-header h1{
+  font-size: 20px;
+  margin: 20px;
+}
+
+.bank-delete-icon{
+  margin: 10px;
+  width: 30px;
+  height: 30px;
+  color: #E3E5E0;
+}
+
+.bank-delete-icon:hover{
+  color: #222160;
+}
+
+.bankAccount{
+  margin: 10px;
+  padding: 15px;
+  background-color: #FFC500;
+  border-radius: 10px;
+}
+
+.bank-info{
+  padding: 0;
+  margin: 0;
+  height: 80px;
+}
+
+#bank-num{
+  font-size: 15px;
+  margin: 0;
+}
+#bank-name{
+  font-size: 18px;
+  margin: 0;
+}
+
+#amount{
+  font-size: 20px;
+  float: right;
+}
+
+#deleteBank{
+  float: right;
+  color: #ad8500;
+}
+
+#deleteBank:hover{
+  opacity: 0.5;
+}
+
+.add-btn{
+  display: flex;
+  justify-content: center;
+  background-color: #7D7F7A;
+  border-radius: 6px;
+  margin: 15px;
+  padding: 10px;
+}
+
+.add-icon{
+  color: white;
+}
+
+.add-btn:hover{
+  opacity: 0.5;
+  box-shadow: inset 0 0 10px black;
+}

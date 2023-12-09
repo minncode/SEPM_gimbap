@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+    font-family: 'Sofia Sans';
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  top: 0;
+  margin: 10px;
+}
+
+.header{
+  display: flex;
+}
+
+.delete-btn ion-icon{
+  color: #222160;
+  width: 30px;
+  height:30px; 
+}
+
+.delete-btn ion-icon:hover{
+  opacity: .5;
+}
+
+.logo {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 40px;
+  max-height: 40px;
+  padding: 10px;
+}
+
+h2 {
+  color: #222160;
+  font-weight: 700;
+  margin-top: 18px;
+}
+
+#login-form{
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px;
+}
+
+#login-form input, select{
+  height: 45px;
+  margin: 3px;
+  padding: 0px 10px;
+  border-radius: 10px;
+  background-color: #EAEBE8;
+  border: none;
+}
+
+select {
+  border-right: 10px solid transparent
+}
+
+#login-form input::placeholder, select::placeholder{
+  color: #d2cccc;
+  padding: 0px 10px;
+}
+#login-form input::-webkit-input-placeholder {
+  color:#807c7c;
+}
+
+#login-form input[type="submit"]{
+  color: #fff;
+  font-size: 16px;
+  background-color: #222160;
+  margin-top: 15px;
+}
+
+#login-form input[type="submit"]:hover{
+  background-color: rgba(34, 33, 96, 0.835);
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 10px 0px inset;
+}
+
+#month{
+  color:#807c7c;
+}
+
+p{
+  color: #222160;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  margin-top: 20px;
+  margin-left: 5px;
+}
