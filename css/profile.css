@@ -55,14 +55,14 @@
   margin-top: 5px;
 }
 
-.edit-icon {
+.edit-btn {
   padding-top: 20px;
   width: 20px;
   height: 20px;
   color: #BFC1BB;
 }
 
-.edit-icon:hover{
+.edit-btn:hover{
   color: #797b76;
 }
 
