@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Sofia Sans' rel='stylesheet'>
+  <link rel="icon" href="images/rmitlogo.png" sizes="16*16">
+  <link rel="stylesheet" href="stylesheets/register.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <title>RMITdays</title>
+</head>
+
+<body>
+  <header>
+    <div class="header">
+      <img class="logo" src="/images/rmitlogo.png" alt="RMIT logo">
+      <h2>REGISTER</h2>
+    </div>
+    <a class="delete-btn" href="/"><ion-icon name="close-outline"></ion-icon></ion-icon></a>
+  </header>
+  <div class="register">
+    <form method="post" action="/register" id="login-form">
+      <p>The year of the rmit enterance</p>
+      <input id="month" type="month" name="year">
+      <p>Select your major</p>
+      <select name="major" type="text">
+        <option value="Business">Business</option>
+        <option value="Accounting">Accounting</option>
+        <option value="BA">Business Administration</option>
+        <option value="Economics">Economics</option>
+        <option value="IB">International Business</option>
+        <option value="Logistics">Logistics and Supply Chain Management</option>
+        <option value="Management">Management</option>
+        <option value="HRM">Human Resource Management</option>
+        <option value="DB">Digital Business</option>
+        <option value="Tourism">Tourism and Hospitality Management</option>
+        <option value="DM">Digital Marketing</option>
+        <option value="Design">Design</option>
+        <option value="GD">Game Design</option>
+        <option value="Film">Film and video</option>
+        <option value="Communications">Communications</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Languages">Languages</option>
+        <option value="Psychology">Psychology</option>
+        <option value="AM">Aviation Management</option>
+        <option value="Engineering">Engineering</option>
+        <option value="IT">Information technology</option>
+        <option value="AI">Artificial Intelligence</option>
+        <option value="FT">Food Technology and Nutrition</option>
+        <p>Personal Information</p>
+        <input type="text" name="email" placeholder="Email">
+        <input type="text" name="name" placeholder="Name">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" value="NEXT">
+        <p class="message">Already have an account? <a href="/">Login</a></p>
+    </form>
+  </div>
+
+</body>
+
+</html>
