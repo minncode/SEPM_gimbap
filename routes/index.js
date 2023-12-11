@@ -93,6 +93,17 @@ router.get('/reviewDetail', (req, res) => {
     res.render('reviewDetail');
 });
 
+router.get('/paymentMain', (req, res) => {
+    res.render('paymentMain');
+});
+
+router.get('/charging', (req, res) => {
+    res.render('charging');
+});
+
+router.get('/barcode', (req, res) => {
+    res.render('barcode');
+});
 
 
 
