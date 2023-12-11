@@ -162,6 +162,10 @@ body {
   margin-right: 10px; 
 }
 
+.scan-icon {
+  font-size: 70px; 
+}
+
   @media screen and (max-width: 600px) {
     .accountInfo, .bankInfo {
         width: 370px; /* 원하는 너비로 설정 */

@@ -58,7 +58,7 @@
 
 .mainContent {
     margin:15px;
-    border: 1px solid;
+    border: 1px solid #E3E5E0;
     border-radius: 15px;
     
 
@@ -67,6 +67,7 @@
 .courseContainer {
     /* display: flex; */
     margin:20px;
+  
 }
 
 /* 코스 정보를 감싸는 새로운 요소에 Flexbox 설정 */
@@ -75,9 +76,13 @@
     justify-content: space-between;
     align-items: center;
     padding:10px;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid #E3E5E0;
+    color:black;
 }
-
+.professorName {
+  color: #7D7F7A;
+  font-size: 13px;
+}
 /* 버튼 스타일 */
 .reviewBtn {
     background-color: #E61E2A;
@@ -86,3 +91,9 @@
     height:35px;
     color: white;
 }
+
+
+.courseContainer a {
+  text-decoration: none; /* 링크 밑줄 제거 */
+}
+
