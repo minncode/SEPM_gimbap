@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../css/payment.css">
+    <link rel="stylesheet" href="/stylesheets/payment.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
     <header>
-        <img class="logo" src="rmitlogo.png" alt="RMIT logo" >
+        <img class="logo" src="/images/rmitlogo.png" alt="RMIT logo" >
         <h2>RMIT Pay</h2>
         <nav>
           <ul>
@@ -26,7 +26,7 @@
             <div class="accountInfo">
                 <p class="accountNumber">Account Number: <span id="accountNumber">1234567890</span></p>
                 <p class="balance">Balance: VND<span id="balance">1000</span></p>
-                <a href="#"><button class="chargeButton" id="charge-button">Charge</button></a>
+                <a href="charging"><button class="chargeButton" id="charge-button">Charge</button></a>
             </div>
         </div>
     
@@ -34,7 +34,7 @@
             <p class="paymentHistory">Payment History</p>
         </div>
 
-        <button class="QR">
+        <button class="QR" onclick="window.location.href = 'barcode'">
             <div class="buttonContent">
                 <ion-icon class="scan-icon" name="scan-outline"></ion-icon>
                 <span>PAYMENT</span>
