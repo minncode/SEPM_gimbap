@@ -1,0 +1,57 @@
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* position: fixed; */
+    width: 100%;
+    top: 0;
+  }
+
+
+header {
+    padding: 10px;
+    text-align: center;
+  }
+  
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* 검색창과 아이콘을 가로 정렬하기 위한 스타일 */
+.search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 350px; /* 필요에 따라 너비 조정 */
+
+}
+
+/* 검색 아이콘에 대한 스타일 */
+.search img {
+    position: absolute;
+    right: 23px;
+    cursor: pointer;
+    top:4px;
+}
+
+/* 검색어 입력란에 대한 스타일 */
+.search input[type="text"] {
+    width: calc(100% - 30px); /* 이미지 고려하여 너비 조정 */
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.mainContent {
+    margin:20px;
+}
+
+.author {
+    color: #7D7F7A;
+    font-size: 13px;
+}
