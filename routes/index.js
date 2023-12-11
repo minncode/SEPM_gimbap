@@ -72,7 +72,9 @@ router.get('/course_list', (req, res) => {
     res.render('course_list');
 });
 
-
+router.get('/course_evaluation', (req, res) => {
+    res.render('course_evaluation');
+});
 
 
 
