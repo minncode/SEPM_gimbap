@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/writeReview.css">
+    <script src="../../script.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <img class="logo" src="../../rmitlogo.png" alt="RMIT logo" >
+        <nav>
+          <ul>
+            <li><a href="#"><img class="icon" src="../../home.png" alt=""></a></li>
+            <li><a href="#"><img class="icon" src="../../id-card.png" alt=""></a></li>
+            <li><a href="#"><img class="icon" src="../../user.png" alt=""></a></li>
+          </ul>
+        </nav>
+        
+    </header>
+    <div class="mainContent">
+        <div class="reviewContainer">
+            <h2>Lecture Review</h2>
+            <br>
+            <div class="section">
+                <h3>Paper</h3>
+                <div class="options">
+                    <span class="option" onclick="selectOption('Paper', 'None')">None</span>
+                    <span class="option" onclick="selectOption('Paper', 'Once')">Once</span>
+                    <span class="option" onclick="selectOption('Paper', 'Twice')">Twice</span>
+                    <span class="option" onclick="selectOption('Paper', '3 Times')">3 Times</span>
+                </div>
+            </div>
+        
+            <div class="section">
+                <h3>Test</h3>
+                <div class="options">
+                    <span class="option" onclick="selectOption('Test', 'None')">None</span>
+                    <span class="option" onclick="selectOption('Test', 'Once')">Once</span>
+                    <span class="option" onclick="selectOption('Test', 'Twice')">Twice</span>
+                    <span class="option" onclick="selectOption('Test', '3 Times')">3 Times</span>
+                </div>
+            </div>
+        
+            <div class="section">
+                <h3>Grades</h3>
+                <div class="options">
+                    <span class="option" onclick="selectOption('Grades', 'Generosity')">Generosity</span>
+                    <span class="option" onclick="selectOption('Grades', 'In General')">In General</span>
+                    <span class="option" onclick="selectOption('Grades', 'Strickness')">Strickness</span>
+                </div>
+            </div>
+        
+            <div class="section">
+                <h3>Group Project</h3>
+                <div class="options">
+                    <span class="option" onclick="selectOption('Group Project', 'Yes')">Yes</span>
+                    <span class="option" onclick="selectOption('Group Project', 'No')">No</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
