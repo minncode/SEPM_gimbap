@@ -77,7 +77,9 @@ router.get('/course_evaluation', (req, res) => {
 });
 
 
-
+router.get('/editprofile', (req, res) => {
+    res.render('editprofile');
+});
 
 
 
