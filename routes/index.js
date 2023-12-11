@@ -64,6 +64,26 @@ router.get('/profile', async (req, res) => {
     });
 });
 
+router.get('/timetable', (req, res) => {
+    res.render('timetable');
+});
+
+router.get('/course_list', (req, res) => {
+    res.render('course_list');
+});
+
+
+
+
+
+
+
+
+
+router.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 
 

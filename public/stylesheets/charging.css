@@ -1,0 +1,120 @@
+*{
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    background: #222160;
+    /* position: fixed; */
+    width: 100%;
+    top: 0;
+  }
+  
+  .logo {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 40px;
+    max-height: 40px;
+    padding: 10px;
+  }
+  
+  header nav {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Move the nav to the right */
+  }
+  
+  header ul {
+    list-style: none;
+    display: flex;
+    padding: 10px;
+  }
+  
+  header li {
+    margin-left: 1rem;
+  }
+  
+  header li img {
+    max-width: 50px;
+    max-height: 50px;
+  }
+  
+  header a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  ul .icon img {
+      opacity: 1;
+      -webkit-transition: .3s ease-in-out;
+      transition: .3s ease-in-out;
+  }
+  .icon:hover {
+      opacity: .5;
+  }
+
+.chargeButtons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+    flex-wrap: wrap;
+    margin:20px; 
+  }
+  
+  .chargeButton {
+    width: calc(40% - 10px); 
+    padding: 10px;
+    font-size: 30px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+    height:80px;
+    font-weight: bold;
+  }
+  
+  .chargeButton:hover {
+    background-color: #e0e0e0;
+  }
+  body {
+    background-color: #222160;
+}
+
+@media screen and (max-width: 600px) {
+  .chargeButton {
+    width: calc(50% - 10px); 
+    padding: 10px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+    height:80px;
+    font-weight: bold;
+  }
+}
+
+.chargingButtons {
+  text-align: center;
+}
+
+.chargingButton {
+  width:90%;
+  height: 70px;
+  border-radius: 30px;
+  background-color: #FFC500;
+  margin-top:30px;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.mainContent {
+  text-align: center;
+  color: white;
+  margin:20px;
+}

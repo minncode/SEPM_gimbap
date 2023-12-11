@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/timetable.css">
+    <title>Timetable</title>
+</head>
+<body>
+
+    <form action="timetable" method="get">
+
+    <header>
+        <img class="logo" src="/images/rmitlogo.png" alt="RMIT logo" >
+        <nav>
+          <ul>
+            <li><a href="main"><img class="icon" src="home.png" alt=""></a></li>
+            <li><a href="#"><img class="icon" src="id-card.png" alt=""></a></li>
+            <li><a href="profile"><img class="icon" src="user.png" alt=""></a></li>
+          </ul>
+        </nav>
+        
+    </header>
+    <div class="mainContent">
+        <div class="mainContentHeader">
+            <h3>Sem5</h3>
+            <div class="Category">
+                <h1>TimeTable</h1>
+                <a href="course_list"><img class="addIcon" src="free-icon-add-2774757.png" alt="Add Course"></a>
+            </div>
+        </div> 
+
+        <table border="1" class="time">
+            <th scope="row">시간</th>
+            <th>MON</th>
+            <th>TUE</th>
+            <th>WED</th>
+            <th>THU</th>
+            <th>FRI</th>
+            
+            <!-- 각 시간별로 셀 생성 -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const days = ['MON', 'TUE', 'WED', 'THU', 'FRI'];
+                    const table = document.querySelector('.time');
+
+                    // Loop through each hour row
+                    for (let hour = 8; hour <= 14; hour++) {
+                        const row = table.insertRow();
+                        const timeCell = row.insertCell(0);
+                        timeCell.textContent = hour;
+
+                        // Loop through each day column
+                        for (let dayIndex = 0; dayIndex < days.length; dayIndex++) {
+                            const day = days[dayIndex];
+                            const scheduleCell = row.insertCell(dayIndex + 1);
+                            const cellClass = `${day}-${hour}`;
+
+                            scheduleCell.classList.add(cellClass);
+                        }
+                    }
+
+                    // 추가된 셀에 과목 정보 추가하는 부분
+                    // (위에 제가 보여준 코드 추가)
+                });
+            </script>
+        </table>
+
+    </div>
+</body>
+</html>
