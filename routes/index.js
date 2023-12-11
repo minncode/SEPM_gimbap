@@ -81,6 +81,19 @@ router.get('/editprofile', (req, res) => {
     res.render('editprofile');
 });
 
+router.get('/courseSelect', (req, res) => {
+    res.render('courseSelect');
+});
+
+router.get('/writeReview', (req, res) => {
+    res.render('writeReview');
+});
+
+router.get('/reviewDetail', (req, res) => {
+    res.render('reviewDetail');
+});
+
+
 
 
 
