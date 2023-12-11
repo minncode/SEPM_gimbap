@@ -1,3 +1,7 @@
+*{
+  font-family: 'Sofia Sans';
+}
+
 .bank-header{
   display: flex;
   align-items: center;
