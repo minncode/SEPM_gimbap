@@ -1,3 +1,7 @@
+*{
+  font-family: 'Sofia Sans';
+}
+
 .bank-header{
   display: flex;
   align-items: center;
@@ -40,6 +44,7 @@
 
 #form-btns{
   margin: 0px 15px;
+  float: right;
 }
 
 #save{
