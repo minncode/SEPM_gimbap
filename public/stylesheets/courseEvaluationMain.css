@@ -3,7 +3,7 @@ header {
     justify-content: space-around;
     align-items: center;
     /* position: fixed; */
-    width: 100%;
+    width: 85%;
     top: 0;
   }
 
@@ -11,23 +11,26 @@ header {
 header {
     padding: 10px;
     text-align: center;
+
   }
   
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
+
 }
 /* 검색창과 아이콘을 가로 정렬하기 위한 스타일 */
 .search {
     position: relative;
     display: flex;
-    align-items: center;
-    width: 350px; /* 필요에 따라 너비 조정 */
+    width: 350px;
+    justify-content: center;
+    margin:0 auto;
 
 }
 
@@ -41,10 +44,13 @@ body {
 
 /* 검색어 입력란에 대한 스타일 */
 .search input[type="text"] {
-    width: calc(100% - 30px); /* 이미지 고려하여 너비 조정 */
+    width: calc(100% - 30px); 
     padding: 8px;
     border-radius: 10px;
     border: 1px solid #ccc;
+    background-color: #E3E5E0;
+
+    
 }
 
 .mainContent {
@@ -55,3 +61,59 @@ body {
     color: #7D7F7A;
     font-size: 13px;
 }
+
+.comment a {
+    text-decoration: none;
+    color: black;
+}
+.comment {
+    border-bottom: 1px solid #E3E5E0;
+}
+
+.reviewBtn {
+    float: right;
+    color: #EB0A0A;
+    height:30px;
+}
+
+.reviewBtn a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+}
+
+.reviewBtn button {
+    padding: 10px 20px;
+    background-color: #EB0A0A;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: fixed;
+    bottom: 12px;
+    right:19px;
+}
+
+.reviewBtn button:hover {
+    background-color: #2980b9;
+}
+.course_evaluation-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .course_evaluation-header h1{
+    font-size: 20px;
+    margin: 10px 20px;
+  }
+
+  .course_evaluation-delete-icon{
+    margin: 10px;
+    width: 30px;
+    height: 30px;
+    color: #E3E5E0;
+  }
+  
+  .course_evaluation-delete-icon:hover{
+    color: #222160;
+  }
