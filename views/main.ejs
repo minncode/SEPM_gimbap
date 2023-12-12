@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Sofia Sans' rel='stylesheet'>
+    <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <link rel="stylesheet" href="/stylesheets/header.css">
+    <scrip src="../js/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>RMITdays</title>
+
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header>
+      <a href="main"><img class="logo" src="/images/rmitlogo.png" alt="RMIT logo" ></a>
+      <nav>
+        <ul>
+          <li><a href="main"><ion-icon class="header-icon" name="home-outline"></ion-icon></a></li>
+          <li><a href="#"><ion-icon class="header-icon" name="id-card-outline"></ion-icon></a></li>
+          <li><a href="profile"><ion-icon class="header-icon" name="person-outline"></ion-icon></ion-icon></a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- main contents -->
+    <section class="main-content">
+      <div class="student-card">
+        <div class="student-card-container">
+          <div class="mobileId-profile">
+            <img src="/images/studentProfile.png" alt="">
+          </div>
+          <div class="info">
+            <div class="majorAndGrade">
+              <p id="major"><%= displaymajor %></p>
+            </div>
+              <h1>Welcome, <%= displayname %>(<%= displayemail.split('@')[0] %>)!</h1>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="wallet-btn"><a href="paymentMain"><ion-icon class="btn-icon" name="wallet-outline"></ion-icon><p>E-wallet</p></a></button>
+          <button class="qr-btn"><a href=""><ion-icon class="btn-icon" name="qr-code-outline"></ion-icon><p>QR</p></a></button>
+        </div>
+      </div>
+
+      <!-- Menu list -->
+      <div class="menu-list">
+        <ul>
+          <a href="timetable"><li><ion-icon class="menu-icon" name="alarm-outline"></ion-icon> <p>Timetable</p></li></a>
+          <a href="course_evaluation"><li><ion-icon  class="menu-icon" name="podium-outline"></ion-icon><p>Course Evaluation</p></li></a>
+          <a href="#"><li><ion-icon  class="menu-icon" name="map-outline"></ion-icon><p>Campus Map</p></li></a>
+        </ul>
+      </div>
+    </section>
+    <!-- 여기에 새로 bottom sheet 추가 예정 -->
+  </body>
+</html>
