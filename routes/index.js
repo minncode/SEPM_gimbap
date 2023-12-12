@@ -105,6 +105,13 @@ router.get('/barcode', (req, res) => {
     res.render('barcode');
 });
 
+router.get('/bankManage', (req, res) => {
+    res.render('bankManage');
+});
+
+router.get('/addBank', (req, res) => {
+    res.render('addBank');
+});
 
 
 
