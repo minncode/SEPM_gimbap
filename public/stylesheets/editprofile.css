@@ -13,7 +13,7 @@
   margin: 10px 20px;
 }
 
-input[type="text" i] {
+input[type="text"] {
   padding: 15px;
   font-size: 15px;
   border: 1.5px solid #E3E5E0;
@@ -74,7 +74,8 @@ input[type="text" i] {
 #editprofile-form {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  justify-content: center;
+  padding: 20px;
 }
 
 #editprofile-form p{
