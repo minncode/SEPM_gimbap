@@ -1,86 +1,9 @@
-*{
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #222160;
-    /* position: fixed; */
-    width: 100%;
-    top: 0;
-  }
-  
-  .logo {
-    display: inline-block;
-    vertical-align: middle;
-    max-width: 40px;
-    max-height: 40px;
-    padding: 10px;
-  }
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-  header nav {
-    display: flex;
-    align-items: center;
-    margin-left: auto; /* Move the nav to the right */
-  }
-  
-  header ul {
-    list-style: none;
-    display: flex;
-    padding: 10px;
-  }
-  
-  header li {
-    margin-left: 1rem;
-  }
-  
-  header li img {
-    max-width: 50px;
-    max-height: 50px;
-  }
-  
-  header a {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-  }
-  
-  ul .icon img {
-      opacity: 1;
-      -webkit-transition: .3s ease-in-out;
-      transition: .3s ease-in-out;
-  }
-  .icon:hover {
-      opacity: .5;
-  }
-  .option-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.option-label {
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f5f5f5;
-    cursor: pointer;
-}
 
 .mainContent {
     margin:15px;
     border: 1px solid #E3E5E0;
     border-radius: 15px;
-    
-
+    margin-top: 70px;
 }
 
 .reviewContainer {
@@ -141,7 +64,9 @@ h3 {
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-right: 20px;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
-
+#submit {
+  text-decoration: none;
+}
