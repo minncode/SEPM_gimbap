@@ -12,7 +12,7 @@
   
 }
 
-/* 코스 정보를 감싸는 새로운 요소에 Flexbox 설정 */
+
 .courseItem {
     display: flex;
     justify-content: space-between;
