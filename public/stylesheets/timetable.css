@@ -13,44 +13,21 @@
   justify-content: space-between;
 }
 
-table {
-}
 table.time {
-  border-collapse: separate;
-  border-spacing: 1.5px;
-  text-align: center;
-  line-height: 3;
-  border-top: 1px solid #ccc;
-  /* margin: 20px 10px; */
-  
+  table-layout: fixed; /* 셀의 크기를 고정시킴 */
+  width: 100%; /* 테이블 전체 너비 설정 */
+  border-spacing: 0.5px;
 }
 
-table.time th {
-  width:150px;
-  padding: 30px;
-  /* font-weight: bold;
-  vertical-align: middle; */
-  border-bottom: 1px solid #ccc;
-  background-color: #efefef;
-  
-}
-
+table.time th,
 table.time td {
-  width: 350px;
-  padding:10px;
-  
+  width: 16.66%; 
+  padding: 5px;
+  text-align: center; 
+  white-space: normal; 
+  word-wrap: break-word;
 }
 
-#first {
-  background:rgb(238, 129, 129);
-}
-#second {
-  background:rgb(106, 106, 177);
-}
-#third {
-  background: rgb(144, 218, 144);
-}
-/* ... (이전의 CSS 코드) */
 
 /* 모달 스타일 */
 .modal {
@@ -89,20 +66,23 @@ table.time td {
   
 
 
+/* ... (기존의 CSS 코드) */
+
 @media screen and (max-width: 600px) {
   .mainContent {
     padding: 20px;
   }
 
   table.time {
-    width: 100%;
+    width: auto; /* 테이블 너비를 화면에 맞게 유동적으로 설정 */
     font-size: 12px;
+    border-spacing: 0.5px; /* 셀 간격을 줄임 */
   }
 
   table.time th,
   table.time td {
     padding: 5px;
-    width: auto;
+    
   }
 
   table.time th:first-child,
