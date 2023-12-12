@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Sofia Sans' rel='stylesheet'>
+  <link rel="icon" href="/images/rmitlogo.png" sizes = "16*16">
+  <link rel="stylesheet" href="/stylesheets/editprofile.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <title>RMITdays</title>
+</head>
+<body>
+
+
+  <div class="editprofile-header">
+    <h1>Edit My Profile</h1>
+    <a href="profile.html">    <ion-icon class="profileform-delete-icon" name="close-outline"></ion-icon></a>
+  </div>
+  <div class="edit-profile">
+    <div id="profile-pic">
+      <img src="/images/studentProfile.png" alt="">
+    </div>
+    <div id="profilepic-btn">
+      <button id="uploadimg" >Uplaod Img</button>
+      <button id="removeimg">Remove</button>
+    </div>
+  </div>
+  <form id="editprofile-form">
+    <p>My Personal Info</p>
+    <input type="text" id="fullname" placeholder="Full Name" required>
+    <input type="text" id="Email" placeholder="Email" required>
+    <input type="text" id="PW" placeholder="PW" required>
+    <p>Major</p>
+    <select name="major">
+      <option value="Business">Business</option>
+      <option value="Accounting">Accounting</option>
+      <option value="BA">Business Administration</option>
+      <option value="Economics">Economics</option>
+      <option value="IB">International Business</option>
+      <option value="Logistics">Logistics and Supply Chain Management</option>
+      <option value="Management">Management</option>
+      <option value="HRM">Human Resource Management</option>
+      <option value="DB">Digital Business</option>
+      <option value="Tourism">Tourism and Hospitality Management</option>
+      <option value="DM">Digital Marketing</option>
+      <option value="Design">Design</option>
+      <option value="GD">Game Design</option>
+      <option value="Film">Film and video</option>
+      <option value="Communications">Communications</option>
+      <option value="Fashion">Fashion</option>
+      <option value="Languages">Languages</option>
+      <option value="Psychology">Psychology</option>
+      <option value="AM">Aviation Management</option>
+      <option value="Engineering">Engineering</option>
+      <option value="IT">Information technology</option>
+      <option value="AI">Artificial Intelligence</option>
+      <option value="FT">Food Technology and Nutrition</option>
+    </select>
+  </form>
+  <div id="form-btns">
+    <input type="submit" id="save" value="Save">
+    <input type="reset" id="reset" value="reset">
+  </div>
+</body>
+</html>

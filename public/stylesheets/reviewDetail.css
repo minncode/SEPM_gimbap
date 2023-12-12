@@ -1,0 +1,29 @@
+header {
+    padding:10px;
+}
+.mainContent {
+    /* margin:15px; */
+    border: 1px solid;
+    border-radius: 15px;
+    padding:10px;
+    
+
+}
+
+.review-section {
+    border-bottom: 1px solid;
+}
+
+.comment {
+    border-bottom: 1px solid;
+    padding:10px;
+}
+
+.author {
+    color: #7D7F7A;
+    font-size: 13px;
+}
+
+.riview {
+    display: flex;
+}

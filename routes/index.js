@@ -92,10 +92,11 @@ router.get('/reviewDetail', (req, res) => {
     res.render('reviewDetail');
 });
 
-router.get('/paymentMain', (req, res) => {
-    res.render('paymentMain');
-});
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 
 router.use(function(err, req, res, next) {

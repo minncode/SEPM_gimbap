@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Sofia Sans' rel='stylesheet'>
+  <link rel="icon" href="/images/rmitlogo.png" sizes="16*16">
+  <link rel="stylesheet" href="/stylesheets/header.css">
+  <link rel="stylesheet" href="/stylesheets/profile.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <title>RMITdays</title>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <a href="main"><img class="logo" src="/images/rmitlogo.png" alt="RMIT logo"></a>
+    <nav>
+      <ul>
+        <li><a href="main"><ion-icon class="header-icon" name="home-outline"></ion-icon></a></li>
+        <li><a href="#"><ion-icon class="header-icon" name="id-card-outline"></ion-icon></a></li>
+        <li><a href="profile"><ion-icon class="header-icon" name="person-outline"></ion-icon></ion-icon></a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- main contents -->
+  <div id="profile-component">
+    <div id="profile-id">
+      <div class="student-card-container">
+        <div class="mobileId-profile">
+          <img src="/images/studentProfile.png" alt="">
+        </div>
+        <div class="info">
+          <div class="majorAndGrade">
+            <p id="major">
+              <%= displaymajor %>
+            </p>
+          </div>
+          <p class="student-name">
+            <%= displayname %>(<%= displayemail.split('@')[0] %>)
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="profile-menulist">
+      <ul>
+        <a href="editprofile">
+          <li><ion-icon class="profile-menu-icon" name="create-outline"></ion-icon>
+            <p>Edit profile</p>
+          </li>
+        </a>
+        <a href="">
+          <li><ion-icon class="profile-menu-icon" name="cash-outline"></ion-icon>
+            <p>My Bank Account</p>
+          </li>
+        </a>
+        <a href="">
+          <li><ion-icon class="profile-menu-icon" name="trash-outline"></ion-icon>
+            <p>Delete account</p>
+          </li>
+        </a>
+        <a href="">
+          <li><ion-icon class="profile-menu-icon" name="log-out-outline"></ion-icon>
+            <p>Logout</p>
+          </li>
+        </a>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

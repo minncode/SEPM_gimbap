@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/payment.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <header>
+        <img class="logo" src="rmitlogo.png" alt="RMIT logo" >
+        <h2>RMIT Pay</h2>
+        <nav>
+          <ul>
+            <li><a href="#"><img class="icon" src="home.png" alt=""></a></li>
+            <li><a href="#"><img class="icon" src="id-card.png" alt=""></a></li>
+            <li><a href="#"><img class="icon" src="user.png" alt=""></a></li>
+          </ul>
+        </nav>
+        
+    </header>
+    <div class="mainContainer">
+        <div class="accountContainer">
+            <div class="accountInfo">
+                <p class="accountNumber">Account Number: <span id="accountNumber">1234567890</span></p>
+                <p class="balance">Balance: VND<span id="balance">1000</span></p>
+                <a href="#"><button class="chargeButton" id="charge-button">Charge</button></a>
+            </div>
+        </div>
+    
+        <div class="bankInfo">
+            <p class="paymentHistory">Payment History</p>
+        </div>
+
+        <button class="QR">
+            <div class="buttonContent">
+                <ion-icon class="scan-icon" name="scan-outline"></ion-icon>
+                <span>PAYMENT</span>
+            </div>
+        </button>
+        
+    </div>
+
+    
+</body>
+</html>
