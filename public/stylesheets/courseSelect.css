@@ -1,67 +1,9 @@
-*{
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #222160;
-    /* position: fixed; */
-    width: 100%;
-    top: 0;
-  }
-  
-  .logo {
-    display: inline-block;
-    vertical-align: middle;
-    max-width: 40px;
-    max-height: 40px;
-    padding: 10px;
-  }
-  
-  header nav {
-    display: flex;
-    align-items: center;
-    margin-left: auto; /* Move the nav to the right */
-  }
-  
-  header ul {
-    list-style: none;
-    display: flex;
-    padding: 10px;
-  }
-  
-  header li {
-    margin-left: 1rem;
-  }
-  
-  header li img {
-    max-width: 50px;
-    max-height: 50px;
-  }
-  
-  header a {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-  }
-  
-  ul .icon img {
-      opacity: 1;
-      -webkit-transition: .3s ease-in-out;
-      transition: .3s ease-in-out;
-  }
-  .icon:hover {
-      opacity: .5;
-  }
 
 .mainContent {
     margin:15px;
     border: 1px solid #E3E5E0;
     border-radius: 15px;
-    
-
+    margin-top: 70px;
 }
 
 .courseContainer {
@@ -70,7 +12,7 @@
   
 }
 
-/* 코스 정보를 감싸는 새로운 요소에 Flexbox 설정 */
+
 .courseItem {
     display: flex;
     justify-content: space-between;

@@ -81,6 +81,37 @@ router.get('/editprofile', (req, res) => {
     res.render('editprofile');
 });
 
+router.get('/courseSelect', (req, res) => {
+    res.render('courseSelect');
+});
+
+router.get('/writeReview', (req, res) => {
+    res.render('writeReview');
+});
+
+router.get('/reviewDetail', (req, res) => {
+    res.render('reviewDetail');
+});
+
+router.get('/paymentMain', (req, res) => {
+    res.render('paymentMain');
+});
+
+router.get('/charging', (req, res) => {
+    res.render('charging');
+});
+
+router.get('/barcode', (req, res) => {
+    res.render('barcode');
+});
+
+router.get('/bankManage', (req, res) => {
+    res.render('bankManage');
+});
+
+router.get('/addBank', (req, res) => {
+    res.render('addBank');
+});
 
 
 

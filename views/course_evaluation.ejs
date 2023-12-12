@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%- include("./partials/header") %>
     <link rel="stylesheet" href="/stylesheets/courseEvaluationMain.css">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
     <title>Document</title>
 </head>
 <body>
 
-    <form action="/course_evaluation" method="get">
 
         <div class="course_evaluation-header">
             <h1>Course Evaluation</h1>
-            <a href="profile.html">    <ion-icon class="course_evaluation-delete-icon" name="close-outline"></ion-icon></a>
+            <a href="main">    <ion-icon class="course_evaluation-delete-icon" name="close-outline"></ion-icon></a>
           </div>
     
     <div class="search">
@@ -28,7 +22,7 @@
         
         <div class="comment-list">
             <div class="comment">
-                <a href="views\reviewDetail.html">
+                <a href="reviewDetail">
                     <h3 class="comment-title">ISYS2101/Software Engineering Project Management : Tuan Tran Mihn</h3>
                 <div class="rating"> 
                     <!-- 별점을 여기에 추가할 수 있어요. -->
@@ -38,7 +32,7 @@
                 </a>
             </div>
             <div class="comment">
-                <a href="views\reviewDetail.html">
+                <a href="reviewDetail">
                     <h3 class="comment-title">ISYS2101/Software Engineering Project Management : Tuan Tran Mihn</h3>
                 <div class="rating"> 
                     <!-- 별점을 여기에 추가할 수 있어요. -->
@@ -48,7 +42,7 @@
                 </a>
             </div>
             <div class="comment">
-                <a href="views\reviewDetail.html">
+                <a href="reviewDetail">
                     <h3 class="comment-title">ISYS2101/Software Engineering Project Management : Tuan Tran Mihn</h3>
                 <div class="rating"> 
                     <!-- 별점을 여기에 추가할 수 있어요. -->
@@ -58,7 +52,7 @@
                 </a>
             </div>
             <div class="comment">
-                <a href="views\reviewDetail.html">
+                <a href="reviewDetail">
                     <h3 class="comment-title">ISYS2101/Software Engineering Project Management : Tuan Tran Mihn</h3>
                 <div class="rating"> 
                     <!-- 별점을 여기에 추가할 수 있어요. -->
@@ -67,9 +61,10 @@
                 <p class="comment-content">He was nice.</p>
                 </a>
             </div>
+            
         </div>
         <div class="reviewBtn">
-            <a href="views\writeReview.html">
+            <a href="courseSelect">
                 <button>Go to Review</button>
             </a>
             

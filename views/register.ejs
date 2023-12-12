@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include("./partials/header") %>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href='https://fonts.googleapis.com/css?family=Sofia Sans' rel='stylesheet'>
-  <link rel="icon" href="images/rmitlogo.png" sizes="16*16">
   <link rel="stylesheet" href="stylesheets/register.css">
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   <title>RMITdays</title>
 </head>
 
@@ -20,8 +13,7 @@
     </div>
     <a class="delete-btn" href="/"><ion-icon name="close-outline"></ion-icon></ion-icon></a>
   </header>
-  <div class="register">
-    <form method="post" action="/register" id="login-form">
+  <div class="register" id="login-form">
       <p>The year of the rmit enterance</p>
       <input id="month" type="month" name="year">
       <p>Select your major</p>
@@ -51,7 +43,7 @@
         <option value="FT">Food Technology and Nutrition</option>
         <p>Personal Information</p>
         <input type="text" name="email" placeholder="Email">
-        <input type="text" name="name" placeholder="Name">
+        <input type="text" name="name" placeholder="Full Name">
         <input type="password" name="password" placeholder="Password">
         <input type="submit" value="NEXT">
         <p class="message">Already have an account? <a href="/">Login</a></p>

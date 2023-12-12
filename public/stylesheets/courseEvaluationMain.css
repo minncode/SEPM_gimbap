@@ -8,11 +8,6 @@ header {
   }
 
 
-header {
-    padding: 10px;
-    text-align: center;
-
-  }
   
 body {
     font-family: Arial, sans-serif;
@@ -29,8 +24,7 @@ body {
     position: relative;
     display: flex;
     width: 350px;
-    justify-content: center;
-    margin:0 auto;
+    align-items: center;
 
 }
 

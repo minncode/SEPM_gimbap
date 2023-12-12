@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/charging.css">
+<%- include("./partials/header") %>
+
+    <link rel="stylesheet" href="/stylesheets/charging.css">
     <title>Document</title>
     
 </head>
 <body>
     <header>
-        <img class="logo" src="rmitlogo.png" alt="RMIT logo" >
+        <img class="logo" src="/images/rmitlogo.png" alt="RMIT logo" >
         <h2>RMIT Pay</h2>
         
     </header>
@@ -17,7 +14,7 @@
       <h2>Select the plan you want to charge</h2>
       <div class="chargeButtons">
         
-          <button class="chargeButton" value="50000">VND 50,000</button>
+          <button class="chargeButton" value="50000">VND <br> 50,000</button>
           <button class="chargeButton" value="100000">VND 100,000</button>
           <button class="chargeButton" value="200000">VND 200,000</button>
           <button class="chargeButton" value="500000">VND 500,000</button>
