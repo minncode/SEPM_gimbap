@@ -83,11 +83,25 @@ select {
   color:#807c7c;
 }
 
-p{
+.register p{
   color: #222160;
   font-size: 15px;
   font-weight: 500;
   display: flex;
   margin-top: 20px;
   margin-left: 5px;
+}
+
+.goto-login{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+}
+
+
+.goto-login a{
+  text-decoration: none;
+  color: #E61E2A;
+  font-weight: 600;
 }
