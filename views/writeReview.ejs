@@ -12,42 +12,59 @@
         <div class="reviewContainer">
             <h2>Lecture Review</h2>
             <br>
-            <div class="section">
+            <div class="section paper">
                 <h3>Paper</h3>
                 <div class="options">
-                    <span class="option" onclick="selectOption('Paper', 'None')">None</span>
-                    <span class="option" onclick="selectOption('Paper', 'Once')">Once</span>
-                    <span class="option" onclick="selectOption('Paper', 'Twice')">Twice</span>
-                    <span class="option" onclick="selectOption('Paper', '3 Times')">3 Times</span>
+                    <span class="option" onclick="selectOption(this, 'paper')">None</span>
+                    <span class="option" onclick="selectOption(this, 'paper')">Once</span>
+                    <span class="option" onclick="selectOption(this, 'paper')">Twice</span>
+                    <span class="option" onclick="selectOption(this, 'paper')">3 Times</span>
                 </div>
             </div>
         
-            <div class="section">
+            <div class="section test">
                 <h3>Test</h3>
                 <div class="options">
-                    <span class="option" onclick="selectOption('Test', 'None')">None</span>
-                    <span class="option" onclick="selectOption('Test', 'Once')">Once</span>
-                    <span class="option" onclick="selectOption('Test', 'Twice')">Twice</span>
-                    <span class="option" onclick="selectOption('Test', '3 Times')">3 Times</span>
+                    <span class="option" onclick="selectOption(this, 'test')">None</span>
+                    <span class="option" onclick="selectOption(this, 'test')">Once</span>
+                    <span class="option" onclick="selectOption(this, 'test')">Twice</span>
+                    <span class="option" onclick="selectOption(this, 'test')">3 Times</span>
                 </div>
             </div>
         
-            <div class="section">
+            <div class="section grades">
                 <h3>Grades</h3>
                 <div class="options">
-                    <span class="option" onclick="selectOption('Grades', 'Generosity')">Generosity</span>
-                    <span class="option" onclick="selectOption('Grades', 'In General')">In General</span>
-                    <span class="option" onclick="selectOption('Grades', 'Strickness')">Strickness</span>
+                    <span class="option" onclick="selectOption(this, 'grades')">Generosity</span>
+                    <span class="option" onclick="selectOption(this, 'grades')">In General</span>
+                    <span class="option" onclick="selectOption(this, 'grades')">Strickness</span>
                 </div>
             </div>
         
-            <div class="section">
+            <div class="section group-project">
                 <h3>Group Project</h3>
                 <div class="options">
-                    <span class="option" onclick="selectOption('Group Project', 'Yes')">Yes</span>
-                    <span class="option" onclick="selectOption('Group Project', 'No')">No</span>
+                    <span class="option" onclick="selectOption(this, 'group-project')">Yes</span>
+                    <span class="option" onclick="selectOption(this, 'group-project')">No</span>
                 </div>
             </div>
+
+            <div class="section section structure">
+                <h3>Structure (about onine lecture)</h3>
+                <div class="options">
+                    <span class="option" onclick="selectOption(this, 'structure')">Yes</span>
+                    <span class="option" onclick="selectOption(this, 'structure')">No</span>
+                </div>
+            </div>
+
+
+            <div class="section">
+                <h3>Comments</h3>
+                <textarea class="comment-box" placeholder="Write your comment here..."></textarea>
+            </div>
+            
+
+            
 
         </div>
         <div class="submit">
@@ -55,5 +72,17 @@
         </div>
         
     </div>
+    <script>
+        function selectOption(option, sectionName) {
+            const section = document.querySelector(`.section.${sectionName}`);
+            const options = section.querySelectorAll(`.option`);
+    
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+            });
+    
+            option.classList.add('selected');
+        }
+    </script>
 </body>
 </html>
