@@ -1,78 +1,84 @@
 <%- include("./partials/header") %>
     <title>Document</title>
     <link rel="stylesheet" href="/stylesheets/course_list.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-
-    <header>
+    <div class="CourseListHeader">
         <h1>Courses</h1>
-        <a href="#"><img class="icon" src="free-icon-x-657059.png" alt=""></a>
-    </header>
-    <div class="courseItem">
-        <h3>CS101 - Introduction to Computer Science</h3>
-        <p>Classroom: 2.4.002</p>
-        <p>Schedule: MON 8H</p>
-        <p>Professor: Tuan Tran Minh</p>
-        <!-- 추가 버튼 -->
-        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
+        <a href="timetable">    <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></a>
     </div>
-    <div class="courseItem">
-        <h3>CS101 - Introduction to Computer Science</h3>
-        <p>Classroom: 2.4.002</p>
-        <p>Schedule: MON 8H</p>
-        <p>Professor: Tuan Tran Minh</p>
-        <!-- 추가 버튼 -->
-        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
+    <div class="mainContent">
+        <div class="courseContainer">
+            <div class="courseItem">
+                <div class="courseInfo">
+                    <h3 class="courseCode">ISYS2101</h3>
+                    <h3 class="courseName">Software Engineering Project Management</h3>
+                    <div class="info">
+                        <p class="professorName">Tuan Tran Mihn</p>
+                        <p class="classroom">2.4.002</p>
+                        <p class="schedule">Tue, 8:00 AM</p>
+                        <p class="semester">Sem 5</p>
+                        <p class="credits">12 Credits</p>
+                    </div>
+                </div>
+                <button class="reviewBtn" onclick="window.location.href = 'timetable'">
+                    <div class="buttonContent">
+                        <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                    </div>
+                </button>
+            </div>
+            <div class="courseItem">
+                <div class="courseInfo">
+                    <h3 class="courseCode">ISYS2101</h3>
+                    <h3 class="courseName">Software Engineering Project Management</h3>
+                    <p class="professorName">Tuan Tran Mihn</p>
+                </div>
+                <button class="reviewBtn" onclick="window.location.href = 'timetable'">
+                    <div class="buttonContent">
+                        <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                    </div>
+                </button>
+            </div>
+            <div class="courseItem">
+                <div class="courseInfo">
+                    <h3 class="courseCode">ISYS2101</h3>
+                    <h3 class="courseName">Software Engineering Project Management</h3>
+                    <p class="professorName">Tuan Tran Mihn</p>
+                </div>
+                <button class="reviewBtn" onclick="window.location.href = 'timetable'">
+                    <div class="buttonContent">
+                        <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                    </div>
+                </button>
+            </div>
+            <div class="courseItem">
+                <div class="courseInfo">
+                    <h3 class="courseCode">ISYS2101</h3>
+                    <h3 class="courseName">Software Engineering Project Management</h3>
+                    <p class="professorName">Tuan Tran Mihn</p>
+                </div>
+                <button class="reviewBtn" onclick="window.location.href = 'timetable'">
+                    <div class="buttonContent">
+                        <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                    </div>
+                </button>
+            </div>
+            <div class="courseItem">
+                <div class="courseInfo">
+                    <h3 class="courseCode">ISYS2101</h3>
+                    <h3 class="courseName">Software Engineering Project Management</h3>
+                    <p class="professorName">Tuan Tran Mihn</p>
+                </div>
+                <button class="reviewBtn" onclick="window.location.href = 'timetable'">
+                    <div class="buttonContent">
+                        <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                    </div>
+                </button>
+            </div>
+        </div>
     </div>
-    <div class="courseItem">
-        <h3>CS101 - Introduction to Computer Science</h3>
-        <p>Classroom: 2.4.002</p>
-        <p>Schedule: MON 8H</p>
-        <p>Professor: Tuan Tran Minh</p>
-        <!-- 추가 버튼 -->
-        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
-    </div>
-    <div class="courseItem">
-        <h3>CS101 - Introduction to Computer Science</h3>
-        <p>Classroom: 2.4.002</p>
-        <p>Schedule: MON 8H</p>
-        <p>Professor: Tuan Tran Minh</p>
-        <!-- 추가 버튼 -->
-        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
-    </div>
-    <div class="courseItem">
-        <h3>CS101 - Introduction to Computer Science</h3>
-        <p>Classroom: 2.4.002</p>
-        <p>Schedule: MON 8H</p>
-        <p>Professor: Tuan Tran Minh</p>
-        <!-- 추가 버튼 -->
-        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
-    </div>
-    <div class="courseItem">
-        <h3>CS101 - Introduction to Computer Science</h3>
-        <p>Classroom: 2.4.002</p>
-        <p>Schedule: MON 8H</p>
-        <p>Professor: Tuan Tran Minh</p>
-        <!-- 추가 버튼 -->
-        <button class="addCourseBtn" onclick="addToTimetable('CS101', 'Introduction to Computer Science', '2.4.002', 'MON 8H', 'Tuan Tran Minh')">Add to Timetable</button>
-    </div>
-    <!-- 다른 코스들도 유사한 구조로 나열될 것입니다 -->
-  
-    <script>
-        function addToTimetable(courseCode, courseName, classroom, schedule, professor) {
-            const urlParams = new URLSearchParams();
-            urlParams.set('courseCode', courseCode);
-            urlParams.set('courseName', courseName);
-            urlParams.set('classroom', classroom);
-            urlParams.set('schedule', schedule);
-            urlParams.set('professor', professor);
-            
-            const url = `timetable.html?${urlParams.toString()}`;
-            window.location.href = url;
-        }
-        const schedule = 'MON 8H';
-        const encodedSchedule = encodeURIComponent(schedule); // 결과: MON%208H
 
-    </script>
 </body>
 </html>

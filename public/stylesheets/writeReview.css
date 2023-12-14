@@ -32,15 +32,14 @@ h3 {
 } */
 
 .option:hover {
-    background-color: #3498db;
-    color: #fff;
+    color: #222160;
 }
 
-/* ... 이전에 작성된 CSS ... */
 
 .option {
     position: relative;
     padding: 10px;
+    color: #BFC1BB;
 
     cursor: pointer;
 }
@@ -70,3 +69,23 @@ h3 {
 #submit {
   text-decoration: none;
 }
+.comment-box {
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: vertical; /* 사용자가 수직으로만 리사이즈 할 수 있도록 함 */
+    background-color: #E3E5E0;
+  }
+
+.comment-box::placeholder {
+    color: black; 
+    padding:10px;
+}
+
+.option.selected {
+    /* 선택된 옵션 스타일 */
+    color: #222160;
+  }
+
+
