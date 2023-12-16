@@ -1,0 +1,167 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Sofia Sans';
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #222160;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+  }
+  
+  .logo {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 40px;
+    max-height: 40px;
+    padding: 10px;
+  }
+  
+  header nav {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+  
+  header ul {
+    list-style: none;
+    display: flex;
+    padding: 10px;
+  }
+  
+  header li {
+    margin-left: 1rem;
+  }
+  
+  .header-icon {
+    color: white;
+    width: 23px;
+    height: 23px;
+  }
+  
+  header a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  ul .icon img {
+      opacity: 1;
+      -webkit-transition: .3s ease-in-out;
+      transition: .3s ease-in-out;
+  }
+  .header-icon:hover {
+      opacity: .5;
+  }
+
+
+.mainContentHeader {
+    padding:25px;
+    margin-top: 70px;
+}
+
+.Category {
+  display: flex;
+  justify-content: space-between;
+}
+.courseList-delete-icon{
+    margin: 10px;
+    width: 30px;
+    height: 30px;
+    color: #E3E5E0;
+  }
+  
+.courseList-delete-icon:hover{
+    color: #222160;
+  }
+
+  .search {
+    position: relative;
+    display: flex;
+    width: 700px;
+    align-items: center;
+    margin:0 auto;
+
+}
+
+
+.search img {
+    position: absolute;
+    right: 23px;
+    cursor: pointer;
+    top:4px;
+}
+
+
+.search input[type="text"] {
+    width: calc(100% - 30px); 
+    padding: 8px 12.6667px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #E3E5E0;
+
+    
+}
+.contentHeader h1 {
+    font-size: 50px;
+}
+
+.mainContent {
+  padding:50px;
+  margin-top: 70px;
+}
+
+.Category {
+  display: flex;
+  justify-content: space-between;
+}
+
+.locationCategory {
+    border: 1px solid #E3E5E0;
+    width:100%;
+    height: 62px;
+    margin: 0 auto;
+    margin-top:20px;
+    border-radius: 15px;
+
+    
+}
+.locationCategory a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    justify-content: space-between;
+    color: black;
+
+
+}
+
+.locationCategory h3 {
+    padding:20px
+}
+
+.nextPage {
+    font-size: 55px;
+    color: #E3E5E0;
+}
+.contentContainer {
+    /* padding:10px; */
+    margin:20px;
+}
+
+@media screen and (max-width: 600px) {
+    .search {
+        width:90%;
+    }
+    .CourseEvaluationHeader h1{
+        font-size: 25px;
+        margin: 40px 5px;
+        padding:30px;
+    }
+
+  }
