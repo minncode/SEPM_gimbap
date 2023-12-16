@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const session = require('express-session');
-
+const bcrypt = require('bcrypt');
 const collection = require('./mongodb');
 
 router.use(session({
@@ -17,35 +17,52 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     const { name, password } = req.body;
-    const Entername = await collection.findOne({ name, password });
-    if (Entername) {
-        req.session.name = Entername.name;
-        req.session.email = Entername.email;
-        req.session.major = Entername.major;
-        res.redirect('/main');
+    const user = await collection.findOne({ name });
+
+    if (user) {
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (passwordMatch) {
+            req.session.name = user.name;
+            req.session.email = user.email;
+            req.session.major = user.major;
+            res.redirect('/main');
+        } else {
+            res.render('login', { error: 'Failed to login' });
+        }
     } else {
         res.render('login', { error: 'Failed to login' });
     }
 });
-    
+
 router.get('/register', (req, res) => {
     res.render("register")
 });
 
-router.post("/register", async(req, res) => {
+router.post("/register", async (req, res) => {
+    const { year, major, email, name, password } = req.body;
 
-    const data = {
-        year: req.body.year,
-        major: req.body.major,
-        email: req.body.email,
-        name: req.body.name,
-        password: req.body.password
+    try {
+        // Hashing the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Creating a new document using the Mongoose model
+        const newUser = new collection({
+            year,
+            major,
+            email,
+            name,
+            password: hashedPassword // Assigning the hashed password to the document
+        });
+
+        // Saving the new user to the database
+        await newUser.save();
+
+        res.render("login");
+    } catch (err) {
+        console.error(err);
+        res.render("register", { error: 'Failed to register' });
     }
-
-    await collection.insertMany(data);
-
-    res.render("login")
-
 });
 
 router.get('/main', async (req, res) => {
@@ -113,9 +130,16 @@ router.get('/addBank', (req, res) => {
     res.render('addBank');
 });
 
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if(err) {
+            return console.log(err);
+        }
+        res.redirect('/'); // 로그아웃 후 리다이렉트할 경로
+    });
+});
 
-
-router.use(function(err, req, res, next) {
+router.use(function (err, req, res, next) {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
