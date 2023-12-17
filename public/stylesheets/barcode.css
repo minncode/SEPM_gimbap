@@ -1,206 +1,131 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Sofia Sans';
   }
+
   header {
     display: flex;
-    /* justify-content: space-between; */
-    align-items: center;
-    background: #222160;
-    /* position: fixed; */
-    width: 100%;
-    top: 0;
+    justify-content: space-between;
   }
-  
+
+  .header{
+    display: flex;
+    flex-direction: row;
+  }
+
+.header h2{
+  padding: 25px 0px;
+  color: white;
+
+}
+
   .logo {
     display: inline-block;
     vertical-align: middle;
     max-width: 40px;
     max-height: 40px;
-    padding: 10px;
+    padding: 20px;
+  }
+  .delete-btn ion-icon{
+    color: white;
+    width: 30px;
+    height:30px;
+    padding: 20px;
   }
   
-  header nav {
-    display: flex;
-    align-items: center;
-    margin-left: auto; /* Move the nav to the right */
-  }
-  
-  header ul {
-    list-style: none;
-    display: flex;
-    padding: 10px;
-  }
-  
-  header li {
-    margin-left: 1rem;
-  }
-  
-  header li img {
-    max-width: 50px;
-    max-height: 50px;
-  }
-  
-  header a {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-  }
-  
-  ul .icon img {
-      opacity: 1;
-      -webkit-transition: .3s ease-in-out;
-      transition: .3s ease-in-out;
-  }
-  .icon:hover {
-      opacity: .5;
+  .delete-btn ion-icon:hover{
+    opacity: .5;
   }
 
 body {
     background-color:#222160 ;
 }
-.mainContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding:50px;
-    background-color: #222160;
-  }
-  
 .mainContainers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  margin: 0px 20px 20px 20px;
   background-color: white;
   border-radius: 20px;
-
-}  
-
-.barCode {
-    width: 1000px; 
-    height: 500px;
-    /* border: 1px solid #ccc; */
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-sizing: border-box; /* padding과 border를 포함한 크기로 지정 */
-    /* background-color: white; */
-    font-size: 30px;
-    text-align: center;
-  
+  height: 80vh;
 }
 
+.barCode{
+  padding: 20px;
+}
+
+.barCode img{
+  min-width: 300px;
+  height: 80px;
+}
+
+.info-btn-wrap{
+  position: absolute;
+  right:0;bottom:15vh;left:0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: -webkit-flex;
+  -webkit-align-item: center;
+  -webkit-justify-content: center;
+}
 
 .accountInfo {
-    width: 254px; 
-    height: 147px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-sizing: border-box; /* padding과 border를 포함한 크기로 지정 */
-    background-color: #E3E5E0;
-    font-size: 20px;
-    margin:0 auto;
-}
-
-/* .chargingButtons {
-  text-align: center;
-}
-
-.chargingButton {
-  width:50%;
-  height: 70px;
-  border-radius: 30px;
-  background-color: #FFC500;
-  margin-top:30px;
-  margin-bottom: 40px;
-} */
-.QR {
-  /* 버튼 스타일 */
-  padding: 10px 20px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  cursor: pointer;
-  background-color: #ffd23c;
+  width: 60%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin:0 auto;
-  margin-top:50px;
-  margin-bottom: 50px;
+  flex-direction: column;
+  background-color: #e3e5e0a6;
+  border-radius: 10px;
+  font-size: 15px;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 5px 5px 5px rgba(128, 128, 128, 0.459)
+}
+
+.accountInfo img{
+  width: 100px;
+  padding-bottom: 30px;
+}
+
+.accountNumber, .balance{
+  float: right;
+}
+
+.accountNumber{
+  font-size: 15px;
+  color: #888986;
+}
+
+.balance{
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .buttonContent {
-  display: flex;
-  align-items: center;
-  border-radius: 20px;
+  padding: 10px;
+  background-color: #FFC500;
+  width: 80%;
+  border: none;
+  border-radius: 30px;
 }
 .buttonContent span {
-  font-size: 40px;
+  font-size: 30px;
+  font-weight: 700;
 }
-.buttonContent img {
-
-  width: 50px;
-  height: 50px;
-  border: 2px solid #ccc;
-  margin-right: 10px; 
-}
-
-@media screen and (max-width: 600px) {
-  .mainContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px; /* 패딩을 줄여 모바일 화면에 맞춥니다. */
-    background-color: #222160;
+.buttonContent ion-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
 }
 
-.mainContainers {
-    background-color: white;
-    border-radius: 20px;
-    width: 100%; /* 전체 너비를 사용하도록 설정합니다. */
-    max-width: 600px; /* 최대 너비를 지정하여 너무 커지지 않도록 합니다. */
-    margin: 0 auto; /* 가운데 정렬합니다. */
-    padding: 20px; /* 패딩을 조정합니다. */
-    box-sizing: border-box;
-    height:800px;
+.btnContent-wrap{
+  display: flex;
+  justify-content: center;
 }
 
-.barCode {
-    width: 100%; /* 너비를 모바일에 맞춥니다. */
-    height: auto; /* 높이 자동 조정 */
-    border-radius: 8px;
-    padding: 10px; /* 패딩을 줄입니다. */
-    margin-bottom: 40px;
-    box-sizing: border-box;
-    font-size: 20px; /* 폰트 사이즈를 줄입니다. */
-    text-align: center;
-}
-
-.accountInfo {
-    width: 100%; /* 너비를 모바일에 맞춥니다. */
-    height: 147px; /* 높이 자동 조정 */
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 10px; /* 패딩을 줄입니다. */
-    margin-bottom: 20px;
-    box-sizing: border-box;
-    background-color: #E3E5E0;
-    font-size: 16px; /* 폰트 사이즈를 줄입니다. */
-    margin-top:300px;
-}
-
-.chargingButtons {
-    text-align: center;
-}
-
-.chargingButton {
-    width: 80%; /* 너비를 조정합니다. */
-    max-width: 200px; /* 최대 너비를 지정하여 너무 커지지 않도록 합니다. */
-    height: 50px; /* 높이를 줄입니다. */
-    border-radius: 30px;
-    background-color: #FFC500;
-    margin-top: 20px; /* 여백 조정 */
-    margin-bottom: 30px; /* 여백 조정 */
-}
-
+.buttonContent:hover {
+  filter: brightness(70%);
 }
