@@ -1,6 +1,7 @@
 <%- include("./partials/header") %>
 
   <link rel="stylesheet" href="stylesheets/register.css">
+  <script src="/js/register.js" defer></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
   <title>RMITdays</title>
@@ -9,7 +10,7 @@
 <body>
 
   <form action="/register" method="POST">
-  <!-- <script src="/public/js/register.js"></script> -->
+  
 
   <header>
     <div class="header">
@@ -20,7 +21,9 @@
   </header>
   <div class="register" id="login-form">
       <p>Select your major</p>
-      <select>
+      <select onfocus='this.size=10;' 
+      onblur='this.size=1;' 
+      onchange='this.size=10; this.blur();'>
         <option value="Business">Business</option>
         <option value="Accounting">Accounting</option>
         <option value="Business Administration">Business Administration</option>

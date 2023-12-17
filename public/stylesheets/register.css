@@ -46,12 +46,13 @@ h2 {
 }
 
 #login-form input, select{
-  height: 45px;
-  margin: 3px;
-  padding: 0px 10px;
+  margin: 10px;
+  padding: 10px 10px;
   border-radius: 10px;
   background-color: #EAEBE8;
   border: none;
+  font-size: 15px;
+  
 }
 
 select {
@@ -109,4 +110,18 @@ select {
 
 .goto-login a:hover{
   opacity: 0.5;
+}
+
+.customSelect::-webkit-scrollbar {
+  width: 10px;
+  height: 20px; 
+}
+
+.customSelect::-webkit-scrollbar-thumb {
+  background-color: rgba(231, 21, 21, 0.3); 
+  border-radius: 10px;
+}
+
+.customSelect::-webkit-scrollbar-track {
+  background: transparent; 
 }
