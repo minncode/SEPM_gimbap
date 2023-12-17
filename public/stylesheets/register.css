@@ -60,6 +60,13 @@ select {
   overflow-y: auto;
 }
 
+select option{
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #EAEBE8;
+  border: none;
+}
+
 #login-form input::placeholder, select::placeholder{
   color: #d2cccc;
   padding: 0px 10px;
