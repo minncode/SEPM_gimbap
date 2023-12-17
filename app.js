@@ -7,7 +7,6 @@ const logger = require('morgan');
 const bodyparser = require('body-parser');
 const ejs = require('ejs');
 
-
 // 라우팅
 const indexRouter = require('./routes/index');
 
@@ -28,7 +27,6 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter); // use -> 미들 웨어를 등록해주는 메서드.
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

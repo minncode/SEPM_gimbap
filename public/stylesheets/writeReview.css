@@ -83,6 +83,11 @@ h3 {
     padding:10px;
 }
 
+.comment-box textarea::-webkit-input-placeholder {
+    text-indent: -3px;
+    padding-left: 10px;
+    }
+
 .option.selected {
     /* 선택된 옵션 스타일 */
     color: #222160;
