@@ -1,4 +1,15 @@
-
+.courseList-delete-icon{
+    margin: 10px;
+    width: 30px;
+    height: 30px;
+    color: #E3E5E0;
+    float: right;
+    padding:5px;
+  }
+  
+  .courseList-delete-icon:hover{
+    color: #222160;
+  }
 .mainContent {
     margin:15px;
     border: 1px solid #E3E5E0;
