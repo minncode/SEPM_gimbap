@@ -1,16 +1,20 @@
 
-
+*{
+    font-family: 'Sofia Sans';
+    margin: 0;
+    padding: 0;
+}
 .mainContentHeader {
-    padding:25px;
     margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
 }
 
-.Category {
-  display: flex;
-  justify-content: space-between;
+.mainContentHeader h2{
+    padding: 20px;
 }
 .courseList-delete-icon{
-    margin: 10px;
+    padding: 20px;
     width: 30px;
     height: 30px;
     color: #E3E5E0;
@@ -23,18 +27,17 @@
   .search {
     position: relative;
     display: flex;
-    width: 700px;
     align-items: center;
-    margin:0 auto;
-
+    padding: 0px 20px;
 }
 
 
-.search img {
+.search ion-icon {
     position: absolute;
-    right: 23px;
+    right: 30px;
     cursor: pointer;
-    top:4px;
+    top: 8px;
+    color: #838481;
 }
 
 
@@ -93,15 +96,3 @@
     /* padding:10px; */
     margin:20px;
 }
-
-@media screen and (max-width: 600px) {
-    .search {
-        width:90%;
-    }
-    .CourseEvaluationHeader h1{
-        font-size: 25px;
-        margin: 40px 5px;
-        padding:30px;
-    }
-
-  }

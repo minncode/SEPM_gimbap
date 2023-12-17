@@ -37,7 +37,8 @@
   h2 {
     color: white;
     font-weight: 700;
-    margin-top: 18px;
+    margin-top: 20px;
+    font-size: 20px;
   }
 
 .chargeButtons {
@@ -45,11 +46,11 @@
     justify-content: center;
     gap: 10px; 
     flex-wrap: wrap;
-    margin:20px; 
+    margin-top: 20px;
   }
   
   .chargeButton {
-    width: calc(40% - 10px); 
+    width: calc(50% - 10px); 
     padding: 10px;
     font-size: 30px;
     border: 1px solid #ccc;
@@ -57,12 +58,12 @@
     cursor: pointer;
     background-color: #f0f0f0;
     box-sizing: border-box;
-    height:80px;
+    height:60px;
     font-weight: bold;
   }
   
   .chargeButton:hover {
-    background-color: #e0e0e0;
+    filter: brightness(70%);
   }
   body {
     background-color: #222160;
@@ -74,7 +75,6 @@
     padding: 10px;
     font-size: 20px;
     border: 1px solid #ccc;
-    border-radius: 10px;
     cursor: pointer;
     background-color: #f0f0f0;
     box-sizing: border-box;
@@ -89,7 +89,7 @@
 
 .chargingButton {
   width:90%;
-  height: 70px;
+  height: 60px;
   border-radius: 30px;
   background-color: #FFC500;
   margin-top:30px;
@@ -97,8 +97,12 @@
   font-size: 30px;
 }
 
+.chargingButton:hover{
+  filter: brightness(70%);
+}
+
 .mainContent {
   text-align: center;
   color: white;
-  margin:20px;
+  padding: 20px;
 }

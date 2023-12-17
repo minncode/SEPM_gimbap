@@ -6,14 +6,13 @@
 
 </head>
 <body>
-
     <%- include("./partials/navigation") %>
 
     <div class="mainContainer">
         <div class="accountContainer">
             <div class="accountInfo">
-                <p class="accountNumber">Account Number: <span id="accountNumber">1234567890</span></p>
-                <p class="balance">Balance: VND<span id="balance">1000</span></p>
+                <p class="accountNumber">1234567890</p>
+                <p class="balance">VND <span id="balance"> 1000,000</span></p>
                 <a href="charging"><button class="chargeButton" id="charge-button">Charge</button></a>
             </div>
         </div>
@@ -21,16 +20,14 @@
         <div class="bankInfo">
             <p class="paymentHistory">Payment History</p>
         </div>
-
-        <button class="QR" onclick="window.location.href = 'barcode'">
-            <div class="buttonContent">
-                <ion-icon class="scan-icon" name="scan-outline"></ion-icon>
-                <span>PAYMENT</span>
-            </div>
-        </button>
         
     </div>
-
+    <button class="QR" onclick="window.location.href = 'barcode'">
+        <div class="buttonContent">
+            <ion-icon class="scan-icon" name="scan-outline"></ion-icon>
+            <span>PAYMENT</span>
+        </div>
+    </button>
     
 </body>
 </html>
