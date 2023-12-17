@@ -1,13 +1,13 @@
 <%- include("./partials/header") %>
 
   <link rel="stylesheet" href="stylesheets/register.css">
-
   <title>RMITdays</title>
 </head>
 
 <body>
 
   <form action="/register" method="POST">
+  <script src="/public/js/register.js"></script>
 
   <header>
     <div class="header">
@@ -20,41 +20,49 @@
       <p>The year of the rmit enterance</p>
       <input id="month" type="month" name="year">
       <p>Select your major</p>
-      <select name="major" type="text">
-        <option value="Business">Business</option>
-        <option value="Accounting">Accounting</option>
-        <option value="BA">Business Administration</option>
-        <option value="Economics">Economics and Finance</option>
-        <option value="IB">International Business</option>
-        <option value="Logistics">Logistics and Supply Chain Management</option>
-        <option value="Management">Management</option>
-        <option value="HRM">Human Resource Management</option>
-        <option value="DB">Digital Business</option>
-        <option value="Tourism">Tourism and Hospitality Management</option>
-        <option value="DM">Digital Marketing</option>
-        <option value="Design">Design - Digital Media</option>
-        <option value="DS">Design Studies</option>
-        <option value="GD">Game Design</option>
-        <option value="Film">Digital Film and video</option>
-        <option value="Communications">Professional Communication</option>
-        <option value="Fashion">Fashion - Enterprise</option>
-        <option value="Languages">Languages</option>
-        <option value="Psychology">Psychology</option>
-        <option value="AM">Aviation Management</option>
-        <option value="Engineering">Software Engineering</option>
-        <option value="IT">Information Technology</option>
-        <option value="RM">Robotics and Mechatronics Engineering</option>
-        <option value="EC">Electronic and Computer Systems Engineering</option>
-        <option value="FT">Food Technology and Nutrition</option>
+      <div class="major-selectbox">
+        <select name="major" type="text" size="10">
+          <option value="0">Business</option>
+          <option value="1">Accounting</option>
+          <option value="2">Business Administration</option>
+          <option value="3">Economics and Finance</option>
+          <option value="4">International Business</option>
+          <option value="5">Logistics and Supply Chain Management</option>
+          <option value="6">Management</option>
+          <option value="7">Human Resource Management</option>
+          <option value="8">Digital Business</option>
+          <option value="9">Tourism and Hospitality Management</option>
+          <option value="10">Digital Marketing</option>
+          <option value="11">Design - Digital Media</option>
+          <option value="12">Design Studies</option>
+          <option value="13">Game Design</option>
+          <option value="14">Digital Film and video</option>
+          <option value="15">Professional Communication</option>
+          <option value="16">Fashion - Enterprise</option>
+          <option value="17">Languages</option>
+          <option value="18">Psychology</option>
+          <option value="19">Aviation Management</option>
+          <option value="20">Software Engineering</option>
+          <option value="21">Information Technology</option>
+          <option value="22">Robotics and Mechatronics Engineering</option>
+          <option value="23">Electronic and Computer Systems Engineering</option>
+          <option value="24">Food Technology and Nutrition</option>
+        </select>
+      </div>
+        <!-- Email, Full name, Password -->
         <p>Personal Information</p>
         <input type="text" name="email" placeholder="Email">
         <input type="text" name="name" placeholder="Full Name">
         <input type="password" name="password" placeholder="Password">
         <input type="submit" value="NEXT">
-        <p class="message">Already have an account? <a href="/">Login</a></p>
-    </form>
-  </div>
 
+
+      </form>
+  </div>
+  <div class="goto-login">
+    <p class="message">Already have an account?</p>
+    <a href="/"><p>Login</p></a>
+  </div>
 </body>
 
 </html>
