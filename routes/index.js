@@ -130,6 +130,26 @@ router.get('/addBank', (req, res) => {
     res.render('addBank');
 });
 
+router.get('/campusMap', (req, res) => {
+    res.render('campusMap');
+});
+
+router.get('/campusMapCategory', (req, res) => {
+    res.render('campusMapCategory');
+});
+
+router.get('/beanlandBuilding', (req, res) => {
+    res.render('beanlandBuilding');
+});
+
+router.get('/foodCourt', (req, res) => {
+    res.render('foodCourt');
+});
+
+router.get('/foodPavillion', (req, res) => {
+    res.render('foodPavillion');
+});
+
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if(err) {
