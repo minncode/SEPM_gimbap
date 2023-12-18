@@ -6,6 +6,7 @@
 </head>
 <body>
 
+  <form action="/editprofile" method="post">
 
   <div class="editprofile-header">
     <h2>Edit My Profile</h2>
@@ -21,41 +22,45 @@
     </div>
   </div>
   
-  <form id="editprofile-form">
+  <div id="editprofile-form">
     <p>My Personal Info</p>
       <input type="text" name="name" placeholder="Full Name" required>
-      <input type="text" name="email" placeholder="Email" required>
+      <input type="text" name="email" placeholder="Email" value="<%= displayemail %>" required readonly>
       <input type="text" name="password" placeholder="Password" required>
     <p>Major</p>
     <select name="major">
-      <option value="Business">Business</option>
-      <option value="Accounting">Accounting</option>
-      <option value="BA">Business Administration</option>
-      <option value="Economics">Economics</option>
-      <option value="IB">International Business</option>
-      <option value="Logistics">Logistics and Supply Chain Management</option>
-      <option value="Management">Management</option>
-      <option value="HRM">Human Resource Management</option>
-      <option value="DB">Digital Business</option>
-      <option value="Tourism">Tourism and Hospitality Management</option>
-      <option value="DM">Digital Marketing</option>
-      <option value="Design">Design</option>
-      <option value="GD">Game Design</option>
-      <option value="Film">Film and video</option>
-      <option value="Communications">Communications</option>
-      <option value="Fashion">Fashion</option>
-      <option value="Languages">Languages</option>
-      <option value="Psychology">Psychology</option>
-      <option value="AM">Aviation Management</option>
-      <option value="Engineering">Engineering</option>
-      <option value="IT">Information technology</option>
-      <option value="AI">Artificial Intelligence</option>
-      <option value="FT">Food Technology and Nutrition</option>
+      <option value="---" <%= displaymajor === '---' ? 'selected' : '' %> disabled>None</option>
+      <option value="Business" <%= displaymajor === 'Business' ? 'selected' : '' %>>Business</option>
+      <option value="Accounting" <%= displaymajor === 'Accounting' ? 'selected' : '' %>>Accounting</option>
+      <option value="Business Administration" <%= displaymajor === 'Business Administration' ? 'selected' : '' %>>Business Administration</option>
+      <option value="Economics and Finance" <%= displaymajor === 'Economics and Finance' ? 'selected' : '' %>>Economics and Finance</option>
+      <option value="International Business" <%= displaymajor === 'International Business' ? 'selected' : '' %>>International Business</option>
+      <option value="Logistics and Supply Chain Management" <%= displaymajor === 'Logistics and Supply Chain Management' ? 'selected' : '' %>>Logistics and Supply Chain Management</option>
+      <option value="Management" <%= displaymajor === 'Management' ? 'selected' : '' %>>Management</option>
+      <option value="Human Resource Management" <%= displaymajor === 'Human Resource Management' ? 'selected' : '' %>>Human Resource Management</option>
+      <option value="Digital Business" <%= displaymajor === 'Digital Business' ? 'selected' : '' %>>Digital Business</option>
+      <option value="Tourism and Hospitality Management" <%= displaymajor === 'Tourism and Hospitality Management' ? 'selected' : '' %>>Tourism and Hospitality Management</option>
+      <option value="Digital Marketing" <%= displaymajor === 'Digital Marketing' ? 'selected' : '' %>>Digital Marketing</option>
+      <option value="Design - Digital Media" <%= displaymajor === 'Design - Digital Media' ? 'selected' : '' %>>Design - Digital Media</option>
+      <option value="Design Studies" <%= displaymajor === 'Design Studies' ? 'selected' : '' %>>Design Studies</option>
+      <option value="Game Design" <%= displaymajor === 'Game Design' ? 'selected' : '' %>>Game Design</option>
+      <option value="Digital Film and video" <%= displaymajor === 'Digital Film and video' ? 'selected' : '' %>>Digital Film and video</option>
+      <option value="Professional Communication" <%= displaymajor === 'Professional Communication' ? 'selected' : '' %>>Professional Communication</option>
+      <option value="Fashion - Enterprise" <%= displaymajor === 'Fashion - Enterprise' ? 'selected' : '' %>>Fashion - Enterprise</option>
+      <option value="Languages" <%= displaymajor === 'Languages' ? 'selected' : '' %>>Languages</option>
+      <option value="Psychology" <%= displaymajor === 'Psychology' ? 'selected' : '' %>>Psychology</option>
+      <option value="Aviation Management" <%= displaymajor === 'Aviation Management' ? 'selected' : '' %>>Aviation Management</option>
+      <option value="Software Engineering" <%= displaymajor === 'Software Engineering' ? 'selected' : '' %>>Software Engineering</option>
+      <option value="Information Technology" <%= displaymajor === 'Information Technology' ? 'selected' : '' %>>Information Technology</option>
+      <option value="Robotics and Mechatronics Engineering" <%= displaymajor === 'Robotics and Mechatronics Engineering' ? 'selected' : '' %>>Robotics and Mechatronics Engineering</option>
+      <option value="Electronic and Computer Systems Engineering" <%= displaymajor === 'Electronic and Computer Systems Engineering' ? 'selected' : '' %>>Electronic and Computer Engineering</option>
+      <option value="Food Technology and Nutrition" <%= displaymajor === 'Food Technology and Nutrition' ? 'selected' : '' %>>Food Technology and Nutrition</option>
     </select>
-  </form>
+  </div>
   <div id="form-btns">
     <input type="submit" id="save" value="Save">
     <input type="reset" id="reset" value="reset">
   </div>
+</form>
 </body>
 </html>

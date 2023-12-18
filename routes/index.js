@@ -146,7 +146,45 @@ router.get('/course_evaluation', (req, res) => {
 
 
 router.get('/editprofile', (req, res) => {
-    res.render('editprofile');
+    res.render('editprofile', {
+        displayname: req.session.name,
+        displayemail: req.session.email,
+        displaymajor: req.session.major
+    });
+});
+
+router.post('/editprofile', async (req, res) => {
+    const { name, email, password, major } = req.body;
+
+    try {
+        const user = await collection.findOne({ email }); // Find user by email
+
+        if (!user) {
+            return res.status(400).send('User not found');
+        }
+
+        // Update user information
+        user.name = name;
+        user.major = major;
+
+        // Only update password if a new one is provided
+        if (password) {
+            const salt = await bcrypt.genSalt(10); // Generate a salt
+            user.password = await bcrypt.hash(password, salt); // Hash the new password
+        }
+
+        await user.save(); // Save updated user information
+
+        // Update session information
+        req.session.name = user.name;
+        req.session.email = user.email;
+        req.session.major = user.major;
+
+        res.redirect('/profile');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
 });
 
 router.get('/courseSelect', (req, res) => {
