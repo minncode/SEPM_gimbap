@@ -3,216 +3,419 @@
     <link rel="stylesheet" href="/stylesheets/timetable.css">
     <link rel="stylesheet" href="/stylesheets/header.css">
     <title>Timetable</title>
-</head>
-<body>
+    </head>
+
+    <body>
 
         <%- include("./partials/navigation") %>
 
-    <div class="mainContent">
-        <div class="mainContentHeader">
-            <h3>Sem5</h3>
-            <div class="Category">
-                <h1>TimeTable</h1>
-                <a href="course_list"><img class="addIcon" src="/images/free-icon-add-2774757.png" alt="Add Course"></a>
-            </div>
-        </div> 
+            <div class="mainContent">
+                <div class="mainContentHeader">
+                    <h3>Sem5</h3>
+                    <div class="Category">
+                        <h1>TimeTable</h1>
+                        <a href="course_list"><img class="addIcon" src="/images/free-icon-add-2774757.png"
+                                alt="Add Course"></a>
+                    </div>
+                </div>
 
-        <table border="1" class="time">
-            <thead>
-                <tr>
-                    <th scope="row"></th>
-                    <th>MON</th>
-                    <th>TUE</th>
-                    <th>WED</th>
-                    <th>THU</th>
-                    <th>FRI</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- 8:00 ~ 8:30 -->
-                <tr>
-                    <td rowspan="2">8</td>
-                    <td id="MON-8"></td>
-                    <td id="TUE-8"></td>
-                    <td id="WED-8"></td>
-                    <td id="THU-8"></td>
-                    <td id="FRI-8"></td>
-                </tr>
-                <!-- 8:30 ~ 9:00 -->
-                <tr>
-                    <td id="MON-8-30"></td>
-                    <td id="TUE-8-30"></td>
-                    <td id="WED-8-30"></td>
-                    <td id="THU-8-30"></td>
-                    <td id="FRI-8-30"></td>
-                </tr>
-                <tr>
-                    <td rowspan="2">9</td>
-                    <td id="MON-9"></td>
-                    <td id="TUE-9"></td>
-                    <td id="WED-9"></td>
-                    <td id="THU-9"></td>
-                    <td id="FRI-9"></td>
-                </tr>
-                <!-- 9:30 ~ 10:00 -->
-                <tr>
-                    <td id="MON-9-30"></td>
-                    <td id="TUE-9-30"></td>
-                    <td id="WED-9-30"></td>
-                    <td id="THU-9-30"></td>
-                    <td id="FRI-9-30"></td>
-                </tr>
-                <tr>
-                    <td rowspan="2">10</td>
-                    <td id="MON-10"></td>
-                    <td id="TUE-10"></td>
-                    <td id="WED-10"></td>
-                    <td id="THU-10"></td>
-                    <td id="FRI-10"></td>
-                </tr>
-                <tr>
-                    <td id="MON-10-30"></td>
-                    <td id="TUE-10-30"></td>
-                    <td id="WED-10-30"></td>
-                    <td id="THU-10-30"></td>
-                    <td id="FRI-10-30"></td>
-                </tr>
-        
-                <!-- 11:00 ~ 11:30 -->
-                <tr>
-                    <td rowspan="2">11</td>
-                    <td id="MON-11"></td>
-                    <td id="TUE-11"></td>
-                    <td id="WED-11"></td>
-                    <td id="THU-11"></td>
-                    <td id="FRI-11"></td>
-                </tr>
-                <tr>
-                    <td id="MON-11-30"></td>
-                    <td id="TUE-11-30"></td>
-                    <td id="WED-11-30"></td>
-                    <td id="THU-11-30"></td>
-                    <td id="FRI-11-30"></td>
-                </tr>
-                <tr>
-                    <td rowspan="2">12</td>
-                    <td id="MON-12"></td>
-                    <td id="TUE-12"></td>
-                    <td id="WED-12"></td>
-                    <td id="THU-12"></td>
-                    <td id="FRI-12"></td>
-                </tr>
-                <tr>
-                    <td id="MON-12-30"></td>
-                    <td id="TUE-12-30"></td>
-                    <td id="WED-12-30"></td>
-                    <td id="THU-12-30"></td>
-                    <td id="FRI-12-30"></td>
-                </tr>
+                <table border="1" class="time">
+                    <thead>
+                        <tr>
+                            <th scope="row"></th>
+                            <th>MON</th>
+                            <th>TUE</th>
+                            <th>WED</th>
+                            <th>THU</th>
+                            <th>FRI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 8:00 ~ 8:30 -->
+                        <tr>
+                            <td rowspan="2">8</td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 8') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 8') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 8') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 8') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 8') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 8:30 ~ 9:00 -->
+                        <tr>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 8:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 8:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 8:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 8:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 8:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+
+                        <!-- 9:00 ~ 9:30 -->
+                        <tr>
+                            <td rowspan="2">9</td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 9') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 9') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 9') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 9') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 9') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 9:30 ~ 10:00 -->
+                        <tr>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 9:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 9:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 9:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 9:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 9:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+
+                        <!-- 10:00 ~ 10:30 -->
+                        <tr>
+                            <td rowspan="2">10</td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 10') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 10') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 10') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 10') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 10') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 10:30 ~ 11:00 -->
+                        <tr>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 10:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 10:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 10:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 10:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 10:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+
+                        <!-- 11:00 ~ 11:30 -->
+                        <tr>
+                            <td rowspan="2">11</td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 11') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 11') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 11') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 11') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 11') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 11:30 ~ 12:00 -->
+                        <tr>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 11:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 11:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 11:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 11:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 11:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 12:00 ~ 12:30 -->
+                        <tr>
+                            <td rowspan="2">12</td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 12') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 12') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 12') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 12') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 12') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 12:30 ~ 13:00 -->
+                        <tr>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 12:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 12:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 12:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 12:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 12:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+
                         <!-- 13:00 ~ 13:30 -->
-                <tr>
-                    <td rowspan="2">13</td>
-                    <td id="MON-13"></td>
-                    <td id="TUE-13"></td>
-                    <td id="WED-13"></td>
-                    <td id="THU-13"></td>
-                    <td id="FRI-13"></td>
-                </tr>
-                <tr>
-                    <td id="MON-13-30"></td>
-                    <td id="TUE-13-30"></td>
-                    <td id="WED-13-30"></td>
-                    <td id="THU-13-30"></td>
-                    <td id="FRI-13-30"></td>
-                </tr>
+                        <tr>
+                            <td rowspan="2">13</td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 13') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 13') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 13') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 13') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 13') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 13:30 ~ 14:00 -->
+                        <tr>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 13:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 13:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 13:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 13:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 13:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
 
-                <!-- 14:00 ~ 14:30 -->
-                <tr>
-                    <td rowspan="2">14</td>
-                    <td id="MON-14"></td>
-                    <td id="TUE-14"></td>
-                    <td id="WED-14"></td>
-                    <td id="THU-14"></td>
-                    <td id="FRI-14"></td>
-                </tr>
-                <tr>
-                    <td id="MON-14-30"></td>
-                    <td id="TUE-14-30"></td>
-                    <td id="WED-14-30"></td>
-                    <td id="THU-14-30"></td>
-                    <td id="FRI-14-30"></td>
-                </tr>
+                        <!-- 14:00 ~ 14:30 -->
+                        <tr>
+                            <td rowspan="2">14</td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 14') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 14') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 14') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 14') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 14') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 14:30 ~ 15:00 -->
+                        <tr>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 14:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 14:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 14:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 14:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 14:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
 
-                <!-- 15:00 ~ 15:30 -->
-                <tr>
-                    <td rowspan="2">15</td>
-                    <td id="MON-15"></td>
-                    <td id="TUE-15"></td>
-                    <td id="WED-15"></td>
-                    <td id="THU-15"></td>
-                    <td id="FRI-15"></td>
-                </tr>
-                <tr>
-                    <td id="MON-15-30"></td>
-                    <td id="TUE-15-30"></td>
-                    <td id="WED-15-30"></td>
-                    <td id="THU-15-30"></td>
-                    <td id="FRI-15-30"></td>
-                </tr>
+                        <!-- 15:00 ~ 15:30 -->
+                        <tr>
+                            <td rowspan="2">15</td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 15') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 15') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 15') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 15') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 15') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 15:30 ~ 16:00 -->
+                        <tr>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 15:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 15:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 15:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 15:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 15:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+
                         <!-- 16:00 ~ 16:30 -->
-                <tr>
-                    <td rowspan="2">16</td>
-                    <td id="MON-16"></td>
-                    <td id="TUE-16"></td>
-                    <td id="WED-16"></td>
-                    <td id="THU-16"></td>
-                    <td id="FRI-16"></td>
-                </tr>
-                <tr>
-                    <td id="MON-16-30"></td>
-                    <td id="TUE-16-30"></td>
-                    <td id="WED-16-30"></td>
-                    <td id="THU-16-30"></td>
-                    <td id="FRI-16-30"></td>
-                </tr>
+                        <tr>
+                            <td rowspan="2">16</td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 16') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 16') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 16') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 16') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 16') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 16:30 ~ 17:00 -->
+                        <tr>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 16:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 16:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 16:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 16:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 16:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
 
-                <!-- 17:00 ~ 17:30 -->
-                <tr>
-                    <td rowspan="2">17</td>
-                    <td id="MON-17"></td>
-                    <td id="TUE-17"></td>
-                    <td id="WED-17"></td>
-                    <td id="THU-17"></td>
-                    <td id="FRI-17"></td>
-                </tr>
-                <tr>
-                    <td id="MON-17-30"></td>
-                    <td id="TUE-17-30"></td>
-                    <td id="WED-17-30"></td>
-                    <td id="THU-17-30"></td>
-                    <td id="FRI-17-30"></td>
-                </tr>
+                        <!-- 17:00 ~ 17:30 -->
+                        <tr>
+                            <td rowspan="2">17</td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 17') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 17') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 17') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 17') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 17') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
+                        <!-- 17:30 ~ 18:00 -->
+                        <tr>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Mon, 17:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Tue, 17:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Wed, 17:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Thu, 17:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                            <td
+                                class="<%= userCourses.some(course => course.time === 'Fri, 17:30') ? 'assigned' : 'not-assigned' %>">
+                            </td>
+                        </tr>
 
-                <!-- 18:00 ~ 18:30 -->
-                <tr>
-                    <td rowspan="2">18</td>
-                    <td id="MON-18"></td>
-                    <td id="TUE-18"></td>
-                    <td id="WED-18"></td>
-                    <td id="THU-18"></td>
-                    <td id="FRI-18"></td>
-                </tr>
-                <tr>
-                    <td id="MON-18-30"></td>
-                    <td id="TUE-18-30"></td>
-                    <td id="WED-18-30"></td>
-                    <td id="THU-18-30"></td>
-                    <td id="FRI-18-30"></td>
-                </tr>
-            </tbody>
-        </table>
-        
 
-    </div>
-</body>
-</html>
+                    </tbody>
+                </table>
+
+
+            </div>
+    </body>
+
+    </html>

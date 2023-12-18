@@ -28,6 +28,13 @@ table.time td {
   word-wrap: break-word;
 }
 
+.not-assigned {
+  background-color: white;
+}
+
+.assigned {
+  background-color: yellowgreen;
+}
 
 /* 모달 스타일 */
 .modal {

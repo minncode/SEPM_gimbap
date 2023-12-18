@@ -3,6 +3,7 @@ const router = express.Router();
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const collection = require('./mongodb');
+const courseEnrollment = require('../models/courseEnrollment');
 
 router.use(session({
     secret: 'your secret key',
@@ -81,13 +82,63 @@ router.get('/profile', async (req, res) => {
     });
 });
 
-router.get('/timetable', (req, res) => {
-    res.render('timetable');
+router.get('/timetable', async (req, res) => {
+    try {
+        const userEmail = req.session.email; // 현재 로그인한 유저의 이메일
+
+        // MongoDB에서 해당 유저의 수업 시간 정보를 불러오는 쿼리
+        const userCourses = await courseEnrollment.find({ email: userEmail });
+
+        // 유저의 수업 정보를 기반으로 timetable.ejs를 렌더링
+        res.render('timetable', { userCourses });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
 });
+
 
 router.get('/course_list', (req, res) => {
     res.render('course_list');
 });
+
+router.post('/course_list/enroll', async (req, res) => {
+    const { courseCode, activity } = req.body;
+    const userEmail = req.session.email;
+
+    try {
+        const lecturer = req.body.lecturer;
+        const classroom = req.body.classroom;
+        const time = req.body.time;
+        const semester = req.body.semester;
+        const credits = req.body.credits;
+
+        if (!userEmail) {
+            // 세션에 이메일 정보가 없으면 로그인 페이지로 리다이렉트 또는 에러 처리
+            return res.status(401).send('Unauthorized');
+        }
+
+        const newEnrollment = new courseEnrollment({
+            email: userEmail,
+            activity,
+            courseCode,
+            lecturer,
+            classroom,
+            time,
+            semester,
+            credits,
+        });
+
+        await newEnrollment.save();
+
+
+        res.redirect('/course_list');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 router.get('/course_evaluation', (req, res) => {
     res.render('course_evaluation');

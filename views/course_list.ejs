@@ -2,83 +2,159 @@
     <title>Document</title>
     <link rel="stylesheet" href="/stylesheets/course_list.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</head>
-<body>
-    <div class="CourseListHeader">
-        <h1>Courses</h1>
-        <a href="timetable">    <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></a>
-    </div>
-    <div class="mainContent">
-        <div class="courseContainer">
-            <div class="courseItem">
-                <div class="courseInfo">
-                    <h3 class="courseCode">ISYS2101</h3>
-                    <h3 class="courseName">Software Engineering Project Management</h3>
-                    <div class="info">
-                        <p class="professorName">Tuan Tran Mihn</p>
-                        <p class="classroom">2.4.002</p>
-                        <p class="schedule">Tue, 8:00 AM</p>
-                        <p class="semester">Sem 5</p>
-                        <p class="credits">12 Credits</p>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    </head>
+
+    <body>
+        <div class="CourseListHeader">
+            <h1>Courses</h1>
+            <a href="timetable"> <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></a>
+        </div>
+        <div class="mainContent">
+            <div class="courseContainer">
+                <div class="courseItem">
+                    <div class="courseInfo">
+                        <h3 class="courseCode">COSC2634</h3>
+                        <h3 class="courseName">Building IT Systems</h3>
+                        <div class="info">
+                            <p class="activity">Activity 01</p>
+                            <p class="professorName">Nhat Quang T</p>
+                            <p class="classroom">2.4.002</p>
+                            <p class="schedule">Tue, 12:30</p>
+                            <p class="semester">Sem 5</p>
+                            <p class="credits">12 Credits</p>
+                        </div>
                     </div>
+                    <form action="/course_list/enroll" method="post">
+                        <input type="hidden" name="courseCode" value="COSC2634">
+                        <input type="hidden" name="activity" value="Activity 01">
+                        <input type="hidden" name="lecturer" value="Nhat Quang T">
+                        <input type="hidden" name="classroom" value="2.4.002">
+                        <input type="hidden" name="time" value="Tue, 12:30">
+                        <input type="hidden" name="semester" value="Sem 5">
+                        <input type="hidden" name="credits" value="12 Credits">
+                        <button class="reviewBtn" type="submit">
+                            <div class="buttonContent">
+                                <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                            </div>
+                        </button>
+                    </form>
                 </div>
-                <button class="reviewBtn" onclick="window.location.href = 'timetable'">
-                    <div class="buttonContent">
-                        <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                <div class="courseItem">
+                    <div class="courseInfo">
+                        <h3 class="courseCode">COSC2634</h3>
+                        <h3 class="courseName">Building IT Systems</h3>
+                        <div class="info">
+                            <p class="activity">Activity 02</p>
+                            <p class="professorName">Tuan TM</p>
+                            <p class="classroom">2.4.002</p>
+                            <p class="schedule">Wed, 14:30</p>
+                            <p class="semester">Sem 5</p>
+                            <p class="credits">12 Credits</p>
+                        </div>
                     </div>
-                </button>
-            </div>
-            <div class="courseItem">
-                <div class="courseInfo">
-                    <h3 class="courseCode">ISYS2101</h3>
-                    <h3 class="courseName">Software Engineering Project Management</h3>
-                    <p class="professorName">Tuan Tran Mihn</p>
+                    <form action="/course_list/enroll" method="post">
+                        <input type="hidden" name="courseCode" value="COSC2634">
+                        <input type="hidden" name="activity" value="Activity 02">
+                        <input type="hidden" name="lecturer" value="Tuan TM">
+                        <input type="hidden" name="classroom" value="2.4.002">
+                        <input type="hidden" name="time" value="Wed, 14:30">
+                        <input type="hidden" name="semester" value="Sem 5">
+                        <input type="hidden" name="credits" value="12 Credits">
+                        <button class="reviewBtn" type="submit">
+                            <div class="buttonContent">
+                                <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                            </div>
+                        </button>
+                    </form>
                 </div>
-                <button class="reviewBtn" onclick="window.location.href = 'timetable'">
-                    <div class="buttonContent">
-                        <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                <div class="courseItem">
+                    <div class="courseInfo">
+                        <h3 class="courseCode">COSC2634</h3>
+                        <h3 class="courseName">Building IT Systems</h3>
+                        <div class="info">
+                            <p class="activity">Activity 03</p>
+                            <p class="professorName">Tuan TM</p>
+                            <p class="classroom">2.4.002</p>
+                            <p class="schedule">Tue, 14:30</p>
+                            <p class="semester">Sem 5</p>
+                            <p class="credits">12 Credits</p>
+                        </div>
                     </div>
-                </button>
-            </div>
-            <div class="courseItem">
-                <div class="courseInfo">
-                    <h3 class="courseCode">ISYS2101</h3>
-                    <h3 class="courseName">Software Engineering Project Management</h3>
-                    <p class="professorName">Tuan Tran Mihn</p>
+                    <form action="/course_list/enroll" method="post">
+                        <input type="hidden" name="courseCode" value="COSC2634">
+                        <input type="hidden" name="activity" value="Activity 03">
+                        <input type="hidden" name="lecturer" value="Tuan TM">
+                        <input type="hidden" name="classroom" value="2.4.002">
+                        <input type="hidden" name="time" value="Tue, 14:30">
+                        <input type="hidden" name="semester" value="Sem 5">
+                        <input type="hidden" name="credits" value="12 Credits">
+                        <button class="reviewBtn" type="submit">
+                            <div class="buttonContent">
+                                <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                            </div>
+                        </button>
+                    </form>
                 </div>
-                <button class="reviewBtn" onclick="window.location.href = 'timetable'">
-                    <div class="buttonContent">
-                        <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                <div class="courseItem">
+                    <div class="courseInfo">
+                        <h3 class="courseCode">COSC2634</h3>
+                        <h3 class="courseName">Building IT Systems</h3>
+                        <div class="info">
+                            <p class="activity">Activity 04</p>
+                            <p class="professorName">Phuc NHT</p>
+                            <p class="classroom">2.4.002</p>
+                            <p class="schedule">Tue, 16:30</p>
+                            <p class="semester">Sem 5</p>
+                            <p class="credits">12 Credits</p>
+                        </div>
                     </div>
-                </button>
-            </div>
-            <div class="courseItem">
-                <div class="courseInfo">
-                    <h3 class="courseCode">ISYS2101</h3>
-                    <h3 class="courseName">Software Engineering Project Management</h3>
-                    <p class="professorName">Tuan Tran Mihn</p>
+                    <form action="/course_list/enroll" method="post">
+                        <input type="hidden" name="courseCode" value="COSC2634">
+                        <input type="hidden" name="activity" value="Activity 04">
+                        <input type="hidden" name="lecturer" value="Phuc NHT">
+                        <input type="hidden" name="classroom" value="2.4.002">
+                        <input type="hidden" name="time" value="Tue, 16:30">
+                        <input type="hidden" name="semester" value="Sem 5">
+                        <input type="hidden" name="credits" value="12 Credits">
+                        <button class="reviewBtn" type="submit">
+                            <div class="buttonContent">
+                                <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                            </div>
+                        </button>
+                    </form>
                 </div>
-                <button class="reviewBtn" onclick="window.location.href = 'timetable'">
-                    <div class="buttonContent">
-                        <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                <div class="courseItem">
+                    <div class="courseInfo">
+                        <h3 class="courseCode">COSC2634</h3>
+                        <h3 class="courseName">Building IT Systems</h3>
+                        <div class="info">
+                            <p class="activity">Activity 05</p>
+                            <p class="professorName">Phuc NHT</p>
+                            <p class="classroom">2.4.002</p>
+                            <p class="schedule">Wed, 16:30</p>
+                            <p class="semester">Sem 5</p>
+                            <p class="credits">12 Credits</p>
+                        </div>
                     </div>
-                </button>
-            </div>
-            <div class="courseItem">
-                <div class="courseInfo">
-                    <h3 class="courseCode">ISYS2101</h3>
-                    <h3 class="courseName">Software Engineering Project Management</h3>
-                    <p class="professorName">Tuan Tran Mihn</p>
+                    <form action="/course_list/enroll" method="post">
+                        <input type="hidden" name="courseCode" value="COSC2634">
+                        <input type="hidden" name="activity" value="Activity 05">
+                        <input type="hidden" name="lecturer" value="Phuc NHT">
+                        <input type="hidden" name="classroom" value="2.4.002">
+                        <input type="hidden" name="time" value="Wed, 16:30">
+                        <input type="hidden" name="semester" value="Sem 5">
+                        <input type="hidden" name="credits" value="12 Credits">
+                        <button class="reviewBtn" type="submit">
+                            <div class="buttonContent">
+                                <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
+                            </div>
+                        </button>
+                    </form>
                 </div>
-                <button class="reviewBtn" onclick="window.location.href = 'timetable'">
-                    <div class="buttonContent">
-                        <ion-icon class="add-icon" name="add-circle-outline"></ion-icon>
-                    </div>
-                </button>
             </div>
         </div>
-    </div>
 
-</body>
-</html>
+    </body>
+
+    </html>

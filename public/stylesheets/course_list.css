@@ -41,9 +41,9 @@ body {
     border-bottom: 1px solid #E3E5E0;
     color:black;
 }
-.professorName, .classroom, .schedule, .semester, .credits  {
+.professorName, .classroom, .schedule, .semester, .credits, .activity  {
   color: #7D7F7A;
-  font-size: 10px;
+  font-size: 9.2px;
 }
 /* 버튼 스타일 */
 .reviewBtn {
