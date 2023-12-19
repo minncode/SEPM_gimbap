@@ -132,12 +132,13 @@ router.post('/course_list/enroll', async (req, res) => {
         await newEnrollment.save();
 
 
-        res.redirect('/course_list');
+        res.redirect('/timetable');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 
 router.get('/course_evaluation', (req, res) => {

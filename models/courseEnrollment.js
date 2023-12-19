@@ -15,9 +15,9 @@ const courseEnrollmentSchema = new mongoose.Schema({
     classroom: {
         type: String,
     },
-    time:{
-        type:String, 
-    },
+    time: {
+        type: [String], // array
+      },
     semester: {
         type: String,
     },
