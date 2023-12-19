@@ -2,6 +2,7 @@
 
     <link rel="stylesheet" href="/stylesheets/timetable.css">
     <link rel="stylesheet" href="/stylesheets/header.css">
+    <script src="/javascripts/timetablePopup.js" defer></script>
     <title>Timetable</title>
     </head>
 
@@ -413,9 +414,28 @@
 
                     </tbody>
                 </table>
+                <div id="myModal" class="timetableModal">
+                    <div class="modalContentHeader">
+                        <span class="close">&times;</span>
+                        <h2>Course Details</h2>
+                
+                        <div class="courseDetails">
+                            <p><span class="detail-label">Course Name</span> <span id="courseName">Building IT Systems</span></p>
+                            <p><span class="detail-label">Activity:</span> <span id="activity">1</span></p>
+                            <p><span class="detail-label">Course Code:</span> <span id="courseCode">COSC2634</span></p>
+                            <p><span class="detail-label">Lecturer:</span> <span id="lecturer">Phuc NHT</span></p>
+                            <p><span class="detail-label">Classroom:</span> <span id="classroom">2.4.002</span></p>
+                            <p><span class="detail-label">Time:</span> <span id="time">Tue, 16:30</span></p>
+                            <p><span class="detail-label">Semester:</span> <span id="semester:">Sem 5</span></p>
+                            <p><span class="detail-label">Credits:</span> <span id="credits:">12</span></p>
+                        </div>
+                        <button class="delete-button">Remove from timetable</button>
+                    </div>
+                </div>
 
 
             </div>
+
     </body>
 
     </html>
