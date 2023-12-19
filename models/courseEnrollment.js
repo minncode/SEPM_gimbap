@@ -5,6 +5,9 @@ const courseEnrollmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    courseName: {
+        type: String,
+    },
     activity: {
         type: String,
         required: true,

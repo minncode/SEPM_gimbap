@@ -107,6 +107,7 @@ router.post('/course_list/enroll', async (req, res) => {
     const userEmail = req.session.email;
 
     try {
+        const courseName = req.body.courseName;
         const lecturer = req.body.lecturer;
         const classroom = req.body.classroom;
         const time = req.body.time;
@@ -120,6 +121,7 @@ router.post('/course_list/enroll', async (req, res) => {
 
         const newEnrollment = new courseEnrollment({
             email: userEmail,
+            courseName,
             activity,
             courseCode,
             lecturer,
