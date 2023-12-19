@@ -242,6 +242,22 @@ router.get('/foodPavillion', (req, res) => {
     res.render('foodPavillion');
 });
 
+
+
+
+router.get('/deleteaccount', async (req, res) => {
+    try {
+        await collection.deleteOne({ email: req.session.email });
+
+        req.session.destroy();
+
+        res.redirect('/');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
+
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if(err) {
