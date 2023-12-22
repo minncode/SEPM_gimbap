@@ -5,27 +5,31 @@
 </head>
 <body>
     <header>
-        <img class="logo" src="/images/rmitlogo.png" alt="RMIT logo" >
-        <h2>RMIT Pay</h2>
-        
+        <div class="header">
+            <img class="logo" src="/images/rmitlogo.png" alt="RMIT logo" >
+            <h2>RMIT Pay</h2>
+        </div>
+        <a class="delete-btn" href="paymentMain"><ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></ion-icon></a>
     </header>
-    <div class="mainContent">
-        <div class="mainContainers">
-            <div class="barCode">
-                <img src="/images/free-icon-barcode-lines-58994.png">
-            </div>
+    <div class="mainContainers">
+        <div class="barCode">
+            <img src="/images/free-icon-barcode-lines-58994.png">
+        </div>
+        <div class="info-btn-wrap">
             <div class="accountInfo">
-                <p class="accountNumber">Account Number: <span id="accountNumber">1234567890</span></p>
-                <p class="balance">Balance: VND<span id="balance">1000</span></p>
+                <img src="/images/rmitunilogo.png" alt="">
+                <div class="info-detail">
+                    <p class="accountNumber">1234567890</p><br>
+                    <p class="balance">VND 100,000</p>
+                </div>
             </div>
-            <button class="QR">
-                <div class="buttonContent">
-                    <img src="/images/free-icon-barcode-scan-5393325.png" alt="QR Code">
-                    <span>PAYMENT</span>
+            <button class="buttonContent">
+                <div class="btnContent-wrap">
+                    <ion-icon class="scan-icon" name="scan-outline"></ion-icon>
+                    <span>QR Pay</span>
                 </div>
             </button>
-        </div>
-
+    
         </div>
     </div>
     

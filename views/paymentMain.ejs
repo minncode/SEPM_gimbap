@@ -2,18 +2,26 @@
 
     <title>Document</title>
     <link rel="stylesheet" href="/stylesheets/payment.css">
-    <link rel="stylesheet" href="/stylesheets/header.css">
 
 </head>
 <body>
-
-    <%- include("./partials/navigation") %>
+    <header>
+        <a href="main"><img class="logo" src="/images/rmitlogo.png" alt="RMIT logo" ></a>
+        <h2>RMIT Pay</h2>
+        <nav>
+          <ul>
+            <li><a href="main"><ion-icon class="header-icon" name="home-outline"></ion-icon></a></li>
+            <li><a href="#"><ion-icon class="header-icon" name="id-card-outline"></ion-icon></a></li>
+            <li><a href="profile"><ion-icon class="header-icon" name="person-outline"></ion-icon></ion-icon></a></li>
+          </ul>
+        </nav>
+      </header>
 
     <div class="mainContainer">
         <div class="accountContainer">
             <div class="accountInfo">
-                <p class="accountNumber">Account Number: <span id="accountNumber">1234567890</span></p>
-                <p class="balance">Balance: VND<span id="balance">1000</span></p>
+                <p class="accountNumber">1234567890</p>
+                <p class="balance">VND <span id="balance"> 1000,000</span></p>
                 <a href="charging"><button class="chargeButton" id="charge-button">Charge</button></a>
             </div>
         </div>
@@ -21,16 +29,14 @@
         <div class="bankInfo">
             <p class="paymentHistory">Payment History</p>
         </div>
-
-        <button class="QR" onclick="window.location.href = 'barcode'">
-            <div class="buttonContent">
-                <ion-icon class="scan-icon" name="scan-outline"></ion-icon>
-                <span>PAYMENT</span>
-            </div>
-        </button>
         
     </div>
-
+    <button class="QR" onclick="window.location.href = 'barcode'">
+        <div class="buttonContent">
+            <ion-icon class="scan-icon" name="scan-outline"></ion-icon>
+            <span>PAYMENT</span>
+        </div>
+    </button>
     
 </body>
 </html>

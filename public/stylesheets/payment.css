@@ -1,183 +1,173 @@
+/* header */
 *{
-    margin: 0;
-    padding: 0;
-    font-family: 'Sofia Sans';
-  }
+  margin: 0;
+  padding: 0;
+  font-family: 'Sofia Sans';
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222160;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+}
+
+.logo {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 40px;
+  max-height: 40px;
+  padding: 10px;
+}
+
+header h2{
+  color: white;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+header ul {
+  list-style: none;
+  display: flex;
+  padding: 10px;
+}
+
+header li {
+  margin-left: 1rem;
+}
+
+.header-icon {
+  color: white;
+  width: 23px;
+  height: 23px;
+}
+
+header a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+ul .icon img {
+	opacity: 1;
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.header-icon:hover {
+	opacity: .5;
+}
 
 body {
   background-color: #222160;
 }
+
 .mainContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding:50px;
-    background-color: #222160;
-  }
-  
-.accountContainer {
-    margin-bottom: 20px; /* bankInfo와의 간격을 위한 여백 */
-  }
-  
-/* styles.css */
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  margin-top: 70px;
+  background-color: #222160;
+}
 
-.accountInfo, .bankInfo {
-    width: 1000px; /* 원하는 너비로 설정 */
-    height: 200px; /* 원하는 높이로 설정 */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-sizing: border-box; /* padding과 border를 포함한 크기로 지정 */
-    background-color: white;
-    font-size: 30px;
-  }
-  
-
-.accountNumber {
-    /* 계좌번호 스타일 */
-
-    color: rgb(211, 211, 216);
-  }
-  
-  .balance {
-    font-weight: bold;
-    font-style: italic;
-    color: rgb(0, 0, 0);
-  }
-  
-  .chargeButton {
-    /* 버튼 스타일 */
-    background-color: #FFC500;
-    color: rgb(0, 0, 0);
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    margin-left: 760px;
-    width:200px;
-    height: 50px;
-    font-size: 25px;
-    margin-top:30px;
-    
-  }
-  
-  .transactionLimit {
-    /* Transaction Limit 스타일 */
-    font-weight: bold;
-    color: red;
-  }
-.QR {
-    background-color: #ffd23c;
-    text-align: center;
-    border-radius: 20px;
-    width:800px;
-    height:100px;
-    margin:20px;
-    font-size: 60px;
-    font-weight: bold;
-  }
-/* styles.css */
-
-.QR {
-  /* 버튼 스타일 */
-  padding: 10px 20px;
-  font-size: 16px;
+/* 계좌 정보 및 은행 정보 컨테이너 스타일 */
+.accountInfo,.bankInfo {
+  padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 20px;
-  cursor: pointer;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: white;
+}
+.accountInfo{
+  height: auto;
+  min-height: 150px;
+}
+
+.bankInfo{
+  height: auto;
+  min-height: 300px;
+  font-size: 20px;
+}
+
+/* 계좌번호 및 잔액 스타일 */
+.accountNumber {
+  font-weight: bold;
+  font-size: 15px;
+  color: rgb(211, 211, 216);
+}
+
+.balance, #balance {
+  color: rgb(0, 0, 0);
+  padding-top: 10px;
+  font-weight: 700;
+  font-size: 25px;
+}
+
+/* 충전 버튼 스타일 */
+.chargeButton {
+  margin-top: 20px;
+  float: right;
+  padding: 8px;
+  background-color: #FFC500;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.chargeButton:hover{
+  filter: brightness(80%);
+}
+
+/* 결제 내역 스타일 */
+.paymentHistory {
+  font-weight: bold;
+  color: red;
+}
+
+
+/* QR 코드 관련 스타일 */
+.QR {
+  position: fixed;
+  bottom: -20px;
+  height: 90px;
   background-color: #ffd23c;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 20px;
+  width: 100%;
+}
+
+.QR:hover{
+  filter: brightness(70%);
+}
+
+.buttonContent{
+  margin-bottom: 15px;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-.buttonContent {
-  display: flex;
-  align-items: center;
-  border-radius: 20px;
-}
-.buttonContent span {
-  font-size: 40px;
-}
-.buttonContent img {
-
+.buttonContent ion-icon{
   width: 50px;
   height: 50px;
-  border: 2px solid #ccc;
-  margin-right: 10px; 
 }
 
-.scan-icon {
-  font-size: 70px; 
+.buttonContent span{
+  font-size: 30px;
+  padding: 10px;
+  font-weight: 700;
 }
 
-  @media screen and (max-width: 600px) {
-    .accountInfo, .bankInfo {
-        width: 370px; /* 원하는 너비로 설정 */
-        height: 250px; /* 원하는 높이로 설정 */
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-sizing: border-box; /* padding과 border를 포함한 크기로 지정 */
-        background-color: white;
-        font-size: 20px;
-    
-      }
-    .chargeButton {
-        margin-top: 80px;
-        
-
-    }
-    .accountNumber {
-        /* 계좌번호 스타일 */
-        font-weight: bold;
-        color: rgb(211, 211, 216);
-      }
-      
-      .balance {
-        /* 잔액 스타일 */
-        font-style: italic;
-        color: rgb(0, 0, 0);
-      }
-      
-      .chargeButton {
-        /* 버튼 스타일 */
-        background-color: #FFC500;
-        color: rgb(0, 0, 0);
-        padding: 5px 10px;
-        border: none;
-        border-radius: 5px;
-        margin-left: 230px;
-        width:100px;
-        height: 50px;
-        font-size: 20px;
-        font-weight: bold;
-        margin-top: 110px;
-
-      }
-      
-      .paymentHistory {
-        /* Transaction Limit 스타일 */
-        font-weight: bold;
-        color: red;
-      }
-
-      .QR {
-        background-color: #ffd23c;
-        text-align: center;
-        border-radius: 20px;
-        width:400px;
-        height:100px;
-        font-size:20px;
-      }
-
-      .bankInfo {
-        height:370px;
-      }
-
-      
-      
-
-      
-  }
+/* 은행 정보 섹션의 높이 수정 */
+.bankInfo {
+  margin-top: 20px;
+}

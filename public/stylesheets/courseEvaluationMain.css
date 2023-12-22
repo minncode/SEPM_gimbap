@@ -1,3 +1,10 @@
+body {
+    font-family: 'Sofia Sans';
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
 .CourseEvaluationHeader{
     display: flex;
     align-items: center;
@@ -5,7 +12,8 @@
 }
 .CourseEvaluationHeader h1{
     font-size: 20px;
-    margin: 30px 40px;
+    margin: 20px;
+    font-weight: bolder;
 }
 
 .courseList-delete-icon{
@@ -18,28 +26,21 @@
 .courseList-delete-icon:hover{
     color: #222160;
   }
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: white;
-}
 /* 검색창과 아이콘을 가로 정렬하기 위한 스타일 */
 .search {
     position: relative;
     display: flex;
-    width: 700px;
     align-items: center;
-    margin:0 auto;
-
+    margin: 0px 15px;
 }
 
 /* 검색 아이콘에 대한 스타일 */
-.search img {
+.search ion-icon {
     position: absolute;
-    right: 23px;
+    right: 15px;
     cursor: pointer;
-    top:4px;
+    top: 8px;
+    color: #838481;
 }
 
 /* 검색어 입력란에 대한 스타일 */
@@ -49,8 +50,6 @@
     border-radius: 10px;
     border: 1px solid #ccc;
     background-color: #E3E5E0;
-
-    
 }
 
 .mainContent {
@@ -94,7 +93,7 @@
 }
 
 .reviewBtn button:hover {
-    background-color: #2980b9;
+    background-color: #222160;
 }
 .course_evaluation-header{
     display: flex;
@@ -116,11 +115,4 @@
   
   .course_evaluation-delete-icon:hover{
     color: #222160;
-  }
-
-
-  @media screen and (max-width: 600px) {
-    .search {
-        width:350px;
-    }
   }
