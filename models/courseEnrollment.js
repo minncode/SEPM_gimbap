@@ -5,7 +5,7 @@ const courseEnrollmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    courseCode: {
+    courseID: {
         type: String,
     },
     activity: {

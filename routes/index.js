@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const session = require('express-session');
 const bcrypt = require('bcrypt');
-const collection = require('./mongodb');
+const collection = require('../models/user');
 const CourseList = require('../models/courseList');
 const CourseActivity = require('../models/courseActivity');
 const CourseEnrollment = require('../models/courseEnrollment');
@@ -470,6 +470,9 @@ router.post('/courseActivityManagement/edit', async (req, res) => {
         return res.status(404).send('Activity not found');
       }
   
+// Delete the corresponding enrollments
+await CourseEnrollment.deleteMany({ courseID: activityToDelete.courseID, activity: activityToDelete.activity });
+
       res.redirect('/courseActivityManagement');
     } catch (err) {
       console.error(err);
@@ -493,12 +496,34 @@ router.get('/courseEnrollmentManagement', async (req, res) => {
 
 // Add Course Enrollment
 router.post('/courseEnrollmentManagement/add', async (req, res) => {
-    const { email, courseCode, activity } = req.body;
+    const { email, courseID, activity } = req.body;
 
     try {
+        // Check if the user with the given email exists
+        const user = await collection.findOne({ email });
+
+        if (!user) {
+            return res.status(400).send('User not found. Please make sure the email is correct.');
+        }
+
+        // Check if the course activity with the given course ID and activity exists
+        const courseActivity = await CourseActivity.findOne({ courseID, activity });
+
+        if (!courseActivity) {
+            return res.status(400).send('Course activity not found. Please make sure the course ID and activity are correct.');
+        }
+
+        // Check if the enrollment already exists
+        const existingEnrollment = await CourseEnrollment.findOne({ email, courseID, activity });
+
+        if (existingEnrollment) {
+            return res.status(400).send('Enrollment already exists.');
+        }
+
+        // Add the enrollment
         const newEnrollment = new CourseEnrollment({
             email,
-            courseCode,
+            courseID,
             activity,
         });
 
@@ -512,7 +537,7 @@ router.post('/courseEnrollmentManagement/add', async (req, res) => {
 
 // Edit Course Enrollment
 router.post('/courseEnrollmentManagement/edit', async (req, res) => {
-    const { enrollmentIdEdit, newCourseCode, newActivity } = req.body;
+    const { enrollmentIdEdit, newCourseID, newActivity } = req.body;
 
     try {
         const enrollmentToEdit = await CourseEnrollment.findById(enrollmentIdEdit);
@@ -521,15 +546,15 @@ router.post('/courseEnrollmentManagement/edit', async (req, res) => {
             return res.status(404).send('Enrollment not found');
         }
 
-        // Check if newCourseCode exists in courseList
-        const courseInList = await CourseList.findOne({ courseCode: newCourseCode });
+        // Check if newCourseID and newActivity exist in courseActivity
+        const activityInCourse = await CourseActivity.findOne({ courseID: newCourseID, activity: newActivity });
 
-        if (!courseInList) {
-            return res.status(400).send('Course does not exist in the course list');
+        if (!activityInCourse) {
+            return res.status(400).send('Course activity not found. Please make sure the course ID and activity are correct.');
         }
 
         // Update enrollment details
-        enrollmentToEdit.courseCode = newCourseCode;
+        enrollmentToEdit.courseID = newCourseID;
         enrollmentToEdit.activity = newActivity;
 
         await enrollmentToEdit.save();
