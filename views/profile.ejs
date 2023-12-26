@@ -2,7 +2,7 @@
 
   <link rel="stylesheet" href="/stylesheets/header.css">
   <link rel="stylesheet" href="/stylesheets/profile.css">
-
+  <script src="/public/javascripts/deleteAccount.js" ></script>
   <title>RMITdays</title>
 </head>
 
@@ -41,7 +41,7 @@
             <p>My Bank Account</p>
           </li>
         </a>
-        <a href="/deleteaccount">
+        <a herf="#" onclick="openPopup()">
           <li><ion-icon class="profile-menu-icon" name="trash-outline"></ion-icon>
             <p>Delete account</p>
           </li>
@@ -53,6 +53,40 @@
         </a>
       </ul>
     </div>
+    <!-- delete account popup -->
+    <div id="popup" class="hide">
+      <div class="content">
+        <h1>Confirm your action</h1>
+        <p>Do you agree to delete your account?</p>
+          <button href="/deleteaccount">YES</button>
+          <button href="#" onclick="closePopup()">NO</button>
+      </div>
+    </div>
+    <script>
+      // Function to open the modal
+      function openPopup() {
+        document.getElementById('popup').classList.remove('hide');
+      }
+      // Function to close the modal
+      function closePopup() {
+        document.getElementById('popup').classList.add('hide');
+      }
+      // Event listener for the 'NO' button
+      document.addEventListener('DOMContentLoaded', function() {
+          document.querySelector('#popup button[onclick="closePopup()"]').addEventListener('click', function(event) {
+              event.preventDefault(); // Prevent the default action
+              closePopup();
+          });
+
+          // Optional: Close the modal if the user clicks outside of it
+          window.onclick = function(event) {
+              let modal = document.getElementById('popup');
+              if (event.target === modal) {
+                  closePopup();
+              }
+          }
+      });
+    </script>
   </div>
 </body>
 
