@@ -1,0 +1,215 @@
+<!-- courseActivityManagement.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Activity Management</title>
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            max-width: 400px; /* 조정 가능한 팝업 최대 너비 */
+            width: 100%;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .popup-close {
+            cursor: pointer;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Remove list styles and make each list item a flex container */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Make buttons the same width */
+        .action-buttons button {
+            width: 100px; /* 조정 가능한 버튼 최대 너비 */
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Course Activity Management</h1>
+
+    <!-- Display Course Activity List -->
+    <h2>Course Activity List</h2>
+    <button onclick="showAddActivityForm()">Add Activity</button>
+    <table>
+        <tr>
+            <th>Course ID</th>
+            <th>Activity</th>
+            <th>Lecturer</th>
+            <th>Classroom</th>
+            <th>Time</th>
+            <th>Action</th>
+        </tr>
+        <% for (let i = 0; i < activityList.length; i++) { %>
+            <tr>
+                <td><%= activityList[i].courseID %></td>
+                <td><%= activityList[i].activity %></td>
+                <td><%= activityList[i].lecturer %></td>
+                <td><%= activityList[i].classroom %></td>
+                <td><%= activityList[i].time.join(', ') %></td>
+                <td class="action-buttons">
+                    <button onclick="showEditActivityForm('<%= activityList[i]._id %>' ,'<%= activityList[i].courseID %>' ,'<%= activityList[i].activity %>' ,'<%= activityList[i].lecturer %>' ,'<%= activityList[i].classroom %>' ,'<%= activityList[i].time %>')">Edit</button>
+                    <button onclick="showDeleteActivityForm('<%= activityList[i]._id %>' ,'<%= activityList[i].courseID %>' ,'<%= activityList[i].activity %>' ,'<%= activityList[i].lecturer %>' ,'<%= activityList[i].classroom %>' ,'<%= activityList[i].time %>')">Delete</button>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+
+    <!-- Add Activity Form -->
+    <div class="popup" id="addActivityPopup">
+        <div class="popup-header">
+            <button class="popup-close" onclick="closePopup('addActivityPopup')">X</button>
+        </div>
+        <form action="/courseActivityManagement/add" method="post">
+            <label for="courseID">Course ID:</label>
+            <input type="text" name="courseID" required><br>
+            <label for="activity">Activity:</label>
+            <input type="text" name="activity" required><br>
+            <label for="lecturer">Lecturer:</label>
+            <input type="text" name="lecturer"><br>
+            <label for="classroom">Classroom:</label>
+            <input type="text" name="classroom"><br>
+            <label for="time">Time (comma-separated):</label>
+            <input type="text" name="time" required><br>
+            <button type="submit">Add Activity</button>
+        </form>
+    </div>
+
+    <!-- Edit Activity Form -->
+    <div class="popup" id="editActivityPopup">
+        <div class="popup-header">
+            <button class="popup-close" onclick="closePopup('editActivityPopup')">X</button>
+        </div>
+        <form action="/courseActivityManagement/edit" method="post">
+            <input type="text" name="activityIdEdit" required readonly style="display: none;">
+            <label for="courseIDEdit">Course ID:</label>
+            <input type="text" name="courseIDEdit" required readonly><br>
+            <label for="newCourseID">New Course ID:</label>
+            <input type="text" name="newCourseID" required><br>
+            <label for="newActivity">New Activity:</label>
+            <input type="text" name="newActivity" required><br>
+            <label for="newLecturer">New Lecturer:</label>
+            <input type="text" name="newLecturer"><br>
+            <label for="newClassroom">New Classroom:</label>
+            <input type="text" name="newClassroom"><br>
+            <label for="newTime">New Time (comma-separated):</label>
+            <input type="text" name="newTime" required><br>
+            <button type="submit">Edit Activity</button>
+        </form>
+    </div>
+
+    <!-- Delete Activity Form -->
+    <div class="popup" id="deleteActivityPopup">
+        <div class="popup-header">
+            <button class="popup-close" onclick="closePopup('deleteActivityPopup')">X</button>
+        </div>
+        <form action="/courseActivityManagement/delete" method="post">
+            <input type="text" name="activityIdDelete" required readonly style="display: none;">
+            <label for="courseIdDelete">Course ID:</label>
+            <input type="text" name="courseIdDelete" required readonly><br>
+            <label for="activityNumDelete">Activity Number:</label>
+            <input type="text" name="activityNumDelete" required readonly><br>
+            <label for="lecturerDelete">Lecturer:</label>
+            <input type="text" name="lecturerDelete" required readonly><br>
+            <label for="lecturerDelete">Classroom:</label>
+            <input type="text" name="classroomDelete" required readonly><br>
+            <label for="lecturerDelete">Time:</label>
+            <input type="text" name="timeDelete" required readonly><br>
+            <button type="submit">Delete Activity</button>
+        </form>
+    </div>
+
+    <div class="overlay" onclick="closeAllActivityPopups()"></div>
+
+    <script>
+        function showAddActivityForm() {
+            showPopup('addActivityPopup');
+        }
+
+        function showEditActivityForm(activityId, courseID, activity, lecturer, classroom, time) {
+            showPopup('editActivityPopup');
+            document.querySelector('[name="activityIdEdit"]').value = activityId;
+            document.querySelector('[name="courseIDEdit"]').value = courseID;
+            document.querySelector('[name="newCourseID"]').value = courseID;
+            document.querySelector('[name="newActivity"]').value = activity;
+            document.querySelector('[name="newLecturer"]').value = lecturer;
+            document.querySelector('[name="newClassroom"]').value = classroom;
+            document.querySelector('[name="newTime"]').value = time;
+        }
+
+        function showDeleteActivityForm(activityId, courseId, activityNum, lecturer, classroom, time) {
+            showPopup('deleteActivityPopup');
+            document.querySelector('[name="activityIdDelete"]').value = activityId;
+            document.querySelector('[name="courseIdDelete"]').value = courseId;
+            document.querySelector('[name="activityNumDelete"]').value = activityNum;
+            document.querySelector('[name="lecturerDelete"]').value = lecturer;
+            document.querySelector('[name="classroomDelete"]').value = classroom;
+            document.querySelector('[name="timeDelete"]').value = time;
+        }
+
+        function showPopup(popupId) {
+            document.getElementById(popupId).style.display = 'block';
+            document.querySelector('.overlay').style.display = 'block';
+        }
+
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
+            document.querySelector('.overlay').style.display = 'none';
+        }
+
+        function closeAllActivityPopups() {
+            closePopup('addActivityPopup');
+            closePopup('editActivityPopup');
+            closePopup('deleteActivityPopup');
+        }
+    </script>
+</body>
+
+</html>

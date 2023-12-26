@@ -3,7 +3,9 @@ const router = express.Router();
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const collection = require('./mongodb');
-const courseEnrollment = require('../models/courseEnrollment');
+const CourseList = require('../models/courseList');
+const CourseActivity = require('../models/courseActivity');
+const CourseEnrollment = require('../models/courseEnrollment');
 
 router.use(session({
     secret: 'your secret key',
@@ -272,6 +274,295 @@ router.use(function (err, req, res, next) {
     res.status(500).send('Something broke!');
 });
 
+
+
+
+
+
+
+// Course List Management Page
+router.get('/courseListManagement', async (req, res) => {
+    try {
+        // Fetch all courses from MongoDB
+        const courseList = await CourseList.find();
+        res.render('courseListManagement', { courseList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Add Course
+router.post('/courseListManagement/add', async (req, res) => {
+    const { courseID, courseCode, courseName, semester, credits } = req.body;
+
+    try {
+        // Check if the course with the given ID already exists
+        const existingCourse = await CourseList.findOne({ courseID });
+
+        if (existingCourse) {
+            return res.status(400).send('Course with this ID already exists');
+        }
+
+        // Create a new course using the Mongoose model
+        const newCourse = new CourseList({
+            courseID,
+            courseCode,
+            courseName,
+            semester, // Added semester field
+            credits, // Added credits field
+        });
+
+        // Save the new course to the database
+        await newCourse.save();
+
+        // Redirect back to the course list management page
+        res.redirect('/courseListManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Edit Course
+router.post('/courseListManagement/edit', async (req, res) => {
+    const { courseIDEdit, newCourseID, newCourseCode, newCourseName, newSemester, newCredits } = req.body;
+
+    try {
+        // Find the course to edit
+        const courseToEdit = await CourseList.findOne({ courseID: courseIDEdit });
+
+        if (!courseToEdit) {
+            return res.status(404).send('Course not found');
+        }
+
+        // Check if the new course code already exists
+        const existingCourse = await CourseList.findOne({ courseID: newCourseID })
+        if (existingCourse) {
+            return res.status(400).send('New course ID already exists');
+        }
+
+        // Update the course information
+        
+        courseToEdit.courseID = newCourseID;
+        courseToEdit.courseCode = newCourseCode;
+        courseToEdit.courseName = newCourseName;
+        courseToEdit.semester = newSemester; // Added semester field update
+        courseToEdit.credits = newCredits; // Added credits field update
+
+        // Save the updated course information to the database
+        await courseToEdit.save();
+
+        // Redirect back to the course list management page
+        res.redirect('/courseListManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Delete Course
+router.post('/courseListManagement/delete', async (req, res) => {
+    const { courseIDDelete } = req.body;
+
+    try {
+        // Find and remove the course from the database
+        await CourseList.findOneAndDelete({ courseID: courseIDDelete });
+
+        // Delete related data from CourseActivity
+        await CourseActivity.deleteMany({ courseID: courseIDDelete });
+
+        // Delete related data from CourseEnrollment
+        await CourseEnrollment.deleteMany({ courseID: courseIDDelete });
+
+        // Redirect back to the course list management page
+        res.redirect('/courseListManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+// Display Course Activity List
+router.get('/courseActivityManagement', async (req, res) => {
+    try {
+      const activityList = await CourseActivity.find();
+      res.render('courseActivityManagement', { activityList });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
+// Add Course Activity
+router.post('/courseActivityManagement/add', async (req, res) => {
+    const { courseID, activity, lecturer, classroom, time } = req.body;
+  
+    try {
+      // Check if the courseID exists in courseLists
+      const existingCourse = await CourseList.findOne({ courseID });
+  
+      if (!existingCourse) {
+        return res.status(400).send('The provided course ID does not exist in the course list.');
+      }
+  
+      const newActivity = new CourseActivity({
+        courseID,
+        activity,
+        lecturer,
+        classroom,
+        time: time.split(',').map((t) => t.trim()),
+      });
+  
+      await newActivity.save();
+      res.redirect('/courseActivityManagement');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
+// Edit Course Activity
+router.post('/courseActivityManagement/edit', async (req, res) => {
+    const { activityIdEdit, newCourseID, newActivity, newLecturer, newClassroom, newTime } = req.body;
+
+    try {
+        const activityToEdit = await CourseActivity.findById(activityIdEdit);
+
+        if (!activityToEdit) {
+            return res.status(404).send('Activity not found');
+        }
+
+        // Check if newCourseID exists in courseList
+        const courseInList = await CourseList.findOne({ courseID: newCourseID });
+
+        if (!courseInList) {
+            return res.status(400).send('The provided course ID does not exist in the course list.');
+        }
+
+        // Update activity details
+        activityToEdit.courseID = newCourseID;
+        activityToEdit.activity = newActivity;
+        activityToEdit.lecturer = newLecturer;
+        activityToEdit.classroom = newClassroom;
+        activityToEdit.time = newTime.split(',').map((t) => t.trim());
+
+        await activityToEdit.save();
+        res.redirect('/courseActivityManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+  
+  // Delete Course Activity
+  router.post('/courseActivityManagement/delete', async (req, res) => {
+    const { activityIdDelete } = req.body;
+  
+    try {
+      const activityToDelete = await CourseActivity.findByIdAndDelete(activityIdDelete);
+  
+      if (!activityToDelete) {
+        return res.status(404).send('Activity not found');
+      }
+  
+      res.redirect('/courseActivityManagement');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
+
+
+
+// Display Course Enrollment List
+router.get('/courseEnrollmentManagement', async (req, res) => {
+    try {
+        const enrollmentList = await CourseEnrollment.find();
+        res.render('courseEnrollmentManagement', { enrollmentList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Add Course Enrollment
+router.post('/courseEnrollmentManagement/add', async (req, res) => {
+    const { email, courseCode, activity } = req.body;
+
+    try {
+        const newEnrollment = new CourseEnrollment({
+            email,
+            courseCode,
+            activity,
+        });
+
+        await newEnrollment.save();
+        res.redirect('/courseEnrollmentManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Edit Course Enrollment
+router.post('/courseEnrollmentManagement/edit', async (req, res) => {
+    const { enrollmentIdEdit, newCourseCode, newActivity } = req.body;
+
+    try {
+        const enrollmentToEdit = await CourseEnrollment.findById(enrollmentIdEdit);
+
+        if (!enrollmentToEdit) {
+            return res.status(404).send('Enrollment not found');
+        }
+
+        // Check if newCourseCode exists in courseList
+        const courseInList = await CourseList.findOne({ courseCode: newCourseCode });
+
+        if (!courseInList) {
+            return res.status(400).send('Course does not exist in the course list');
+        }
+
+        // Update enrollment details
+        enrollmentToEdit.courseCode = newCourseCode;
+        enrollmentToEdit.activity = newActivity;
+
+        await enrollmentToEdit.save();
+        res.redirect('/courseEnrollmentManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Delete Course Enrollment
+router.post('/courseEnrollmentManagement/delete', async (req, res) => {
+    const { enrollmentIdDelete } = req.body;
+
+    try {
+        const enrollmentToDelete = await CourseEnrollment.findByIdAndDelete(enrollmentIdDelete);
+
+        if (!enrollmentToDelete) {
+            return res.status(404).send('Enrollment not found');
+        }
+
+        res.redirect('/courseEnrollmentManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
+  
 
 
 module.exports = router;
