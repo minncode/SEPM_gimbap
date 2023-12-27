@@ -1,0 +1,221 @@
+<!-- userManagement.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            max-width: 400px; /* 조정 가능한 팝업 최대 너비 */
+            width: 100%;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .popup-close {
+            cursor: pointer;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Remove list styles and make each list item a flex container */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Make buttons the same width */
+        .action-buttons button {
+            width: 100px; /* 조정 가능한 버튼 최대 너비 */
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>User Management</h1>
+
+    <!-- Display User List -->
+    <h2>User List</h2>
+    <button onclick="showAddUserForm()">Add User</button>
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Major</th>
+            <th>Year</th>
+            <th>Action</th>
+        </tr>
+        <% for (let i = 0; i < userList.length; i++) { %>
+            <tr>
+                <td><%= userList[i].email %></td>
+                <td><%= userList[i].name %></td>
+                <td><%= userList[i].role %></td>
+                <td><%= userList[i].major %></td>
+                <td><%= userList[i].year %></td>
+                <td class="action-buttons">
+                    <button onclick="showEditUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Edit</button>
+                    <button onclick="showDeleteUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Delete</button>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+
+    <!-- Add User Form -->
+    <div class="popup" id="addUserPopup">
+        <div class="popup-header">
+            <button class="popup-close" onclick="closePopup('addUserPopup')">X</button>
+        </div>
+        <form action="/userManagement/add" method="post">
+            <label for="email">Email:</label>
+            <input type="email" name="email" required><br>
+            <label for="name">Name:</label>
+            <input type="text" name="name" required><br>
+            <label for="role">Role:</label>
+            <input type="text" name="role" required><br>
+            <label for="major">Major:</label>
+            <input type="text" name="major" required><br>
+            <label for="year">Year (optional):</label>
+            <input type="text" name="year"><br>
+            <label for="password">Password:</label>
+            <input type="password" name="password" required><br>
+            <button type="submit">Add User</button>
+        </form>
+    </div>
+
+    <!-- Edit User Form -->
+    <div class="popup" id="editUserPopup">
+        <div class="popup-header">
+            <button class="popup-close" onclick="closePopup('editUserPopup')">X</button>
+        </div>
+        <form action="/userManagement/edit" method="post">
+            <input type="text" name="userIdEdit" required readonly style="display: none;">
+            <label for="newEmail">New Email:</label>
+            <input type="text" name="newEmail" required><br>
+            <label for="newName">New Name:</label>
+            <input type="text" name="newName" required><br>
+            <label for="newRole">New Role:</label>
+            <input type="text" name="newRole"><br>
+            
+            <label for="newMajor">New Major:</label>
+            <input type="text" name="newMajor" required><br>
+            <label for="yearEdit">Year:</label>
+            <input type="text" name="yearEdit" required><br>
+
+
+            <button type="submit">Edit User</button>
+        </form>
+    </div>
+
+    <!-- Delete User Form -->
+    <div class="popup" id="deleteUserPopup">
+        <div class="popup-header">
+            <button class="popup-close" onclick="closePopup('deleteUserPopup')">X</button>
+        </div>
+        <form action="/userManagement/delete" method="post">
+            <input type="text" name="userIdDelete" required readonly style="display: none;">
+            <label for="emailDelete">Email:</label>
+            <input type="email" name="emailDelete" required readonly><br>
+            <label for="nameDelete">Name:</label>
+            <input type="text" name="nameDelete" required readonly><br>
+            <label for="roleDelete">Role:</label>
+            <input type="text" name="roleDelete" required readonly><br>
+            <label for="majorDelete">Major:</label>
+            <input type="text" name="majorDelete" required readonly><br>
+            <label for="yearDelete">Year:</label>
+            <input type="text" name="yearDelete" required readonly><br>
+            <button type="submit">Delete User</button>
+        </form>
+    </div>
+
+    <div class="overlay" onclick="closeAllUserPopups()"></div>
+
+    <script>
+        function showAddUserForm() {
+            showPopup('addUserPopup');
+        }
+
+        function showEditUserForm(userId, email, name, role, major, year) {
+            showPopup('editUserPopup');
+            document.querySelector('[name="userIdEdit"]').value = userId;
+            document.querySelector('[name="newEmail"]').value = email;
+            document.querySelector('[name="newName"]').value = name;
+            document.querySelector('[name="newRole"]').value = role;
+            document.querySelector('[name="newMajor"]').value = major;
+            document.querySelector('[name="yearEdit"]').value = year;
+            
+            
+            
+            
+        }
+
+        function showDeleteUserForm(userId, email, name, role, major, year) {
+            showPopup('deleteUserPopup');
+            document.querySelector('[name="userIdDelete"]').value = userId;
+            document.querySelector('[name="emailDelete"]').value = email;
+            document.querySelector('[name="nameDelete"]').value = name;
+            document.querySelector('[name="roleDelete"]').value = role;
+            document.querySelector('[name="majorDelete"]').value = major;
+            document.querySelector('[name="yearDelete"]').value = year;
+        }
+
+        function showPopup(popupId) {
+            document.getElementById(popupId).style.display = 'block';
+            document.querySelector('.overlay').style.display = 'block';
+        }
+
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
+            document.querySelector('.overlay').style.display = 'none';
+        }
+
+        function closeAllUserPopups() {
+            closePopup('addUserPopup');
+            closePopup('editUserPopup');
+            closePopup('deleteUserPopup');
+        }
+    </script>
+</body>
+
+</html>
