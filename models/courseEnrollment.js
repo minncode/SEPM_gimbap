@@ -5,31 +5,15 @@ const courseEnrollmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    courseName: {
+    courseID: {
         type: String,
     },
     activity: {
         type: String,
         required: true,
-    },
-    lecturer: {
-        type: String,
-    },
-    classroom: {
-        type: String,
-    },
-    time: {
-        type: [String], // array
-      },
-    semester: {
-        type: String,
-    },
-    credits: {
-        type: String,
     }
 });
 
+const CourseEnrollment = mongoose.model('courseEnrollments', courseEnrollmentSchema);
 
-const courseEnrollment = mongoose.model('courseEnrollments', courseEnrollmentSchema);
-
-module.exports = courseEnrollment;
+module.exports = CourseEnrollment;
