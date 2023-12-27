@@ -621,14 +621,18 @@ router.post('/userManagement/add', async (req, res) => {
     try {
         const { major, email, name, password, year, role } = req.body;
 
+                // Hashing the password
+                const hashedPassword = await bcrypt.hash(password, 10);
+        
         // Check if the email already exists
         const existingUser = await collection.findOne({ email });
 
         if (existingUser) {
-            return res.status(400).send('Email already exists');
+            res.render('/userManagement', { error: 'Email already exists' });
         }
 
-        const newUser = new collection({ major, email, name, password, year, role });
+        // Creating a new document using the Mongoose model
+        const newUser = new collection({ major, email, name, password: hashedPassword, year, role });
         await newUser.save();
         res.redirect('/userManagement'); // Redirect to user list or wherever you want
     } catch (error) {

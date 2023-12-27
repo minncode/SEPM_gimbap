@@ -215,6 +215,12 @@
             closePopup('editUserPopup');
             closePopup('deleteUserPopup');
         }
+
+  <% if (typeof error !== 'undefined') { %>
+    alert('<%= error %>');
+  <% } %>
+
+
     </script>
 </body>
 
