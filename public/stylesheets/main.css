@@ -1,7 +1,19 @@
-*{
+* {
   margin: 0;
   padding: 0;
   font-family: 'Sofia Sans';
+}
+
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* studnet Id card */
@@ -25,6 +37,7 @@
 .student-card-container{
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 20px;
 }
 
@@ -41,7 +54,7 @@
   width: 100%;
 }
 
-#major, #grade{
+#major{
   font-size: 15px;
 }
 .student-name{
@@ -70,6 +83,7 @@
   padding: 10px;
   height: 100%;
 }
+
 .buttons p{
   font-size: 18px;
 }
@@ -150,4 +164,199 @@ background-color: rgba(34, 33, 96, 0.835);
   font-weight: 500;
   border-radius: 10px;
   color: rgb(255, 255, 255);
+}
+
+/* bottom shet */
+:root {
+  --background: #222160;
+  --foreground: #fff;
+  --divider: #D9D9D935;
+  --overlay: rgba(0, 0, 0, 0.614);
+}
+
+/* x sheet btn */
+.close-sheet{
+  background-color: #222160;
+}
+
+.close-sheet ion-icon{
+  border-inline: none;
+  color: white;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+}
+
+/* sheet */
+#sheet {
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  visibility: visible;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+#sheet[aria-hidden="true"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#sheet .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  height: 100%;
+  background: var(--overlay);
+  opacity: 0.5;
+}
+
+/* Primary sheet style */
+#sheet .contents {
+  background: #222160;
+  position: relative;
+  overflow-y: hidden;
+  transition: var(--default-transitions);
+  transform: translateY(0);
+  max-height: 200vh;
+  height: 80vh;
+  max-width: none;
+  padding-top: 50px;
+  border-radius: 16px 16px 0 0;
+  z-index: 1;
+}
+
+/* Overlay effect with pseudo-element */
+#sheet .contents::before {
+  content: '';
+  position: absolute;
+  top: 180px; /* Adjust these values to control the overlay size */
+  bottom: -5px;
+  right: 0px;
+  left: 0px;
+  background: #fff; /* Lighter background */
+  border-radius: 10px; /* Smooths the corners */
+  z-index: 2; /* Ensures it's under the text/content */
+  width: 100%;
+}
+
+
+#sheet .contents:not(.not-selectable) {
+  transition: var(--default-transitions), height 0.5s;
+}
+
+#sheet .contents.fullscreen {
+  border-radius: 0;
+}
+
+#sheet[aria-hidden="true"] .contents {
+  transform: translateY(100%);
+}
+
+#sheet .draggable-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 50px;
+  margin: auto;
+  padding:12px 0px 0px;
+  cursor: grab;
+}
+
+#sheet .draggable-thumb {
+  width: inherit;
+  height: 0.25rem;
+  background: var(--divider);
+  border-radius: 0.125rem;
+}
+
+#sheet .close-sheet {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: none;
+}
+
+#sheet .body {
+  height: 100%;
+  /* overflow-y: auto; */
+  gap: 1rem;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+}
+
+.qr-studentId-info{
+  margin: 50px 0px 0px 0px;
+  color: white;
+  text-align: center;
+}
+
+#qr-major{
+  font-size: 14px;
+  margin: 0px 0px 20px;
+}
+.qr-student-name{
+  font-size: 18px;
+  font-weight: bolder;
+}
+
+.qr-mobileId-profile{
+  display: flex;
+  justify-content:center;
+}
+
+.qr-mobileId-profile img{
+  position: relative;
+  z-index: 5;
+  top: 90px;
+  background-color: #E3E5E0;
+  border-radius: 70%;
+  width: 100%;
+  max-width: 75px;
+}
+
+#qr-mobileId-panel{
+  display: flex;
+  justify-content: center;
+  border: 2px solid #22216035 ;
+  border-radius: 15px;
+  width: 130px;
+  text-align: center;
+  color: #22216035;
+  font-weight: bolder;
+  font-size: 15px;
+  align-items: center;
+  margin: 10px;
+}
+
+.main-wrap{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  position: relative;
+  z-index: 5;
+  width: 100%;
+}
+
+.QR-img{
+  max-width: 250px;
+  max-height: 250px;
+  width: 220px;
+  height: 220px;
+  margin-bottom: 10px;
+}
+
+.QR-img img{
+  width: 100%;
 }
