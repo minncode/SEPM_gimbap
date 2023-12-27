@@ -6,112 +6,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Enrollment Management</title>
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border: 1px solid #ccc;
-            z-index: 1000;
-            max-width: 400px; /* 조정 가능한 팝업 최대 너비 */
-            width: 100%;
-        }
+    <title>Admin</title>
+    <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
 
-        .popup-header {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 10px;
-        }
-
-        .popup-close {
-            cursor: pointer;
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            font-size: 16px;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        /* Remove list styles and make each list item a flex container */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        /* Make buttons the same width */
-        .action-buttons button {
-            width: 100px; /* 조정 가능한 버튼 최대 너비 */
-            margin-right: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="/stylesheets/courseManagement.css">
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
 <body>
-    <h1>Course Enrollment Management</h1>
+    <div class="adminCourseManageContents">
+        <h1>Course Enrollment Management</h1>
 
-    <!-- Display Course Enrollment List -->
-    <h2>Course Enrollment List</h2>
-    <button onclick="showAddEnrollmentForm()">Add Enrollment</button>
-    <table>
-        <tr>
-            <th>Email</th>
-            <th>Course ID</th>
-            <th>Activity</th>
-            <th>Action</th>
-        </tr>
-        <% for (let i = 0; i < enrollmentList.length; i++) { %>
+        <!-- Display Course Enrollment List -->
+        <button class="admin-add-btn" onclick="showAddEnrollmentForm()">
+            <ion-icon name="add-outline"></ion-icon>
+            <p>Add New</p>
+        </button>
+        <table>
             <tr>
-                <td><%= enrollmentList[i].email %></td>
-                <td><%= enrollmentList[i].courseID %></td>
-                <td><%= enrollmentList[i].activity %></td>
-                <td class="action-buttons">
-                    <button onclick="showEditEnrollmentForm('<%= enrollmentList[i]._id %>', '<%= enrollmentList[i].email %>', '<%= enrollmentList[i].courseID %>', '<%= enrollmentList[i].activity %>')">Edit</button>
-                    <button onclick="showDeleteEnrollmentForm('<%= enrollmentList[i]._id %>', '<%= enrollmentList[i].email %>', '<%= enrollmentList[i].courseID %>', '<%= enrollmentList[i].activity %>')">Delete</button>
-                </td>
+                <th>Email</th>
+                <th>Course ID</th>
+                <th>Activity</th>
+                <th>Action</th>
             </tr>
-        <% } %>
-    </table>
-
-    <!-- Add Enrollment Form -->
-    <div class="popup" id="addEnrollmentPopup">
-        <div class="popup-header">
-            <button class="popup-close" onclick="closePopup('addEnrollmentPopup')">X</button>
-        </div>
-        <form action="/courseEnrollmentManagement/add" method="post">
-            <label for="email">Email:</label>
-            <input type="text" name="email" required><br>
-            <label for="courseID">Course ID:</label>
-            <input type="text" name="courseID" required><br>
-            <label for="activity">Activity:</label>
-            <input type="text" name="activity" required><br>
-            <button type="submit">Add Enrollment</button>
-        </form>
+            <% for (let i = 0; i < enrollmentList.length; i++) { %>
+                <tr>
+                    <td><%= enrollmentList[i].email %></td>
+                    <td><%= enrollmentList[i].courseID %></td>
+                    <td><%= enrollmentList[i].activity %></td>
+                    <td class="action-buttons">
+                        <button onclick="showEditEnrollmentForm('<%= enrollmentList[i]._id %>', '<%= enrollmentList[i].email %>', '<%= enrollmentList[i].courseID %>', '<%= enrollmentList[i].activity %>')">Edit</button>
+                        <button onclick="showDeleteEnrollmentForm('<%= enrollmentList[i]._id %>', '<%= enrollmentList[i].email %>', '<%= enrollmentList[i].courseID %>', '<%= enrollmentList[i].activity %>')">Delete</button>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
     </div>
 
     <!-- Edit Enrollment Form -->

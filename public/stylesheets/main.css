@@ -170,8 +170,8 @@ background-color: rgba(34, 33, 96, 0.835);
 :root {
   --background: #222160;
   --foreground: #fff;
-  --divider: #D9D9D935;
-  --overlay: rgba(0, 0, 0, 0.614);
+  --divider: #d9d9d9a3;
+  --overlay: rgba(0, 0, 0, 0.781);
 }
 
 /* x sheet btn */
@@ -215,6 +215,7 @@ background-color: rgba(34, 33, 96, 0.835);
   height: 100%;
   background: var(--overlay);
   opacity: 0.5;
+  backdrop-filter: blur(5px);
 }
 
 /* Primary sheet style */
