@@ -55,7 +55,8 @@ router.post("/register", async (req, res) => {
             major,
             email,
             name,
-            password: hashedPassword // Assigning the hashed password to the document
+            password: hashedPassword, // Assigning the hashed password to the document
+            role: "student"
         });
 
         // Saving the new user to the database
@@ -277,7 +278,15 @@ router.use(function (err, req, res, next) {
 
 
 
-
+// Admin Page
+router.get('/admin', async (req, res) => {
+    try {
+        res.render('adminMain');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 
 // Course List Management Page
@@ -553,6 +562,12 @@ router.post('/courseEnrollmentManagement/edit', async (req, res) => {
             return res.status(400).send('Course activity not found. Please make sure the course ID and activity are correct.');
         }
 
+        // Check if the enrollment already exists
+        const existingEnrollment = await CourseEnrollment.findOne({ email: enrollmentToEdit.email, courseID: newCourseID, activity: newActivity })
+        if (existingEnrollment) {
+            return res.status(400).send('Enrollment already exists.');
+        }
+
         // Update enrollment details
         enrollmentToEdit.courseID = newCourseID;
         enrollmentToEdit.activity = newActivity;
@@ -584,6 +599,101 @@ router.post('/courseEnrollmentManagement/delete', async (req, res) => {
 });
 
 
+
+
+
+
+
+
+// Render User Management page
+router.get('/userManagement', async (req, res) => {
+    try {
+        const userList = await collection.find().select('-password'); // Exclude password field
+        res.render('userManagement', { userList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Add User
+router.post('/userManagement/add', async (req, res) => {
+    try {
+        const { major, email, name, password, year, role } = req.body;
+
+                // Hashing the password
+                const hashedPassword = await bcrypt.hash(password, 10);
+        
+        // Check if the email already exists
+        const existingUser = await collection.findOne({ email });
+
+        if (existingUser) {
+            res.render('/userManagement', { error: 'Email already exists' });
+        }
+
+        // Creating a new document using the Mongoose model
+        const newUser = new collection({ major, email, name, password: hashedPassword, year, role });
+        await newUser.save();
+        res.redirect('/userManagement'); // Redirect to user list or wherever you want
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+// Edit user
+router.post('/userManagement/edit', async (req, res) => {
+    const { userIdEdit, newMajor, newEmail, newName, newRole } = req.body;
+
+    try {
+        const userToEdit = await collection.findById(userIdEdit).select('-password');
+
+        if (!userToEdit) {
+            return res.status(404).send('User not found');
+        }
+
+        // Get the existing user email
+        const oldEmail = userToEdit.email;
+
+        // Update user details
+        userToEdit.major = newMajor;
+        userToEdit.email = newEmail;
+        userToEdit.name = newName;
+        userToEdit.role = newRole;
+
+        await userToEdit.save();
+
+        // Update CourseEnrollment records with the new email
+        await CourseEnrollment.updateMany({ email: oldEmail }, { $set: { email: newEmail } });
+
+        res.redirect('/userManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Delete user
+router.post('/userManagement/delete', async (req, res) => {
+    const { userIdDelete } = req.body;
+
+    try {
+        const userToDelete = await collection.findByIdAndDelete(userIdDelete);
+
+        if (!userToDelete) {
+            return res.status(404).send('User not found');
+        }
+
+        // Delete corresponding records in courseEnrollment for the user's email
+        await CourseEnrollment.deleteMany({ email: userToDelete.email });
+
+        res.redirect('/userManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 
 

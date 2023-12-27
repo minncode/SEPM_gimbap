@@ -11,11 +11,9 @@ mongoose.connect("mongodb+srv://admin:1234@min.bcimc0z.mongodb.net/?retryWrites=
 const LogInSchema = new mongoose.Schema({
     year:{
         type: Date,
-        required: true
     },
     major:{
         type: String,
-        required: true
     },
     email:{
         type: String,
@@ -28,6 +26,9 @@ const LogInSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true
+    },
+    role:{
+        type: String,
     }
 })
 
