@@ -14,7 +14,7 @@ const indexRouter = require('./routes/index');
 const app = express();
 
 // 앱 세팅
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views/user'));
 app.set('view engine', 'ejs');
 
 

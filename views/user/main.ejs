@@ -1,4 +1,4 @@
-<%- include("./partials/header") %>
+<%- include("../partials/header") %>
 
     <link rel="stylesheet" href="/stylesheets/main.css">
     <link rel="stylesheet" href="/stylesheets/header.css">
@@ -10,7 +10,7 @@
   <body>
 
   <!-- Header -->
-  <%- include("./partials/navigation") %>
+  <%- include("../partials/navigation") %>
 
     <!-- main contents -->
     <section class="main-content">
@@ -61,8 +61,8 @@
           </button>
 
           <div class="qr-studentId-info">
-            <p class="qr-student-name">Student Name<br>(S1234567)</p>
-            <p id="qr-major">Major</p>
+            <p class="qr-student-name"><%= displayname %><br>(<%= displayemail.split('@')[0] %>)</p>
+            <p id="qr-major"><%= displaymajor %></p>
           </div>
         </header>
         <div class="qr-mobileId-profile">
