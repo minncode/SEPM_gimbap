@@ -37,8 +37,8 @@
                     <td><%= enrollmentList[i].courseID %></td>
                     <td><%= enrollmentList[i].activity %></td>
                     <td class="action-buttons">
-                        <button onclick="showEditEnrollmentForm('<%= enrollmentList[i]._id %>', '<%= enrollmentList[i].email %>', '<%= enrollmentList[i].courseID %>', '<%= enrollmentList[i].activity %>')">Edit</button>
-                        <button onclick="showDeleteEnrollmentForm('<%= enrollmentList[i]._id %>', '<%= enrollmentList[i].email %>', '<%= enrollmentList[i].courseID %>', '<%= enrollmentList[i].activity %>')">Delete</button>
+                        <button id="action-edit" onclick="showEditEnrollmentForm('<%= enrollmentList[i]._id %>', '<%= enrollmentList[i].email %>', '<%= enrollmentList[i].courseID %>', '<%= enrollmentList[i].activity %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteEnrollmentForm('<%= enrollmentList[i]._id %>', '<%= enrollmentList[i].email %>', '<%= enrollmentList[i].courseID %>', '<%= enrollmentList[i].activity %>')">Delete</button>
                     </td>
                 </tr>
             <% } %>

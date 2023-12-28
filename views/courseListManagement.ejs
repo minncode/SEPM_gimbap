@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
+    <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
     <link rel="stylesheet" href="/stylesheets/courseManagement.css">
     
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -39,8 +40,8 @@
                     <td><%= courseList[i].semester %></td>
                     <td><%= courseList[i].credits %></td>
                     <td class="action-buttons">
-                        <button onclick="showEditForm('<%= courseList[i].courseID %>', '<%= courseList[i].courseCode %>', '<%= courseList[i].courseName %>', '<%= courseList[i].semester %>', '<%= courseList[i].credits %>')">Edit</button>
-                        <button onclick="showDeleteForm('<%= courseList[i].courseID %>', '<%= courseList[i].courseCode %>', '<%= courseList[i].courseName %>', '<%= courseList[i].semester %>', '<%= courseList[i].credits %>')">Delete</button>
+                        <button id="action-edit" onclick="showEditForm('<%= courseList[i].courseID %>', '<%= courseList[i].courseCode %>', '<%= courseList[i].courseName %>', '<%= courseList[i].semester %>', '<%= courseList[i].credits %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteForm('<%= courseList[i].courseID %>', '<%= courseList[i].courseCode %>', '<%= courseList[i].courseName %>', '<%= courseList[i].semester %>', '<%= courseList[i].credits %>')">Delete</button>
                     </td>
                 </tr>
             <% } %>

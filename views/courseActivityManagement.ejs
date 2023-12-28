@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
+    <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
     <link rel="stylesheet" href="/stylesheets/courseManagement.css">
     
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -39,8 +40,8 @@
                     <td><%= activityList[i].classroom %></td>
                     <td><%= activityList[i].time.join(', ') %></td>
                     <td class="action-buttons">
-                        <button onclick="showEditActivityForm('<%= activityList[i]._id %>' ,'<%= activityList[i].courseID %>' ,'<%= activityList[i].activity %>' ,'<%= activityList[i].lecturer %>' ,'<%= activityList[i].classroom %>' ,'<%= activityList[i].time %>')">Edit</button>
-                        <button onclick="showDeleteActivityForm('<%= activityList[i]._id %>' ,'<%= activityList[i].courseID %>' ,'<%= activityList[i].activity %>' ,'<%= activityList[i].lecturer %>' ,'<%= activityList[i].classroom %>' ,'<%= activityList[i].time %>')">Delete</button>
+                        <button id="action-edit" onclick="showEditActivityForm('<%= activityList[i]._id %>' ,'<%= activityList[i].courseID %>' ,'<%= activityList[i].activity %>' ,'<%= activityList[i].lecturer %>' ,'<%= activityList[i].classroom %>' ,'<%= activityList[i].time %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteActivityForm('<%= activityList[i]._id %>' ,'<%= activityList[i].courseID %>' ,'<%= activityList[i].activity %>' ,'<%= activityList[i].lecturer %>' ,'<%= activityList[i].classroom %>' ,'<%= activityList[i].time %>')">Delete</button>
                     </td>
                 </tr>
             <% } %>
