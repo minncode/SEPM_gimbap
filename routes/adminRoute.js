@@ -7,281 +7,18 @@ const CourseList = require('../models/courseList');
 const CourseActivity = require('../models/courseActivity');
 const CourseEnrollment = require('../models/courseEnrollment');
 
+
 router.use(session({
     secret: 'your secret key',
     resave: false,
     saveUninitialized: true
 }));
 
-/* GET home page. */
-router.get('/', (req, res) => {
-    res.render("login")
-});
-
-router.post('/', async (req, res) => {
-    const { name, password } = req.body;
-    const user = await collection.findOne({ name });
-
-    if (user) {
-        const passwordMatch = await bcrypt.compare(password, user.password);
-
-        if (passwordMatch) {
-            req.session.name = user.name;
-            req.session.email = user.email;
-            req.session.major = user.major;
-            res.redirect('/main');
-        } else {
-            res.render('login', { error: 'Failed to login' });
-        }
-    } else {
-        res.render('login', { error: 'Failed to login' });
-    }
-});
-
-router.get('/register', (req, res) => {
-    res.render("register")
-});
-
-router.post("/register", async (req, res) => {
-    const { year, major, email, name, password } = req.body;
-
-    try {
-        // Hashing the password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Creating a new document using the Mongoose model
-        const newUser = new collection({
-            year,
-            major,
-            email,
-            name,
-            password: hashedPassword, // Assigning the hashed password to the document
-            role: "student"
-        });
-
-        // Saving the new user to the database
-        await newUser.save();
-
-        res.render("login");
-    } catch (err) {
-        console.error(err);
-        res.render("register", { error: 'Failed to register' });
-    }
-});
-
-router.get('/main', async (req, res) => {
-    res.render('main', {
-        displayname: req.session.name,
-        displayemail: req.session.email,
-        displaymajor: req.session.major
-    });
-});
-
-router.get('/profile', async (req, res) => {
-    res.render('profile', {
-        displayname: req.session.name,
-        displayemail: req.session.email,
-        displaymajor: req.session.major
-    });
-});
-
-router.get('/timetable', async (req, res) => {
-    try {
-        const userEmail = req.session.email; // 현재 로그인한 유저의 이메일
-
-        // MongoDB에서 해당 유저의 수업 시간 정보를 불러오는 쿼리
-        const userCourses = await courseEnrollment.find({ email: userEmail });
-
-        // 유저의 수업 정보를 기반으로 timetable.ejs를 렌더링
-        res.render('timetable', { userCourses });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-    }
-});
-
-
-router.get('/course_list', (req, res) => {
-    res.render('course_list');
-});
-
-router.post('/course_list/enroll', async (req, res) => {
-    const { courseCode, activity } = req.body;
-    const userEmail = req.session.email;
-
-    try {
-        const courseName = req.body.courseName;
-        const lecturer = req.body.lecturer;
-        const classroom = req.body.classroom;
-        const time = req.body.time;
-        const semester = req.body.semester;
-        const credits = req.body.credits;
-
-        if (!userEmail) {
-            // 세션에 이메일 정보가 없으면 로그인 페이지로 리다이렉트 또는 에러 처리
-            return res.status(401).send('Unauthorized');
-        }
-
-        const newEnrollment = new courseEnrollment({
-            email: userEmail,
-            courseName,
-            activity,
-            courseCode,
-            lecturer,
-            classroom,
-            time,
-            semester,
-            credits,
-        });
-
-        await newEnrollment.save();
-
-
-        res.redirect('/timetable');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-    }
-});
-
-
-
-router.get('/course_evaluation', (req, res) => {
-    res.render('course_evaluation');
-});
-
-
-router.get('/editprofile', (req, res) => {
-    res.render('editprofile', {
-        displayname: req.session.name,
-        displayemail: req.session.email,
-        displaymajor: req.session.major
-    });
-});
-
-router.post('/editprofile', async (req, res) => {
-    const { name, email, password, major } = req.body;
-
-    try {
-        const user = await collection.findOne({ email }); // Find user by email
-
-        if (!user) {
-            return res.status(400).send('User not found');
-        }
-
-        // Update user information
-        user.name = name;
-        user.major = major;
-
-        // Only update password if a new one is provided
-        if (password) {
-            const salt = await bcrypt.genSalt(10); // Generate a salt
-            user.password = await bcrypt.hash(password, salt); // Hash the new password
-        }
-
-        await user.save(); // Save updated user information
-
-        // Update session information
-        req.session.name = user.name;
-        req.session.email = user.email;
-        req.session.major = user.major;
-
-        res.redirect('/profile');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Server error');
-    }
-});
-
-router.get('/courseSelect', (req, res) => {
-    res.render('courseSelect');
-});
-
-router.get('/writeReview', (req, res) => {
-    res.render('writeReview');
-});
-
-router.get('/reviewDetail', (req, res) => {
-    res.render('reviewDetail');
-});
-
-router.get('/paymentMain', (req, res) => {
-    res.render('paymentMain');
-});
-
-router.get('/charging', (req, res) => {
-    res.render('charging');
-});
-
-router.get('/barcode', (req, res) => {
-    res.render('barcode');
-});
-
-router.get('/bankManage', (req, res) => {
-    res.render('bankManage');
-});
-
-router.get('/addBank', (req, res) => {
-    res.render('addBank');
-});
-
-router.get('/campusMap', (req, res) => {
-    res.render('campusMap');
-});
-
-router.get('/campusMapCategory', (req, res) => {
-    res.render('campusMapCategory');
-});
-
-router.get('/beanlandBuilding', (req, res) => {
-    res.render('beanlandBuilding');
-});
-
-router.get('/foodCourt', (req, res) => {
-    res.render('foodCourt');
-});
-
-router.get('/foodPavillion', (req, res) => {
-    res.render('foodPavillion');
-});
-
-
-
-
-router.get('/deleteaccount', async (req, res) => {
-    try {
-        await collection.deleteOne({ email: req.session.email });
-
-        req.session.destroy();
-
-        res.redirect('/');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Server error');
-    }
-});
-
-router.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if(err) {
-            return console.log(err);
-        }
-        res.redirect('/'); // 로그아웃 후 리다이렉트할 경로
-    });
-});
-
-router.use(function (err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
-
-
-
 
 // Admin Page
-router.get('/admin', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        res.render('adminMain');
+        res.render('admin/adminMain');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -294,7 +31,7 @@ router.get('/courseListManagement', async (req, res) => {
     try {
         // Fetch all courses from MongoDB
         const courseList = await CourseList.find();
-        res.render('courseListManagement', { courseList });
+        res.render('admin/courseListManagement', { courseList });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -326,7 +63,7 @@ router.post('/courseListManagement/add', async (req, res) => {
         await newCourse.save();
 
         // Redirect back to the course list management page
-        res.redirect('/courseListManagement');
+        res.redirect('/admin/courseListManagement');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -345,12 +82,11 @@ router.post('/courseListManagement/edit', async (req, res) => {
             return res.status(404).send('Course not found');
         }
 
-        // Check if the new course code already exists
-        const existingCourse = await CourseList.findOne({ courseID: newCourseID })
+        // Check if the new course ID already exists by excluding the current course being edited
+        const existingCourse = await CourseList.findOne({ courseID: newCourseID, _id: { $ne: courseToEdit._id } });
         if (existingCourse) {
-            return res.status(400).send('New course ID already exists');
+            return res.status(400).send('The new course ID already exists');
         }
-
         // Update the course information
         
         courseToEdit.courseID = newCourseID;
@@ -362,8 +98,14 @@ router.post('/courseListManagement/edit', async (req, res) => {
         // Save the updated course information to the database
         await courseToEdit.save();
 
+        // Update CourseActivity records with the new courseID
+        await CourseActivity.updateMany({ courseID: courseIDEdit }, { $set: { courseID: newCourseID } });
+
+        // Update CourseEnrollment records with the new courseID
+        await CourseEnrollment.updateMany({ courseID: courseIDEdit }, { $set: { courseID: newCourseID } });
+
         // Redirect back to the course list management page
-        res.redirect('/courseListManagement');
+        res.redirect('/admin/courseListManagement');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -385,7 +127,7 @@ router.post('/courseListManagement/delete', async (req, res) => {
         await CourseEnrollment.deleteMany({ courseID: courseIDDelete });
 
         // Redirect back to the course list management page
-        res.redirect('/courseListManagement');
+        res.redirect('/admin/courseListManagement');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -399,7 +141,7 @@ router.post('/courseListManagement/delete', async (req, res) => {
 router.get('/courseActivityManagement', async (req, res) => {
     try {
       const activityList = await CourseActivity.find();
-      res.render('courseActivityManagement', { activityList });
+      res.render('admin/courseActivityManagement', { activityList });
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
@@ -417,6 +159,12 @@ router.post('/courseActivityManagement/add', async (req, res) => {
       if (!existingCourse) {
         return res.status(400).send('The provided course ID does not exist in the course list.');
       }
+
+      // Check if the activity
+      const existingActivity = await CourseActivity.findOne({ courseID, activity })
+      if (existingActivity) {
+          return res.status(400).send('Same activity already exists.');
+      }
   
       const newActivity = new CourseActivity({
         courseID,
@@ -427,7 +175,7 @@ router.post('/courseActivityManagement/add', async (req, res) => {
       });
   
       await newActivity.save();
-      res.redirect('/courseActivityManagement');
+      res.redirect('/admin/courseActivityManagement');
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
@@ -452,6 +200,20 @@ router.post('/courseActivityManagement/edit', async (req, res) => {
             return res.status(400).send('The provided course ID does not exist in the course list.');
         }
 
+        // Check if the new activity already exists for the given courseID, excluding the current activity being edited
+        const existingActivity = await CourseActivity.findOne({
+            courseID: newCourseID,
+            activity: newActivity,
+            _id: { $ne: activityToEdit._id }
+        });
+
+        if (existingActivity) {
+            return res.status(400).send('The new activity already exists.');
+        }
+
+        const oldId = activityToEdit.courseID;
+        const oldActivity = activityToEdit.activity;
+
         // Update activity details
         activityToEdit.courseID = newCourseID;
         activityToEdit.activity = newActivity;
@@ -460,13 +222,18 @@ router.post('/courseActivityManagement/edit', async (req, res) => {
         activityToEdit.time = newTime.split(',').map((t) => t.trim());
 
         await activityToEdit.save();
-        res.redirect('/courseActivityManagement');
+
+        // Update CourseEnrollment records with the new courseID and activity
+        await CourseEnrollment.updateMany(
+            { courseID: oldId, activity: oldActivity }, { $set: { courseID: newCourseID, activity: newActivity } }
+        );
+
+        res.redirect('/admin/courseActivityManagement');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
     }
 });
-
   
   // Delete Course Activity
   router.post('/courseActivityManagement/delete', async (req, res) => {
@@ -482,7 +249,7 @@ router.post('/courseActivityManagement/edit', async (req, res) => {
 // Delete the corresponding enrollments
 await CourseEnrollment.deleteMany({ courseID: activityToDelete.courseID, activity: activityToDelete.activity });
 
-      res.redirect('/courseActivityManagement');
+      res.redirect('/admin/courseActivityManagement');
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
@@ -496,7 +263,7 @@ await CourseEnrollment.deleteMany({ courseID: activityToDelete.courseID, activit
 router.get('/courseEnrollmentManagement', async (req, res) => {
     try {
         const enrollmentList = await CourseEnrollment.find();
-        res.render('courseEnrollmentManagement', { enrollmentList });
+        res.render('admin/courseEnrollmentManagement', { enrollmentList });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -537,7 +304,7 @@ router.post('/courseEnrollmentManagement/add', async (req, res) => {
         });
 
         await newEnrollment.save();
-        res.redirect('/courseEnrollmentManagement');
+        res.redirect('/admin/courseEnrollmentManagement');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -573,7 +340,7 @@ router.post('/courseEnrollmentManagement/edit', async (req, res) => {
         enrollmentToEdit.activity = newActivity;
 
         await enrollmentToEdit.save();
-        res.redirect('/courseEnrollmentManagement');
+        res.redirect('/admin/courseEnrollmentManagement');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -591,7 +358,7 @@ router.post('/courseEnrollmentManagement/delete', async (req, res) => {
             return res.status(404).send('Enrollment not found');
         }
 
-        res.redirect('/courseEnrollmentManagement');
+        res.redirect('/admin/courseEnrollmentManagement');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -609,7 +376,7 @@ router.post('/courseEnrollmentManagement/delete', async (req, res) => {
 router.get('/userManagement', async (req, res) => {
     try {
         const userList = await collection.find().select('-password'); // Exclude password field
-        res.render('userManagement', { userList });
+        res.render('admin/userManagement', { userList });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -628,13 +395,13 @@ router.post('/userManagement/add', async (req, res) => {
         const existingUser = await collection.findOne({ email });
 
         if (existingUser) {
-            res.render('/userManagement', { error: 'Email already exists' });
+            return res.status(400).send('User with this email already exists');
         }
 
         // Creating a new document using the Mongoose model
         const newUser = new collection({ major, email, name, password: hashedPassword, year, role });
         await newUser.save();
-        res.redirect('/userManagement'); // Redirect to user list or wherever you want
+        res.redirect('/admin/userManagement'); // Redirect to user list or wherever you want
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -656,6 +423,13 @@ router.post('/userManagement/edit', async (req, res) => {
         // Get the existing user email
         const oldEmail = userToEdit.email;
 
+        // Check if the new email is already in use by another user (excluding the current user)
+        const existingUserWithEmail = await collection.findOne({ email: newEmail, _id: { $ne: userIdEdit } });
+        if (existingUserWithEmail) {
+            // Another user is already using the new email
+            return res.status(400).send('The new email is already in use by another user.');
+        }
+        
         // Update user details
         userToEdit.major = newMajor;
         userToEdit.email = newEmail;
@@ -667,7 +441,7 @@ router.post('/userManagement/edit', async (req, res) => {
         // Update CourseEnrollment records with the new email
         await CourseEnrollment.updateMany({ email: oldEmail }, { $set: { email: newEmail } });
 
-        res.redirect('/userManagement');
+        res.redirect('/admin/userManagement');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -688,7 +462,7 @@ router.post('/userManagement/delete', async (req, res) => {
         // Delete corresponding records in courseEnrollment for the user's email
         await CourseEnrollment.deleteMany({ email: userToDelete.email });
 
-        res.redirect('/userManagement');
+        res.redirect('/admin/userManagement');
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
