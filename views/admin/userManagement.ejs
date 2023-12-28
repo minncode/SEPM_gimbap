@@ -109,7 +109,7 @@
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('addUserPopup')">X</button>
         </div>
-        <form action="/userManagement/add" method="post">
+        <form action="/admin/userManagement/add" method="post">
             <label for="email">Email:</label>
             <input type="email" name="email" required><br>
             <label for="name">Name:</label>
@@ -131,7 +131,7 @@
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('editUserPopup')">X</button>
         </div>
-        <form action="/userManagement/edit" method="post">
+        <form action="/admin/userManagement/edit" method="post">
             <input type="text" name="userIdEdit" required readonly style="display: none;">
             <label for="newEmail">New Email:</label>
             <input type="text" name="newEmail" required><br>
@@ -155,7 +155,7 @@
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('deleteUserPopup')">X</button>
         </div>
-        <form action="/userManagement/delete" method="post">
+        <form action="/admin/userManagement/delete" method="post">
             <input type="text" name="userIdDelete" required readonly style="display: none;">
             <label for="emailDelete">Email:</label>
             <input type="email" name="emailDelete" required readonly><br>
@@ -218,9 +218,6 @@
             closePopup('deleteUserPopup');
         }
 
-  <% if (typeof error !== 'undefined') { %>
-    alert('<%= error %>');
-  <% } %>
 
 
     </script>

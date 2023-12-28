@@ -53,7 +53,7 @@
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('addPopup')">X</button>
         </div>
-        <form action="/courseListManagement/add" method="post">
+        <form action="/admin/courseListManagement/add" method="post">
             <label for="courseID">Course ID:</label>
             <input type="text" name="courseID" required><br>
             <label for="courseID">Course Code:</label>
@@ -73,7 +73,7 @@
     <div class="popup-header">
         <button class="popup-close" onclick="closePopup('editPopup')">X</button>
     </div>
-    <form action="/courseListManagement/edit" method="post">
+    <form action="/admin/courseListManagement/edit" method="post">
         <label for="courseIDEdit">Course ID:</label>
         <input type="text" name="courseIDEdit" required readonly ><br>
 
@@ -101,7 +101,7 @@
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('deletePopup')">X</button>
         </div>
-        <form action="/courseListManagement/delete" method="post">
+        <form action="/admin/courseListManagement/delete" method="post">
             <label for="courseIDDelete">Course ID:</label>
             <input type="text" name="courseIDDelete" required readonly ><br>
             <label for="courseCodeDelete">Course Code:</label>

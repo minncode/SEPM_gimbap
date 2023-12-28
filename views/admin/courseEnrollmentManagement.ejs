@@ -45,12 +45,28 @@
         </table>
     </div>
 
+    <!-- Add Enrollment Form -->
+    <div class="popup" id="addEnrollmentPopup">
+        <div class="popup-header">
+            <button class="popup-close" onclick="closePopup('addEnrollmentPopup')">X</button>
+        </div>
+        <form action="/admin/courseEnrollmentManagement/add" method="post">
+            <label for="email">Email:</label>
+            <input type="text" name="email" required><br>
+            <label for="courseID">Course ID:</label>
+            <input type="text" name="courseID" required><br>
+            <label for="activity">Activity:</label>
+            <input type="text" name="activity" required><br>
+            <button type="submit">Add Enrollment</button>
+        </form>
+    </div>
+
     <!-- Edit Enrollment Form -->
     <div class="popup" id="editEnrollmentPopup">
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('editEnrollmentPopup')">X</button>
         </div>
-        <form action="/courseEnrollmentManagement/edit" method="post">
+        <form action="/admin/courseEnrollmentManagement/edit" method="post">
             <input type="text" name="enrollmentIdEdit" required readonly style="display: none;">
             <label for="emailEdit">Email:</label>
             <input type="text" name="emailEdit" required readonly><br>
@@ -69,7 +85,7 @@
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('deleteEnrollmentPopup')">X</button>
         </div>
-        <form action="/courseEnrollmentManagement/delete" method="post">
+        <form action="/admin/courseEnrollmentManagement/delete" method="post">
             <input type="text" name="enrollmentIdDelete" required readonly style="display: none;">
             <label for="emailDelete">Email:</label>
             <input type="text" name="emailDelete" required readonly><br>
