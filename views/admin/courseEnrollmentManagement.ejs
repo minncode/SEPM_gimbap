@@ -9,6 +9,7 @@
     <title>Admin</title>
     <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
 
+    <link rel="stylesheet" href="/stylesheets/adimNavbar.css">
     <link rel="stylesheet" href="/stylesheets/courseManagement.css">
     
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -16,9 +17,39 @@
 </head>
 
 <body>
+    <div class="admin-navbar">
+        <ul>
+            <a class="navlogo" href="#">
+                <img src="/images/rmitlogo.png" alt="">
+                <p>RMITdays</p>
+            </a>
+            <li>
+            <a class="admin-profile-wrap" href="#">
+                <div class="admin-profile">
+                    <img src="/images/studentProfile.png" alt="">
+                </div> 
+                <p>Admin Name</p>
+            </a>
+            </li>
+            <li>
+                <a class="backWeb" href="#">
+                    <ion-icon name="exit-outline"></ion-icon>
+                    <p>Go back to Website</p>
+                </a>
+            </li>
+
+            <p id="category1" >Management</p>
+            <li><a href="#">User Management</a></li>
+            <li><a href="#">Course List Management</a></li>
+            <li><a href="#">Course Activity Management</a></li>
+            <li><a href="#">Course Enrollment Management</a></li>
+            <li><a href="#">Campus Map Management</a></li>
+            <li><a href="#">Payment Management</a></li>
+            <li><a href="#">Course Evaluation Management</a></li>
+          </ul>
+    </div>
     <div class="adminCourseManageContents">
         <h1>Course Enrollment Management</h1>
-
         <!-- Display Course Enrollment List -->
         <button class="admin-add-btn" onclick="showAddEnrollmentForm()">
             <ion-icon name="add-outline"></ion-icon>

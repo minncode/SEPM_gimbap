@@ -5,7 +5,7 @@
 }
 
 .adminCourseManageContents{
-  margin: 15px;
+  margin: 15px 15px 15px 265px
 }
 
 .adminCourseManageContents h1{
@@ -85,6 +85,10 @@ th {
 .action-buttons button {
   width: 60px; /* 조정 가능한 버튼 최대 너비 */
   margin: 2px 0px 2px 5px;
+}
+
+.action-buttons button:hover{
+  opacity: 0.7;
 }
 
 /* popup */
