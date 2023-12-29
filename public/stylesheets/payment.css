@@ -96,7 +96,7 @@ body {
 }
 
 /* 계좌번호 및 잔액 스타일 */
-.accountNumber {
+.userEmail {
   font-weight: bold;
   font-size: 15px;
   color: rgb(211, 211, 216);

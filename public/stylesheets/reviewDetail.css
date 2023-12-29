@@ -63,3 +63,36 @@
 .course_evaluation_detail-delete-icon {
     font-size: 30px;
 }
+.graph {
+    display: flex;
+    flex-direction: column; 
+    height: 100px; 
+    width: 100%; 
+}
+
+.bar {
+    height: 100%;
+    margin-bottom: 10px; 
+    background-color: #ddd; 
+    position: relative;
+}
+
+.barText {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5px;
+    color: #222160;
+}
+
+#generosityBar {
+    background-color: #FFC500; 
+}
+
+#generalBar {
+    background-color: #91C987; 
+}
+
+#strictnessBar {
+    background-color: #F8BBBB; 
+}

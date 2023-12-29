@@ -19,102 +19,100 @@
 
         <h1>User Management</h1>
 
-        <!-- Display User List -->
-        <button class="admin-add-btn" onclick="showAddUserForm()">
-            <ion-icon name="add-outline"></ion-icon>
-            <p>Add User</p>
-        </button>
-
-        <table>
+    <!-- Display User List -->
+    <button class="admin-add-btn" onclick="showAddUserForm()">
+        <ion-icon name="add-outline"></ion-icon>
+        <p>Add User</p>
+    </button>
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Major</th>
+            <th>Year</th>
+            <th>Action</th>
+        </tr>
+        <% for (let i = 0; i < userList.length; i++) { %>
             <tr>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Major</th>
-                <th>Year</th>
-                <th>Action</th>
+                <td><%= userList[i].email %></td>
+                <td><%= userList[i].name %></td>
+                <td><%= userList[i].role %></td>
+                <td><%= userList[i].major %></td>
+                <td><%= userList[i].year %></td>
+
+                <td class="action-buttons">
+                    <button id="action-edit" onclick="showEditUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Edit</button>
+                    <button id="action-delete" onclick="showDeleteUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Delete</button>
+                </td>
             </tr>
-            <% for (let i = 0; i < userList.length; i++) { %>
-                <tr>
-                    <td><%= userList[i].email %></td>
-                    <td><%= userList[i].name %></td>
-                    <td><%= userList[i].role %></td>
-                    <td><%= userList[i].major %></td>
-                    <td><%= userList[i].year %></td>
-                    <td class="action-buttons">
-                        <button id="action-edit" onclick="showEditUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Edit</button>
-                        <button id="action-delete" onclick="showDeleteUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Delete</button>
-                    </td>
-                </tr>
-            <% } %>
-        </table>
-    
-        <!-- Add User Form -->
-        <div class="popup" id="addUserPopup">
-            <div class="popup-header">
-                <button class="popup-close" onclick="closePopup('addUserPopup')">X</button>
-            </div>
-            <form action="/admin/userManagement/add" method="post">
-                <label for="email">Email:</label>
-                <input type="email" name="email" required><br>
-                <label for="name">Name:</label>
-                <input type="text" name="name" required><br>
-                <label for="role">Role:</label>
-                <input type="text" name="role" required><br>
-                <label for="major">Major:</label>
-                <input type="text" name="major" required><br>
-                <label for="year">Year (optional):</label>
-                <input type="text" name="year"><br>
-                <label for="password">Password:</label>
-                <input type="password" name="password" required><br>
-                <button type="submit">Add User</button>
-            </form>
+        <% } %>
+    </table>
+
+    <!-- Add User Form -->
+    <div class="popup" id="addUserPopup">
+        <div class="popup-header">
+            <button class="popup-close" onclick="closePopup('addUserPopup')">X</button>
         </div>
-    
-        <!-- Edit User Form -->
-        <div class="popup" id="editUserPopup">
-            <div class="popup-header">
-                <button class="popup-close" onclick="closePopup('editUserPopup')">X</button>
-            </div>
-            <form action="/admin/userManagement/edit" method="post">
-                <input type="text" name="userIdEdit" required readonly style="display: none;">
-                <label for="newEmail">New Email:</label>
-                <input type="text" name="newEmail" required><br>
-                <label for="newName">New Name:</label>
-                <input type="text" name="newName" required><br>
-                <label for="newRole">New Role:</label>
-                <input type="text" name="newRole"><br>
-                
-                <label for="newMajor">New Major:</label>
-                <input type="text" name="newMajor" required><br>
-                <label for="yearEdit">Year:</label>
-                <input type="text" name="yearEdit" required><br>
-    
-    
-                <button type="submit">Edit User</button>
-            </form>
+        <form action="/admin/userManagement/add" method="post">
+            <label for="email" class="custom-label">Email:</label>
+            <input type="email" name="email" required class="custom-input"><br>
+            <label for="name" class="custom-label">Name:</label>
+            <input type="text" name="name" required class="custom-input"><br>
+            <label for="role" class="custom-label">Role:</label>
+            <input type="text" name="role" required class="custom-input"><br>
+            <label for="major" class="custom-label">Major:</label>
+            <input type="text" name="major" required class="custom-input"><br>
+            <label for="year" class="custom-label">Year (optional):</label>
+            <input type="text" name="year"><br>
+            <label for="password" class="custom-label">Password:</label>
+            <input type="password" name="password" required class="custom-input"><br>
+            <button type="submit" class="custom-button">Add User</button>
+        </form>
+    </div>
+
+    <!-- Edit User Form -->
+    <div class="popup" id="editUserPopup">
+        <div class="popup-header">
+            <button class="popup-close" onclick="closePopup('editUserPopup')">X</button>
         </div>
-    
-        <!-- Delete User Form -->
-        <div class="popup" id="deleteUserPopup">
-            <div class="popup-header">
-                <button class="popup-close" onclick="closePopup('deleteUserPopup')">X</button>
-            </div>
-            <form action="/admin/userManagement/delete" method="post">
-                <input type="text" name="userIdDelete" required readonly style="display: none;">
-                <label for="emailDelete">Email:</label>
-                <input type="email" name="emailDelete" required readonly><br>
-                <label for="nameDelete">Name:</label>
-                <input type="text" name="nameDelete" required readonly><br>
-                <label for="roleDelete">Role:</label>
-                <input type="text" name="roleDelete" required readonly><br>
-                <label for="majorDelete">Major:</label>
-                <input type="text" name="majorDelete" required readonly><br>
-                <label for="yearDelete">Year:</label>
-                <input type="text" name="yearDelete" required readonly><br>
-                <button type="submit">Delete User</button>
-            </form>
+        <form action="/admin/userManagement/edit" method="post">
+            <input type="text" name="userIdEdit" required readonly class="custom-input" style="display: none;">
+            <label for="newEmail" class="custom-label">New Email:</label>
+            <input type="text" name="newEmail" required class="custom-input"><br>
+            <label for="newName" class="custom-label">New Name:</label>
+            <input type="text" name="newName" required class="custom-input"><br>
+            <label for="newRole" class="custom-label">New Role:</label>
+            <input type="text" name="newRole" class="custom-input"><br>
+            
+            <label for="newMajor" class="custom-label">New Major:</label>
+            <input type="text" name="newMajor" required class="custom-input"><br>
+            <label for="yearEdit" class="custom-label">Year:</label>
+            <input type="text" name="yearEdit" required class="custom-input"><br>
+
+
+            <button type="submit" class="custom-button">Edit User</button>
+        </form>
+
+    <!-- Delete User Form -->
+    <div class="popup" id="deleteUserPopup">
+        <div class="popup-header">
+            <button class="popup-close" onclick="closePopup('deleteUserPopup')">X</button>
         </div>
+        <form action="/admin/userManagement/delete" method="post">
+            <input type="text" name="userIdDelete" required readonly class="custom-input"style="display: none;">
+            <label for="emailDelete" class="custom-label">Email:</label>
+            <input type="email" name="emailDelete" required readonly class="custom-input"><br>
+            <label for="nameDelete" class="custom-label">Name:</label>
+            <input type="text" name="nameDelete" required readonly class="custom-input"><br>
+            <label for="roleDelete" class="custom-label">Role:</label>
+            <input type="text" name="roleDelete" required readonly class="custom-input"><br>
+            <label for="majorDelete" class="custom-label">Major:</label>
+            <input type="text" name="majorDelete" required readonly class="custom-input"><br>
+            <label for="yearDelete" class="custom-label">Year:</label>
+            <input type="text" name="yearDelete" required readonly class="custom-input"><br>
+            <button type="submit" class="custom-button">Delete User</button>
+        </form>
     </div>
 
     <div class="overlay" onclick="closeAllUserPopups()"></div>

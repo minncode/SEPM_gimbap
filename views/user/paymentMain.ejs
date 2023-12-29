@@ -20,14 +20,28 @@
     <div class="mainContainer">
         <div class="accountContainer">
             <div class="accountInfo">
-                <p class="accountNumber">1234567890</p>
-                <p class="balance">VND <span id="balance"> 1000,000</span></p>
+                <p class="userEmail"><%= userEmail %></p>
+                <p class="balance">VND <span id="balance"><%= balanceAmount.toLocaleString() %></span></p>
                 <a href="charging"><button class="chargeButton" id="charge-button">Charge</button></a>
             </div>
         </div>
     
         <div class="bankInfo">
             <p class="paymentHistory">Payment History</p>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Payment Date</th>
+                </tr>
+                <% for (let i = 0; i < paymentRecords.length; i++) { %>
+                    <tr>
+                        <td><%= paymentRecords[i].type %></td>
+                        <td><%= paymentRecords[i].amount %></td>
+                        <td><%= new Date(paymentRecords[i].paymentDate).toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }) %></td>
+                    </tr>
+                <% } %>
+            </table>
         </div>
         
     </div>

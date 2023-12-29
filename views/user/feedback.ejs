@@ -1,0 +1,58 @@
+<%- include("../partials/header") %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/feedback.css">
+    <link rel="stylesheet" href="/stylesheets/header.css">
+    <title>User Feedback</title>
+
+</head>
+<body>
+    <%- include("../partials/navigation") %>
+    <div class="contentConatiner">
+        <div class="feedback-form">
+            <h2>Leave Feedback</h2>
+            <select id="feedbackType">
+                <option value="complaint">Complaint</option>
+                <option value="suggestion">Suggestion</option>
+                <option value="question">Question</option>
+            </select>
+            <textarea id="feedbackText" placeholder="Write your feedback here..."></textarea>
+            <button class="submitBtn" onclick="openPopup()">Submit</button>
+        </div>
+    </div>
+    <div id="popup" class="hide">
+        <div class="content">
+          <h1>Confirm your action</h1>
+          <p>Do you agree to submit your feedback?</p>
+            <button onclick="window.location.href='/deleteaccount'">YES</button>
+            <button href="#" onclick="closePopup()">NO</button>
+        </div>
+      </div>
+
+      <script>
+        // Function to open the modal
+        function openPopup() {
+          document.getElementById('popup').classList.remove('hide');
+        }
+        // Function to close the modal
+        function closePopup() {
+          document.getElementById('popup').classList.add('hide');
+        }
+        // Event listener for the 'NO' button
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('#popup button[onclick="closePopup()"]').addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default action
+                closePopup();
+            });
+  
+            // Optional: Close the modal if the user clicks outside of it
+            window.onclick = function(event) {
+                let modal = document.getElementById('popup');
+                if (event.target === modal) {
+                    closePopup();
+                }
+            }
+        });
+      </script>
+</body>
+</html>
