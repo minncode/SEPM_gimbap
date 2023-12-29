@@ -287,9 +287,30 @@ router.get('/charging', (req, res) => {
     }
   });
 
-router.get('/barcode', (req, res) => {
-    res.render('user/barcode');
+// Route to display the barcode page
+router.get('/barcode', async (req, res) => {
+    try {
+        const userEmail = req.session.email;
+
+        if (!userEmail) {
+            return res.redirect('/');
+        }
+
+        const paymentBalance = await PaymentBalance.findOne({ email: userEmail });
+
+        res.render('user/barcode', { userEmail, paymentBalance });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
+
+
+
+
+
+
+
 
 router.get('/bankManage', (req, res) => {
     res.render('user/bankManage');
