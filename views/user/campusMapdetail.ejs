@@ -1,0 +1,48 @@
+<%- include("../partials/header") %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/campusMapdetail.css">
+    <link rel="stylesheet" href="/stylesheets/header.css">
+    <link href='https://fonts.googleapis.com/css?family=Sofia Sans' rel='stylesheet'>
+    <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <%- include("../partials/navigation") %>
+      <div class="mainContentHeader">
+        <div class="Category">
+            <h1>Noodle U</h1>
+            <a href="main">    <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></a>
+        </div>
+      </div>
+
+    
+        <div class="contentContainers">
+            <div class="contentContainer">
+                <div class="locationImgcontainer">
+                    <img class="locationimage" src="fic5.jpg">
+                </div>
+                <div class="detail">
+                    <div class="location">
+                        <ion-icon class="locationIcon" name="location-outline"></ion-icon>
+                        <p class="locationName">Building 1. Beanland Building</p>
+                    </div>
+                    <div class="opentime">
+                        <ion-icon class="time" name="time-outline"></ion-icon>
+                        <p class="opencloseTime">8:00 am ~ 17:00 pm</p>
+                    </div>
+
+                    <div class="phoneNumber">
+                        <ion-icon class="phone" name="call-outline"></ion-icon>
+                        <p class="call">1234-6778</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+
+    
+</body>
+</html>

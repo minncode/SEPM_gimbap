@@ -54,17 +54,17 @@
             <button class="popup-close" onclick="closePopup('addActivityPopup')">X</button>
         </div>
         <form action="/admin/courseActivityManagement/add" method="post">
-            <label for="courseID">Course ID:</label>
-            <input type="text" name="courseID" required><br>
-            <label for="activity">Activity:</label>
-            <input type="text" name="activity" required><br>
-            <label for="lecturer">Lecturer:</label>
-            <input type="text" name="lecturer"><br>
-            <label for="classroom">Classroom:</label>
-            <input type="text" name="classroom"><br>
-            <label for="time">Time (comma-separated):</label>
-            <input type="text" name="time" required><br>
-            <button type="submit">Add Activity</button>
+            <label for="courseID" class="custom-label">Course ID:</label>
+            <input type="text" name="courseID" required class="custom-input"><br>
+            <label for="activity" class="custom-label">Activity:</label>
+            <input type="text" name="activity" required class="custom-input"><br>
+            <label for="lecturer" class="custom-label">Lecturer:</label>
+            <input type="text" name="lecturer" class="custom-input"><br>
+            <label for="classroom" class="custom-label">Classroom:</label>
+            <input type="text" name="classroom" class="custom-input"><br>
+            <label for="time" class="custom-label">Time (comma-separated):</label>
+            <input type="text" name="time" required class="custom-input"><br>
+            <button type="submit" class="custom-button">Add Activity</button>
         </form>
     </div>
 
@@ -74,20 +74,20 @@
             <button class="popup-close" onclick="closePopup('editActivityPopup')">X</button>
         </div>
         <form action="/admin/courseActivityManagement/edit" method="post">
-            <input type="text" name="activityIdEdit" required readonly style="display: none;">
-            <label for="courseIDEdit">Course ID:</label>
-            <input type="text" name="courseIDEdit" required readonly><br>
-            <label for="newCourseID">New Course ID:</label>
-            <input type="text" name="newCourseID" required><br>
-            <label for="newActivity">New Activity:</label>
-            <input type="text" name="newActivity" required><br>
-            <label for="newLecturer">New Lecturer:</label>
-            <input type="text" name="newLecturer"><br>
-            <label for="newClassroom">New Classroom:</label>
-            <input type="text" name="newClassroom"><br>
-            <label for="newTime">New Time (comma-separated):</label>
-            <input type="text" name="newTime" required><br>
-            <button type="submit">Edit Activity</button>
+            <input type="text" name="activityIdEdit" required readonly class="custom-input" style="display: none;">
+            <label for="courseIDEdit" class="custom-label">Course ID:</label>
+            <input type="text" name="courseIDEdit" required readonly class="custom-input"><br>
+            <label for="newCourseID" class="custom-label">New Course ID:</label>
+            <input type="text" name="newCourseID" required class="custom-input"><br>
+            <label for="newActivity" class="custom-label">New Activity:</label>
+            <input type="text" name="newActivity" required class="custom-input"><br>
+            <label for="newLecturer" class="custom-label">New Lecturer:</label>
+            <input type="text" name="newLecturer" class="custom-input"><br>
+            <label for="newClassroom" class="custom-label">New Classroom:</label>
+            <input type="text" name="newClassroom" class="custom-input"><br>
+            <label for="newTime" class="custom-label">New Time (comma-separated):</label>
+            <input type="text" name="newTime" required class="custom-input"><br>
+            <button type="submit" class="custom-button">Edit Activity</button>
         </form>
     </div>
 
@@ -97,18 +97,18 @@
             <button class="popup-close" onclick="closePopup('deleteActivityPopup')">X</button>
         </div>
         <form action="/admin/courseActivityManagement/delete" method="post">
-            <input type="text" name="activityIdDelete" required readonly style="display: none;">
-            <label for="courseIdDelete">Course ID:</label>
-            <input type="text" name="courseIdDelete" required readonly><br>
-            <label for="activityNumDelete">Activity Number:</label>
-            <input type="text" name="activityNumDelete" required readonly><br>
-            <label for="lecturerDelete">Lecturer:</label>
-            <input type="text" name="lecturerDelete" required readonly><br>
-            <label for="lecturerDelete">Classroom:</label>
-            <input type="text" name="classroomDelete" required readonly><br>
-            <label for="lecturerDelete">Time:</label>
-            <input type="text" name="timeDelete" required readonly><br>
-            <button type="submit">Delete Activity</button>
+            <input type="text" name="activityIdDelete" required readonly class="custom-input" style="display: none;">
+            <label for="courseIdDelete" class="custom-label">Course ID:</label>
+            <input type="text" name="courseIdDelete" required readonly class="custom-input"><br>
+            <label for="activityNumDelete" class="custom-label">Activity Number:</label>
+            <input type="text" name="activityNumDelete" required readonly class="custom-input"><br>
+            <label for="lecturerDelete" class="custom-label">Lecturer:</label>
+            <input type="text" name="lecturerDelete" required readonly class="custom-input"><br>
+            <label for="lecturerDelete" class="custom-label">Classroom:</label>
+            <input type="text" name="classroomDelete" required readonly class="custom-input"><br>
+            <label for="lecturerDelete" class="custom-label">Time:</label>
+            <input type="text" name="timeDelete" required readonly class="custom-input"><br>
+            <button type="submit" class="custom-button">Delete Activity</button>
         </form>
     </div>
 

@@ -247,6 +247,15 @@ router.get('/foodPavillion', (req, res) => {
     res.render('user/foodPavillion');
 });
 
+router.get('/foodPavillion', (req, res) => {
+    res.render('user/foodPavillion');
+});
+
+router.get('/campusMapdetail', (req, res) => {
+    res.render('user/campusMapdetail');
+});
+
+
 
 
 

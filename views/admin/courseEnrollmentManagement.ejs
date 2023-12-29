@@ -51,13 +51,13 @@
             <button class="popup-close" onclick="closePopup('addEnrollmentPopup')">X</button>
         </div>
         <form action="/admin/courseEnrollmentManagement/add" method="post">
-            <label for="email">Email:</label>
-            <input type="text" name="email" required><br>
-            <label for="courseID">Course ID:</label>
-            <input type="text" name="courseID" required><br>
-            <label for="activity">Activity:</label>
-            <input type="text" name="activity" required><br>
-            <button type="submit">Add Enrollment</button>
+            <label for="email" class="custom-label">Email:</label>
+            <input type="text" name="email" required class="custom-input"><br>
+            <label for="courseID" class="custom-label">Course ID:</label>
+            <input type="text" name="courseID" required class="custom-input"><br>
+            <label for="activity" class="custom-label">Activity:</label>
+            <input type="text" name="activity" required class="custom-input"><br>
+            <button type="submit" class="custom-button">Add Enrollment</button>
         </form>
     </div>
 
@@ -67,16 +67,16 @@
             <button class="popup-close" onclick="closePopup('editEnrollmentPopup')">X</button>
         </div>
         <form action="/admin/courseEnrollmentManagement/edit" method="post">
-            <input type="text" name="enrollmentIdEdit" required readonly style="display: none;">
-            <label for="emailEdit">Email:</label>
-            <input type="text" name="emailEdit" required readonly><br>
-            <label for="courseIDEdit">Course ID:</label>
-            <input type="text" name="courseIDEdit" required readonly><br>
-            <label for="newCourseID">New Course ID:</label>
-            <input type="text" name="newCourseID" required><br>
-            <label for="newActivity">New Activity:</label>
-            <input type="text" name="newActivity" required><br>
-            <button type="submit">Edit Enrollment</button>
+            <input type="text" name="enrollmentIdEdit" required readonly class="custom-input" style="display: none;">
+            <label for="emailEdit" class="custom-label">Email:</label>
+            <input type="text" name="emailEdit" required readonly class="custom-input"><br>
+            <label for="courseIDEdit" class="custom-label">Course ID:</label>
+            <input type="text" name="courseIDEdit" required readonly class="custom-input"><br>
+            <label for="newCourseID" class="custom-label">New Course ID:</label>
+            <input type="text" name="newCourseID" required class="custom-input"><br>
+            <label for="newActivity" class="custom-label">New Activity:</label>
+            <input type="text" name="newActivity" required class="custom-input"><br>
+            <button type="submit" class="custom-button">Edit Enrollment</button>
         </form>
     </div>
 
@@ -86,14 +86,14 @@
             <button class="popup-close" onclick="closePopup('deleteEnrollmentPopup')">X</button>
         </div>
         <form action="/admin/courseEnrollmentManagement/delete" method="post">
-            <input type="text" name="enrollmentIdDelete" required readonly style="display: none;">
-            <label for="emailDelete">Email:</label>
-            <input type="text" name="emailDelete" required readonly><br>
-            <label for="courseIDDelete">Course ID:</label>
-            <input type="text" name="courseIDDelete" required readonly><br>
-            <label for="activityDelete">Activity:</label>
-            <input type="text" name="activityDelete" required readonly><br>
-            <button type="submit">Delete Enrollment</button>
+            <input type="text" name="enrollmentIdDelete" required readonly class="custom-input" style="display: none;">
+            <label for="emailDelete" class="custom-label">Email:</label>
+            <input type="text" name="emailDelete" required readonly class="custom-input"><br>
+            <label for="courseIDDelete" class="custom-label">Course ID:</label>
+            <input type="text" name="courseIDDelete" required readonly class="custom-input"><br>
+            <label for="activityDelete" class="custom-label">Activity:</label>
+            <input type="text" name="activityDelete" required readonly class="custom-input"><br>
+            <button type="submit" class="custom-button">Delete Enrollment</button>
         </form>
     </div>
 
