@@ -1,0 +1,95 @@
+<!-- feedbackManagement.ejs -->
+
+<%- include("../partials/header") %>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback Management</title>
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        z-index: 1000;
+        max-width: 400px; /* 조정 가능한 팝업 최대 너비 */
+        width: 100%;
+    }
+
+    .popup-header {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+    }
+
+    .popup-close {
+        cursor: pointer;
+        background-color: #ff0000;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        font-size: 16px;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    /* Remove list styles and make each list item a flex container */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    /* Make buttons the same width */
+    .action-buttons button {
+        width: 100px; /* 조정 가능한 버튼 최대 너비 */
+        margin-right: 5px;
+    }
+</style>
+</head>
+
+<body>
+<h1>Feedback Management</h1>
+
+<!-- Display Feedback List -->
+<h2>Feedback List</h2>
+<table>
+    <tr>
+        <th>Type of Feedback</th>
+        <th>Feedback Details</th>
+        <th>Submission Time</th>
+    </tr>
+    <% for (let i = 0; i < feedbackList.length; i++) { %>
+        <tr>
+            <td><%= feedbackList[i].typeOfFeedback %></td>
+            <td><%= feedbackList[i].feedbackDetails %></td>
+            <td><%= feedbackList[i].submissionTime.toISOString().split('T')[0] %></td>
+        </tr>
+    <% } %>
+</table>
+
+
+</body>
+
+</html>
