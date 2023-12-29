@@ -8,7 +8,7 @@ const CourseActivity = require('../models/courseActivity');
 const CourseEnrollment = require('../models/courseEnrollment');
 const PaymentBalance = require('../models/paymentBalance');
 const PaymentRecord = require('../models/paymentRecord');
-
+const Feedback = require('../models/feedback');
 
 
 router.use(session({
@@ -617,7 +617,17 @@ router.get('/paymentRecordManagement', async (req, res) => {
     }
 });
 
+// Feedback Management
+router.get('/feedbackManagement', async (req, res) => {
+    try {
+        const feedbackList = await Feedback.find();
 
+        res.render('admin/feedbackManagement', { feedbackList });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 
 

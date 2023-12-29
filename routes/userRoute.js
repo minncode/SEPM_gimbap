@@ -8,6 +8,7 @@ const CourseActivity = require('../models/courseActivity');
 const CourseEnrollment = require('../models/courseEnrollment');
 const PaymentBalance = require('../models/paymentBalance');
 const PaymentRecord = require('../models/paymentRecord');
+const Feedback = require('../models/feedback');
 
 
 router.use(session({
@@ -326,13 +327,31 @@ router.get('/campusMapdetail', (req, res) => {
     res.render('user/campusMapdetail');
 });
 
+// Route to render the feedback form
 router.get('/feedback', (req, res) => {
     res.render('user/feedback');
 });
 
+// Route to handle feedback submission
+router.post('/submit-feedback', async (req, res) => {
+    try {
+        const { feedbackType, feedbackDetails } = req.body;
 
+        // Create a new feedback document
+        const newFeedback = new Feedback({
+            typeOfFeedback: feedbackType,
+            feedbackDetails: feedbackDetails,
+        });
 
+        // Save the feedback to the database
+        const savedFeedback = await newFeedback.save();
 
+        res.status(201).json({ success: true, feedback: savedFeedback });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
 
 
 router.get('/deleteaccount', async (req, res) => {
@@ -358,7 +377,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.use(function (err, req, res, next) {
-    console.error(err.stack);
+    console.error('Error in :', error);
     res.status(500).send('Something broke!');
 });
 

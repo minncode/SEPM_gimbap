@@ -1,9 +1,11 @@
+<!-- user/feedback.ejs -->
+
 <%- include("../partials/header") %>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/stylesheets/feedback.css">
-    <link rel="stylesheet" href="/stylesheets/header.css">
-    <title>User Feedback</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/stylesheets/feedback.css">
+<link rel="stylesheet" href="/stylesheets/header.css">
+<title>User Feedback</title>
 
 </head>
 <body>
@@ -12,9 +14,12 @@
         <div class="feedback-form">
             <h2>Leave Feedback</h2>
             <select id="feedbackType">
-                <option value="complaint">Complaint</option>
-                <option value="suggestion">Suggestion</option>
-                <option value="question">Question</option>
+                <option value="GeneralInquiry">General Inquiry</option>
+                <option value="BugReport">Bug Report</option>
+                <option value="FeatureRequest">Feature Request</option>
+                <option value="ContentError">Content Error</option>
+                <option value="PaymentIssue">Payment Issue</option>
+                <option value="AccountProblem">Account Problem</option>
             </select>
             <textarea id="feedbackText" placeholder="Write your feedback here..."></textarea>
             <button class="submitBtn" onclick="openPopup()">Submit</button>
@@ -24,35 +29,53 @@
         <div class="content">
           <h1>Confirm your action</h1>
           <p>Do you agree to submit your feedback?</p>
-            <button onclick="window.location.href='/deleteaccount'">YES</button>
+            <button onclick="submitFeedback()">YES</button>
             <button href="#" onclick="closePopup()">NO</button>
         </div>
       </div>
 
       <script>
-        // Function to open the modal
         function openPopup() {
           document.getElementById('popup').classList.remove('hide');
         }
-        // Function to close the modal
+
         function closePopup() {
           document.getElementById('popup').classList.add('hide');
         }
-        // Event listener for the 'NO' button
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('#popup button[onclick="closePopup()"]').addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent the default action
-                closePopup();
+
+        async function submitFeedback() {
+          const feedbackType = document.getElementById('feedbackType').value;
+          const feedbackText = document.getElementById('feedbackText').value;
+
+          openPopup();
+
+          try {
+            const response = await fetch('/submit-feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    feedbackType: feedbackType,
+                    feedbackDetails: feedbackText,
+                }),
             });
-  
-            // Optional: Close the modal if the user clicks outside of it
-            window.onclick = function(event) {
-                let modal = document.getElementById('popup');
-                if (event.target === modal) {
-                    closePopup();
-                }
+
+            const result = await response.json();
+
+            if (result.success) {
+                console.log('Feedback submitted successfully');
+
+                // Redirect to /profile
+                window.location.href = '/profile';
+            } else {
+                console.error('Failed to submit feedback');
             }
-        });
+        } catch (error) {
+            console.error('An error occurred:', error);
+            closePopup();
+        }
+    }
       </script>
 </body>
 </html>

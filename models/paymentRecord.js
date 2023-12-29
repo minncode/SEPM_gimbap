@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const paymentRecordSchema = new mongoose.Schema({
     email: {
-        type: String, // 사용자를 식별할 수 있는 고유한 ID (예: MongoDB의 ObjectId)
+        type: String, 
         required: true,
     },
     type: {
@@ -10,21 +10,21 @@ const paymentRecordSchema = new mongoose.Schema({
         required: true,
     },
     amount: {
-        type: String, // 금액은 숫자로 저장하는 것이 일반적
+        type: String, 
         required: true,
     },
     remainingBalance: {
-        type: String, // 남은 잔액
+        type: String, 
     },
     paymentStatus: {
-        type: String, // 결제 상태 (예: "성공", "보류", "취소" 등)
+        type: String, 
     },
     paymentDate: {
-        type: Date, // 결제 일자 및 시간
-        default: Date.now, // 기본값으로 현재 일시 설정
+        type: Date, 
+        default: Date.now, 
     },
     adminNote: {
-        type: String, // 어드민이 추가하는 메모 또는 설명
+        type: String, 
     },
 });
 
