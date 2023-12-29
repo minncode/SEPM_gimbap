@@ -255,6 +255,11 @@ router.get('/campusMapdetail', (req, res) => {
     res.render('user/campusMapdetail');
 });
 
+router.get('/feedback', (req, res) => {
+    res.render('user/feedback');
+});
+
+
 
 
 
