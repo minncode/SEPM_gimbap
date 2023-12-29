@@ -39,13 +39,13 @@
             </li>
 
             <p id="category1" >Management</p>
-            <li><a href="#">User Management</a></li>
-            <li><a href="#">Course List Management</a></li>
-            <li><a href="#">Course Activity Management</a></li>
-            <li><a href="#">Course Enrollment Management</a></li>
-            <li><a href="#">Campus Map Management</a></li>
-            <li><a href="#">Payment Management</a></li>
-            <li><a href="#">Course Evaluation Management</a></li>
+            <li><a href="#">User</a></li>
+            <li><a href="#">Course List</a></li>
+            <li><a href="#">Course Activity</a></li>
+            <li><a href="#">Course Enrollment</a></li>
+            <li><a href="#">Campus Map</a></li>
+            <li><a href="#">Payment</a></li>
+            <li><a href="#">Course Evaluation</a></li>
           </ul>
     </div>
     <div class="adminCourseManageContents">
@@ -167,6 +167,25 @@
             closePopup('editEnrollmentPopup');
             closePopup('deleteEnrollmentPopup');
         }
+
+// JavaScript Toggle Function
+function toggleNavbar() {
+    var navbar = document.querySelector('.admin-navbar');
+    var toggleButton = document.getElementById('toggleButton');
+    var isCollapsed = navbar.classList.contains('nav-collapsed');
+
+    if (isCollapsed) {
+        navbar.classList.remove('nav-collapsed');
+        navbar.classList.add('nav-expanded');
+        // 필요한 경우 추가적인 스타일 변경
+    } else {
+        navbar.classList.remove('nav-expanded');
+        navbar.classList.add('nav-collapsed');
+        // 필요한 경우 추가적인 스타일 변경
+    }
+}
+
+
     </script>
 </body>
 
