@@ -78,7 +78,7 @@ body {
 
 /* 계좌 정보 및 은행 정보 컨테이너 스타일 */
 .accountInfo,.bankInfo {
-  padding: 20px;
+  padding: 15px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
@@ -132,6 +132,19 @@ body {
   color: red;
 }
 
+.paymentHistoryTitle th{
+  font-size: 13px;
+  text-align: left;
+  font-weight: 800;
+  padding: 5px 5px 5px 0px;
+}
+
+.paymentHistoryInfo td{
+  text-align: left;
+  font-size: 12px;
+  padding: 5px 10px 5px 0px;
+}
+
 
 /* QR 코드 관련 스타일 */
 .QR {
@@ -171,3 +184,4 @@ body {
 .bankInfo {
   margin-top: 20px;
 }
+

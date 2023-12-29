@@ -18,18 +18,64 @@
     <h2>Select the plan you want to charge</h2>
     <div class="chargeButtons">
       <form action="/charging" method="post">
-        <button class="chargeButton" name="amount" value="50000">VND <br> 50,000</button>
-        <button class="chargeButton" name="amount" value="100000">VND <br> 100,000</button>
-        <button class="chargeButton" name="amount" value="200000">VND <br> 200,000</button>
-        <button class="chargeButton" name="amount" value="500000">VND <br> 500,000</button>
-        <button class="chargeButton" name="amount" value="800000">VND <br> 800,000</button>
-        <button class="chargeButton" name="amount" value="1000000">VND <br> 1,000,000</button>
+        <button class="chargeButton" onclick="openPopup()" name="amount" value="50000">VND <br> 50,000</button>
+        <button class="chargeButton" onclick="openPopup()" name="amount" value="100000">VND <br> 100,000</button>
+        <button class="chargeButton" onclick="openPopup()" name="amount" value="200000">VND <br> 200,000</button>
+        <button class="chargeButton" onclick="openPopup()" name="amount" value="500000">VND <br> 500,000</button>
+        <button class="chargeButton" onclick="openPopup()" name="amount" value="800000">VND <br> 800,000</button>
+        <button class="chargeButton" onclick="openPopup()" name="amount" value="1000000">VND <br> 1,000,000</button>
       </form>
     </div>
     <div class="chargingButtons">
-      <button class="chargingButton">Charge</button>
+      <button class="chargingButton" onclick="openPopup()">Charge</button>
     </div>
-  </div>  
-
+        <!-- charging confirm popup -->
+        <div id="popup" class="hide">
+          <div class="content">
+              <div id="charge-popup-header">
+                  <h1>Notification</h1>
+                  <button class="charge-pop-close-btn" onclick="closePopup()"><ion-icon name="close-outline"></ion-icon></button>
+              </div>
+              <div id="charge-popup-main">
+                  <p>Please chosse your plan</p>
+              </div>
+          </div>
+        </div>
+        <div id="popup" class="hide">
+          <div class="content">
+              <div id="charge-popup-header">
+                  <h1>Notification</h1>
+                  <button class="charge-pop-close-btn" onclick="closePopup()"><ion-icon name="close-outline"></ion-icon></button>
+              </div>
+              <div id="charge-popup-main">
+                  <p>Successfully charged.</p>
+              </div>
+          </div>
+        </div>
+        <script>
+          // Function to open the modal
+          function openPopup() {
+            document.getElementById('popup').classList.remove('hide');
+          }
+          // Function to close the modal
+          function closePopup() {
+            document.getElementById('popup').classList.add('hide');
+          }
+          // Event listener for the 'NO' button
+          document.addEventListener('DOMContentLoaded', function() {
+              document.querySelector('#popup button[onclick="closePopup()"]').addEventListener('click', function(event) {
+                  event.preventDefault(); // Prevent the default action
+                  closePopup();
+              });
+    
+              // Optional: Close the modal if the user clicks outside of it
+              window.onclick = function(event) {
+                  let modal = document.getElementById('popup');
+                  if (event.target === modal) {
+                      closePopup();
+                  }
+              }
+          });
+        </script>
 </body>
 </html>

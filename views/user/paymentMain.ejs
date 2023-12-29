@@ -29,13 +29,13 @@
         <div class="bankInfo">
             <p class="paymentHistory">Payment History</p>
             <table>
-                <tr>
+                <tr class="paymentHistoryTitle">
                     <th>Type</th>
                     <th>Amount</th>
                     <th>Payment Date</th>
                 </tr>
                 <% for (let i = 0; i < paymentRecords.length; i++) { %>
-                    <tr>
+                    <tr class="paymentHistoryInfo" >
                         <td><%= paymentRecords[i].type %></td>
                         <td><%= paymentRecords[i].amount %></td>
                         <td><%= new Date(paymentRecords[i].paymentDate).toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }) %></td>
