@@ -6,6 +6,8 @@ const collection = require('../models/user');
 const CourseList = require('../models/courseList');
 const CourseActivity = require('../models/courseActivity');
 const CourseEnrollment = require('../models/courseEnrollment');
+const PaymentBalance = require('../models/paymentBalance');
+const PaymentRecord = require('../models/paymentRecord');
 
 
 router.use(session({
@@ -207,13 +209,82 @@ router.get('/reviewDetail', (req, res) => {
     res.render('user/reviewDetail');
 });
 
-router.get('/paymentMain', (req, res) => {
-    res.render('user/paymentMain');
+router.get('/paymentMain', async (req, res) => {
+    try {
+        const userEmail = req.session.email;
+
+        if (!userEmail) {
+            return res.redirect('/');
+        }
+
+
+        const paymentBalance = await PaymentBalance.findOne({ email: userEmail });
+
+
+        const balanceAmount = paymentBalance ? paymentBalance.balance : 0;
+
+        const paymentRecords = await PaymentRecord.find({ email: userEmail }).sort({ paymentDate: 'desc' }).lean();
+
+        res.render('user/paymentMain', { userEmail, balanceAmount, paymentRecords });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
+// charging route
 router.get('/charging', (req, res) => {
     res.render('user/charging');
-});
+  });
+  
+  router.post('/charging', async (req, res) => {
+    const { amount } = req.body;
+  
+    try {
+      // Retrieve the current user's email from the session
+      const userEmail = req.session.email;
+  
+      // Fetch the payment balance for the user
+      let paymentBalance = await PaymentBalance.findOne({ email: userEmail });
+  
+      // If the balance doesn't exist, create a new one
+      if (!paymentBalance) {
+        paymentBalance = new PaymentBalance({ email: userEmail, balance: '0' });
+        await paymentBalance.save();
+      }
+  
+      // Get the current balance
+      const currentBalance = parseFloat(paymentBalance.balance) || 0;
+  
+      // Get the amount to increase
+      const increaseAmount = parseFloat(amount) || 0;
+  
+      // Calculate the new balance
+      const newBalance = currentBalance + increaseAmount;
+  
+      // Convert the balance to a string and save
+      paymentBalance.balance = newBalance.toString();
+      await paymentBalance.save();
+  
+      // Add a record to the Payment Record
+      const paymentRecord = new PaymentRecord({
+        email: userEmail,
+        type: 'RMIT Pay charge',
+        amount: amount.toString(), // Save the button amount as a string
+        remainingBalance: paymentBalance.balance,
+        paymentStatus: 'Success',
+        paymentDate: new Date(),
+      });
+  
+      await paymentRecord.save();
+  
+      // Redirect to the payment main page
+      res.redirect('/paymentMain');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
 
 router.get('/barcode', (req, res) => {
     res.render('user/barcode');

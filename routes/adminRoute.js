@@ -6,6 +6,9 @@ const collection = require('../models/user');
 const CourseList = require('../models/courseList');
 const CourseActivity = require('../models/courseActivity');
 const CourseEnrollment = require('../models/courseEnrollment');
+const PaymentBalance = require('../models/paymentBalance');
+const PaymentRecord = require('../models/paymentRecord');
+
 
 
 router.use(session({
@@ -440,6 +443,10 @@ router.post('/userManagement/edit', async (req, res) => {
 
         // Update CourseEnrollment records with the new email
         await CourseEnrollment.updateMany({ email: oldEmail }, { $set: { email: newEmail } });
+        // Update PaymentBalance records with the new email
+        await PaymentBalance.updateMany({ email: oldEmail }, { $set: { email: newEmail } })
+        // Update PaymentRecord records with the new email
+        await PaymentRecord.updateMany({ email: oldEmail }, { $set: { email: newEmail } });
 
         res.redirect('/admin/userManagement');
     } catch (err) {
@@ -459,6 +466,8 @@ router.post('/userManagement/delete', async (req, res) => {
             return res.status(404).send('User not found');
         }
 
+        // Delete corresponding records in paymentBalance for the user's email
+        await PaymentBalance.deleteMany({ email: userToDelete.email });
         // Delete corresponding records in courseEnrollment for the user's email
         await CourseEnrollment.deleteMany({ email: userToDelete.email });
 
@@ -472,6 +481,146 @@ router.post('/userManagement/delete', async (req, res) => {
 
 
   
+
+
+
+
+// Payment Balance Management Page
+router.get('/paymentBalanceManagement', async (req, res) => {
+    try {
+        const balanceList = await PaymentBalance.find();
+        res.render('admin/paymentBalanceManagement', { balanceList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Add Payment Balance
+router.post('/paymentBalanceManagement/add', async (req, res) => {
+    const { email, balance, adminNote } = req.body;
+
+    try {
+        const existingUser = await collection.findOne({ email });
+
+        if (!existingUser) {
+            return res.status(400).send('User with this email does not exist');
+        }
+
+        const existingBalance = await PaymentBalance.findOne({ email });
+
+        if (existingBalance) {
+            return res.status(400).send('Payment balance for this email already exists');
+        }
+
+        // Create a new payment record using the Mongoose model
+        const newRecord = new PaymentRecord({
+            email,
+            type: 'Admin Adjustment',
+            amount: balance,
+            remainingBalance: balance,
+            paymentStatus: 'Success',
+            paymentDate: new Date(),
+            adminNote,
+        });
+
+        // Save the new payment record to the database
+        await newRecord.save();
+
+        // Save the payment balance to the database
+        const newBalance = new PaymentBalance({ email, balance });
+        await newBalance.save();
+
+        res.redirect('/admin/paymentBalanceManagement');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Edit Payment Balance
+router.post('/paymentBalanceManagement/edit', async (req, res) => {
+    const { balanceIdEdit, newBalance, adminNoteEdit } = req.body;
+
+    try {
+        const balanceToEdit = await PaymentBalance.findById(balanceIdEdit);
+
+        if (!balanceToEdit) {
+            return res.status(404).send('Balance not found');
+        }
+
+        // Create a new payment record using the Mongoose model
+        const newRecord = new PaymentRecord({
+            email: balanceToEdit.email,
+            type: 'Admin Adjustment',
+            amount: newBalance - balanceToEdit.balance,
+            remainingBalance: newBalance,
+            paymentStatus: 'Success',
+            paymentDate: new Date(),
+            adminNote: adminNoteEdit,
+        });
+
+        // Save the new payment record to the database
+        await newRecord.save();
+
+        // Update the payment balance
+        balanceToEdit.balance = newBalance;
+        await balanceToEdit.save();
+
+        res.redirect('/admin/paymentBalanceManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+// Delete Payment Balance
+router.post('/paymentBalanceManagement/delete', async (req, res) => {
+    const { balanceIdDelete, adminNoteDelete } = req.body;
+
+    try {
+        const balanceToDelete = await PaymentBalance.findByIdAndDelete(balanceIdDelete);
+
+        if (!balanceToDelete) {
+            return res.status(404).send('Balance not found');
+        }
+
+        // Create Payment Record for account deletion
+        const paymentRecord = new PaymentRecord({
+            email: balanceToDelete.email,
+            type: 'Delete Account',
+            amount: 0,
+            remainingBalance: 0,
+            paymentStatus: 'Success',
+            paymentDate: new Date(),
+            adminNote: adminNoteDelete,
+        });
+
+        await paymentRecord.save();
+
+        res.redirect('/admin/paymentBalanceManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+// Render Payment Record Management page
+router.get('/paymentRecordManagement', async (req, res) => {
+    try {
+        // Fetch all payment records from MongoDB
+        const paymentRecordList = await PaymentRecord.find();
+        res.render('admin/paymentRecordManagement', { paymentRecordList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
 
 
 module.exports = router;

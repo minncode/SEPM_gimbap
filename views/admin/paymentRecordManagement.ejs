@@ -1,0 +1,148 @@
+<!-- paymentRecordManagement.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Record Management</title>
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            max-width: 400px; /* 조정 가능한 팝업 최대 너비 */
+            width: 100%;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .popup-close {
+            cursor: pointer;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Remove list styles and make each list item a flex container */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Make buttons the same width */
+        .action-buttons button {
+            width: 100px; /* 조정 가능한 버튼 최대 너비 */
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Payment Record Management</h1>
+
+    <!-- Display Payment Record List -->
+    <h2>Payment Record List</h2>
+    <!-- <button onclick="showAddRecordForm()">Add Payment Record</button> -->
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>type</th>
+            <th>Amount</th>
+            <th>Remaining Balance</th>
+            <th>Payment Status</th>
+            <th>Payment Date</th>
+            <th>Admin Note</th>
+        </tr>
+        <% for (let i = 0; i < paymentRecordList.length; i++) { %>
+            <tr>
+                <td><%= paymentRecordList[i].email %></td>
+                <td><%= paymentRecordList[i].type %></td>
+                <td><%= paymentRecordList[i].amount %></td>
+                <td><%= paymentRecordList[i].remainingBalance %></td>
+                <td><%= paymentRecordList[i].paymentStatus %></td>
+                <td><%= paymentRecordList[i].paymentDate.toISOString().split('T')[0] %></td>
+                <td><%= paymentRecordList[i].adminNote %></td>
+                <!-- <td class="action-buttons">
+                    <button onclick="showEditRecordForm('<%= paymentRecordList[i]._id %>')">Edit</button>
+                    <button onclick="showDeleteRecordForm('<%= paymentRecordList[i]._id %>')">Delete</button>
+                </td> -->
+            </tr>
+        <% } %>
+    </table>
+
+
+
+    <!-- <div class="overlay" onclick="closeAllRecordPopups()"></div> -->
+
+    <script>
+        // // Add or modify JavaScript functions as needed
+        // function showAddRecordForm() {
+        //     showPopup('addRecordPopup');
+        // }
+
+        // function showEditRecordForm(recordId) {
+        //     // Modify as needed based on your logic
+        //     showPopup('editRecordPopup');
+        //     // Additional logic to pre-fill form fields based on recordId
+        // }
+
+        // function showDeleteRecordForm(recordId) {
+        //     // Modify as needed based on your logic
+        //     showPopup('deleteRecordPopup');
+        //     // Additional logic to pre-fill form fields based on recordId
+        // }
+
+        // function showPopup(popupId) {
+        //     document.getElementById(popupId).style.display = 'block';
+        //     document.querySelector('.overlay').style.display = 'block';
+        // }
+
+        // function closePopup(popupId) {
+        //     document.getElementById(popupId).style.display = 'none';
+        //     document.querySelector('.overlay').style.display = 'none';
+        // }
+
+        // function closeAllRecordPopups() {
+        //     closePopup('addRecordPopup');
+        //     closePopup('editRecordPopup');
+        //     closePopup('deleteRecordPopup');
+        // }
+    </script>
+</body>
+
+</html>
