@@ -9,6 +9,7 @@ const CourseEnrollment = require('../models/courseEnrollment');
 const PaymentBalance = require('../models/paymentBalance');
 const PaymentRecord = require('../models/paymentRecord');
 const Feedback = require('../models/feedback');
+const QRCode = require('qrcode');
 
 
 router.use(session({
@@ -75,11 +76,19 @@ router.post("/register", async (req, res) => {
 });
 
 router.get('/main', async (req, res) => {
-    res.render('user/main', {
-        displayname: req.session.name,
-        displayemail: req.session.email,
-        displaymajor: req.session.major
-    });
+    const userEmail = req.session.email;
+    try {
+        const qrUrl = await QRCode.toDataURL(userEmail);
+        res.render('user/main', {
+            displayname: req.session.name,
+            displayemail: req.session.email,
+            displaymajor: req.session.major,
+            qrUrl: qrUrl
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to generate QR code' });
+    }
 });
 
 router.get('/profile', async (req, res) => {
