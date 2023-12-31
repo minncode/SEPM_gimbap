@@ -52,7 +52,7 @@
         <option value="Food Technology and Nutrition">Food Technology and Nutrition</option>
       </select>
       <p>The year of the rmit enterance</p>
-      <input id="month" type="month" name="year">
+      <input id="month" type="month" name="year" required>
 
       <!-- <p>Select your major</p>
       <select>
@@ -85,9 +85,12 @@
 
         <!-- Email, Full name, Password -->
         <p>Personal Information</p>
-        <input type="text" name="email" placeholder="Email">
-        <input type="text" name="name" placeholder="Full Name">
-        <input type="password" name="password" placeholder="Password">
+        <div class="email-input">
+          <input type="text" name="email" placeholder="s1234567" required>
+          <span>@rmit.edu.vn</span>
+      </div>
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="password" name="password" placeholder="Password" required>
         <input type="submit" value="NEXT">
       </form>
   </div>
