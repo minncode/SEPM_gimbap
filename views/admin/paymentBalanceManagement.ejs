@@ -12,7 +12,7 @@
     
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <title>Payment Balance Management</title>
+    <title>Payment Balance: Admin</title>
 
 </head>
 
@@ -48,28 +48,35 @@
             <li><a href="#">Course Evaluation</a></li>
           </ul>
     </div>
-    <h1>Payment Balance Management</h1>
 
-    <!-- Display Payment Balance List -->
-    <h2>Payment Balance List</h2>
-    <button onclick="showAddBalanceForm()">Add Balance</button>
-    <table>
-        <tr>
-            <th>Email</th>
-            <th>Balance</th>
-            <th>Action</th>
-        </tr>
-        <% for (let i = 0; i < balanceList.length; i++) { %>
+    <!-- main -->
+    <div class="adminCourseManageContents">
+        <h1>Payment Balance Management</h1>
+
+        <!-- Display Payment Balance List -->
+        <button class="admin-add-btn" onclick="showAddBalanceForm()">
+            <ion-icon name="add-outline"></ion-icon>
+            <p>Add Balance</p>
+        </button>
+
+        <table>
             <tr>
-                <td><%= balanceList[i].email %></td>
-                <td><%= balanceList[i].balance %></td>
-                <td class="action-buttons">
-                    <button onclick="showEditBalanceForm('<%= balanceList[i]._id %>', '<%= balanceList[i].email %>', '<%= balanceList[i].balance %>')">Edit</button>
-                    <button onclick="showDeleteBalanceForm('<%= balanceList[i]._id %>', '<%= balanceList[i].email %>', '<%= balanceList[i].balance %>')">Delete</button>
-                </td>
+                <th>Email</th>
+                <th>Balance</th>
+                <th>Action</th>
             </tr>
-        <% } %>
-    </table>
+            <% for (let i = 0; i < balanceList.length; i++) { %>
+                <tr>
+                    <td><%= balanceList[i].email %></td>
+                    <td><%= balanceList[i].balance %></td>
+                    <td class="action-buttons">
+                        <button id="action-edit" onclick="showEditBalanceForm('<%= balanceList[i]._id %>', '<%= balanceList[i].email %>', '<%= balanceList[i].balance %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteBalanceForm('<%= balanceList[i]._id %>', '<%= balanceList[i].email %>', '<%= balanceList[i].balance %>')">Delete</button>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
 
     <!-- Add Balance Form -->
     <div class="popup" id="addBalancePopup">

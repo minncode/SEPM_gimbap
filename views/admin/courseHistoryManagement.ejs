@@ -13,35 +13,42 @@
     
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <title>Course History Management</title>
+    <title>Course History: Admin</title>
 
 </head>
 
 <body>
-    <h1>Course History Management</h1>
 
-    <!-- Display Course History List -->
-    <h2>Course History List</h2>
-    <button onclick="showAddCourseForm()">Add Course</button>
-    <table>
-        <tr>
-            <th>Course ID</th>
-            <th>Course Name</th>
-            <th>Lecturer</th>
-            <th>Action</th>
-        </tr>
-        <% for (let i = 0; i < courseHistoryList.length; i++) { %>
+        <!-- main -->
+    <div class="adminCourseManageContents">
+        <h1>Course History Management</h1>
+
+        <!-- Display Course History List -->
+        <button class="admin-add-btn" onclick="showAddCourseForm()">
+            <ion-icon name="add-outline"></ion-icon>
+            <p>Add Course</p>
+        </button>
+
+        <table>
             <tr>
-                <td><%= courseHistoryList[i].courseID %></td>
-                <td><%= courseHistoryList[i].courseName %></td>
-                <td><%= courseHistoryList[i].lecturer %></td>
-                <td class="action-buttons">
-                    <button onclick="showEditCourseForm('<%= courseHistoryList[i]._id %>', '<%= courseHistoryList[i].courseID %>', '<%= courseHistoryList[i].courseName %>', '<%= courseHistoryList[i].lecturer %>')">Edit</button>
-                    <button onclick="showDeleteCourseForm('<%= courseHistoryList[i]._id %>', '<%= courseHistoryList[i].courseID %>', '<%= courseHistoryList[i].courseName %>', '<%= courseHistoryList[i].lecturer %>')">Delete</button>
-                </td>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Lecturer</th>
+                <th>Action</th>
             </tr>
-        <% } %>
-    </table>
+            <% for (let i = 0; i < courseHistoryList.length; i++) { %>
+                <tr>
+                    <td><%= courseHistoryList[i].courseID %></td>
+                    <td><%= courseHistoryList[i].courseName %></td>
+                    <td><%= courseHistoryList[i].lecturer %></td>
+                    <td class="action-buttons">
+                        <button id="action-edit" onclick="showEditCourseForm('<%= courseHistoryList[i]._id %>', '<%= courseHistoryList[i].courseID %>', '<%= courseHistoryList[i].courseName %>', '<%= courseHistoryList[i].lecturer %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteCourseForm('<%= courseHistoryList[i]._id %>', '<%= courseHistoryList[i].courseID %>', '<%= courseHistoryList[i].courseName %>', '<%= courseHistoryList[i].lecturer %>')">Delete</button>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
+	</div>
 
     <!-- Add Course Form -->
     <div class="popup" id="addCoursePopup">
