@@ -17,44 +17,50 @@
 </head>
 
 <body>
-    <h1>Course Evaluation Management</h1>
+    <!-- main -->
+    <div class="adminCourseManageContents">
+        <h1>Course Evaluation Management</h1>
 
-    <!-- Display Course Evaluation List -->
-    <h2>Course Evaluation List</h2>
-    <button onclick="showAddEvaluationForm()">Add Course Evaluation</button>
-    <table>
-        <tr>
-            <th>Course ID</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Enrollment Semester</th>
-            <th>Star Rating</th>
-            <th>Assignments Count</th>
-            <th>Exams Count</th>
-            <th>Group Projects Count</th>
-            <th>Difficulty</th>
-            <th>Text Feedback</th>
-            <th>Action</th>
-        </tr>
-        <% for (let i = 0; i < courseEvaluationList.length; i++) { %>
+        <!-- Display Course Evaluation List -->
+        <button class="admin-add-btn" onclick="showAddEvaluationForm()">
+            <ion-icon name="add-outline"></ion-icon>
+            <p>Add NEW</p>
+        </button>
+
+        <table>
             <tr>
-                <td><%= courseEvaluationList[i].courseID %></td>
-                <td><%= courseEvaluationList[i].email %></td>
-                <td><%= courseEvaluationList[i].status %></td>
-                <td><%= courseEvaluationList[i].enrollmentSemester %></td>
-                <td><%= courseEvaluationList[i].starRating %></td>
-                <td><%= courseEvaluationList[i].assignmentsCount %></td>
-                <td><%= courseEvaluationList[i].examsCount %></td>
-                <td><%= courseEvaluationList[i].groupProjectsCount %></td>
-                <td><%= courseEvaluationList[i].difficulty %></td>
-                <td><%= courseEvaluationList[i].textFeedback %></td>
-                <td class="action-buttons">
-                    <button onclick="showEditEvaluationForm('<%= courseEvaluationList[i]._id %>', '<%= courseEvaluationList[i].courseID %>', '<%= courseEvaluationList[i].email %>', '<%= courseEvaluationList[i].status %>', '<%= courseEvaluationList[i].enrollmentSemester %>', '<%= courseEvaluationList[i].starRating %>', '<%= courseEvaluationList[i].assignmentsCount %>', '<%= courseEvaluationList[i].examsCount %>', '<%= courseEvaluationList[i].groupProjectsCount %>', '<%= courseEvaluationList[i].difficulty %>', '<%= courseEvaluationList[i].textFeedback %>')">Edit</button>
-                    <button onclick="showDeleteEvaluationForm('<%= courseEvaluationList[i]._id %>')">Delete</button>
-                </td>
+                <th>Course ID</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Enrollment Semester</th>
+                <th>Star Rating</th>
+                <th>Assignments Count</th>
+                <th>Exams Count</th>
+                <th>Group Projects Count</th>
+                <th>Difficulty</th>
+                <th>Text Feedback</th>
+                <th>Action</th>
             </tr>
-        <% } %>
-    </table>
+            <% for (let i = 0; i < courseEvaluationList.length; i++) { %>
+                <tr>
+                    <td><%= courseEvaluationList[i].courseID %></td>
+                    <td><%= courseEvaluationList[i].email %></td>
+                    <td><%= courseEvaluationList[i].status %></td>
+                    <td><%= courseEvaluationList[i].enrollmentSemester %></td>
+                    <td><%= courseEvaluationList[i].starRating %></td>
+                    <td><%= courseEvaluationList[i].assignmentsCount %></td>
+                    <td><%= courseEvaluationList[i].examsCount %></td>
+                    <td><%= courseEvaluationList[i].groupProjectsCount %></td>
+                    <td><%= courseEvaluationList[i].difficulty %></td>
+                    <td><%= courseEvaluationList[i].textFeedback %></td>
+                    <td class="action-buttons">
+                        <button id="action-edit" onclick="showEditEvaluationForm('<%= courseEvaluationList[i]._id %>', '<%= courseEvaluationList[i].courseID %>', '<%= courseEvaluationList[i].email %>', '<%= courseEvaluationList[i].status %>', '<%= courseEvaluationList[i].enrollmentSemester %>', '<%= courseEvaluationList[i].starRating %>', '<%= courseEvaluationList[i].assignmentsCount %>', '<%= courseEvaluationList[i].examsCount %>', '<%= courseEvaluationList[i].groupProjectsCount %>', '<%= courseEvaluationList[i].difficulty %>', '<%= courseEvaluationList[i].textFeedback %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteEvaluationForm('<%= courseEvaluationList[i]._id %>')">Delete</button>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
 
     <!-- Add Evaluation Form -->
     <div class="popup" id="addEvaluationPopup">

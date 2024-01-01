@@ -18,30 +18,36 @@
 </head>
 
 <body>
-    <h1>Course Enrollment History Management</h1>
+    <!-- main -->
+    <div class="adminCourseManageContents">
+        <h1>Course Enrollment History Management</h1>
 
-    <!-- Display Course Enrollment History List -->
-    <h2>Course Enrollment History List</h2>
-    <button onclick="showAddHistoryForm()">Add Enrollment History</button>
-    <table>
-        <tr>
-            <th>Email</th>
-            <th>Course ID</th>
-            <th>Enrollment Semester</th>
-            <th>Action</th>
-        </tr>
-        <% for (let i = 0; i < enrollmentHistoryList.length; i++) { %>
+        <!-- Display Course Enrollment History List -->
+        <button class="admin-add-btn" onclick="showAddHistoryForm()">
+            <ion-icon name="add-outline"></ion-icon>
+            <p>Add NEW</p>
+        </button>
+
+        <table>
             <tr>
-                <td><%= enrollmentHistoryList[i].email %></td>
-                <td><%= enrollmentHistoryList[i].courseID %></td>
-                <td><%= enrollmentHistoryList[i].enrollmentSemester %></td>
-                <td class="action-buttons">
-                    <button onclick="showEditHistoryForm('<%= enrollmentHistoryList[i]._id %>', '<%= enrollmentHistoryList[i].email %>', '<%= enrollmentHistoryList[i].courseID %>', '<%= enrollmentHistoryList[i].enrollmentSemester %>')">Edit</button>
-                    <button onclick="showDeleteHistoryForm('<%= enrollmentHistoryList[i]._id %>', '<%= enrollmentHistoryList[i].email %>', '<%= enrollmentHistoryList[i].courseID %>', '<%= enrollmentHistoryList[i].enrollmentSemester %>')">Delete</button>
-                </td>
+                <th>Email</th>
+                <th>Course ID</th>
+                <th>Enrollment Semester</th>
+                <th>Action</th>
             </tr>
-        <% } %>
-    </table>
+            <% for (let i = 0; i < enrollmentHistoryList.length; i++) { %>
+                <tr>
+                    <td><%= enrollmentHistoryList[i].email %></td>
+                    <td><%= enrollmentHistoryList[i].courseID %></td>
+                    <td><%= enrollmentHistoryList[i].enrollmentSemester %></td>
+                    <td class="action-buttons">
+                        <button id="action-edit" onclick="showEditHistoryForm('<%= enrollmentHistoryList[i]._id %>', '<%= enrollmentHistoryList[i].email %>', '<%= enrollmentHistoryList[i].courseID %>', '<%= enrollmentHistoryList[i].enrollmentSemester %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteHistoryForm('<%= enrollmentHistoryList[i]._id %>', '<%= enrollmentHistoryList[i].email %>', '<%= enrollmentHistoryList[i].courseID %>', '<%= enrollmentHistoryList[i].enrollmentSemester %>')">Delete</button>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
 
     <!-- Add Enrollment History Form -->
     <div class="popup" id="addHistoryPopup">
