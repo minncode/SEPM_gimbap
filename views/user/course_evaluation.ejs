@@ -5,7 +5,6 @@
 </head>
 <body>
 
-
     <div class="CourseEvaluationHeader">
         <h1>Course Evaluation</h1>
         <a href="main">    <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></a>
@@ -14,61 +13,32 @@
     <div class="search">
         <input type="text" placeholder="Search i.e. ISYS2101 or 교수이름">
         <ion-icon class="searchIcon" name="search-outline"></ion-icon>
-      </div>
+    </div>
+    
     <div class="mainContent">
-        <h4>Current Review</h4>
-        
+        <h4>All courses</h4>
+
         <div class="comment-list">
-            <div class="comment">
-                <a href="reviewDetail">
-                    <h3 class="comment-title">ISYS2101/Software Engineering Project Management : Tuan Tran Mihn</h3>
-                <div class="rating"> 
-                    <!-- 별점을 여기에 추가할 수 있어요. -->
+            <% for (let i = 0; i < courseHistoryList.length; i++) { %>
+                <div class="comment">
+                    <a href="reviewDetail">
+                        <h3 class="comment-title"><%= courseHistoryList[i].courseID %> - <%= courseHistoryList[i].courseName %></h3>
+                        <p class="author"><%= courseHistoryList[i].lecturer %></p>
+                        <div class="rating">
+                            <!-- 별점을 여기에 추가할 수 있어요. -->
+                        </div>
+                    </a>
                 </div>
-                <p class="author">Students in the first semester of '22</p>
-                <p class="comment-content">He was nice.</p>
-                </a>
-            </div>
-            <div class="comment">
-                <a href="reviewDetail">
-                    <h3 class="comment-title">ISYS2101/Software Engineering Project Management : Tuan Tran Mihn</h3>
-                <div class="rating"> 
-                    <!-- 별점을 여기에 추가할 수 있어요. -->
-                </div>
-                <p class="author">Students in the first semester of '22</p>
-                <p class="comment-content">He was nice.</p>
-                </a>
-            </div>
-            <div class="comment">
-                <a href="reviewDetail">
-                    <h3 class="comment-title">ISYS2101/Software Engineering Project Management : Tuan Tran Mihn</h3>
-                <div class="rating"> 
-                    <!-- 별점을 여기에 추가할 수 있어요. -->
-                </div>
-                <p class="author">Students in the first semester of '22</p>
-                <p class="comment-content">He was nice.</p>
-                </a>
-            </div>
-            <div class="comment">
-                <a href="reviewDetail">
-                    <h3 class="comment-title">ISYS2101/Software Engineering Project Management : Tuan Tran Mihn</h3>
-                <div class="rating"> 
-                    <!-- 별점을 여기에 추가할 수 있어요. -->
-                </div>
-                <p class="author">Students in the first semester of '22</p>
-                <p class="comment-content">He was nice.</p>
-                </a>
-            </div>
-            
+            <% } %>
         </div>
+
         <div class="reviewBtn">
             <a href="courseSelect">
                 <button>Go to Review</button>
             </a>
-            
         </div>
+        
+    </div>
 
-        
-        
 </body>
 </html>
