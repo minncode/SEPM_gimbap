@@ -22,6 +22,9 @@
     margin:20px;
   
 }
+.courseContainer h2 {
+  margin:15px;
+}
 
 
 .courseItem {
@@ -31,6 +34,7 @@
     padding:10px;
     border-bottom: 1px solid #E3E5E0;
     color:black;
+    /* margin-top:20px; */
 }
 .professorName {
   color: #7D7F7A;
@@ -48,6 +52,6 @@
 
 
 .courseContainer a {
-  text-decoration: none; /* 링크 밑줄 제거 */
+  text-decoration: none;
 }
 
