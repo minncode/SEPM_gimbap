@@ -93,6 +93,7 @@ body {
   height: auto;
   min-height: 300px;
   font-size: 20px;
+  margin-bottom: 70px;
 }
 
 /* 계좌번호 및 잔액 스타일 */
