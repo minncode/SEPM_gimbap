@@ -400,7 +400,7 @@ router.get('/charging', (req, res) => {
       await paymentRecord.save();
   
       // Redirect to the payment main page
-      res.redirect('/paymentMain');
+    //   res.redirect('/paymentMain');
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
