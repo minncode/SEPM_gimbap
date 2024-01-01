@@ -164,11 +164,26 @@ router.post('/course_list/enroll', async (req, res) => {
 
 
 
-// Display Course Evaluation Page
+// Display Course Evaluation Page with Search Results
 router.get('/course_evaluation', async (req, res) => {
     try {
-        const courseHistoryList = await CourseHistory.find();
-        res.render('user/course_evaluation', { courseHistoryList });
+        let query = req.query.q; // Get the search query from the URL
+        let courseHistoryList;
+
+        if (query) {
+            // If there's a search query, filter the courseHistoryList based on the query
+            courseHistoryList = await CourseHistory.find({
+                $or: [
+                    { courseName: { $regex: new RegExp(query, 'i') } }, // Case-insensitive search for courseName
+                    { lecturer: { $regex: new RegExp(query, 'i') } } // Case-insensitive search for lecturer
+                ]
+            });
+        } else {
+            // If there's no search query, get all courseHistory
+            courseHistoryList = await CourseHistory.find();
+        }
+
+        res.render('user/course_evaluation', { courseHistoryList, searchQuery: query });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -219,8 +234,92 @@ router.post('/editprofile', async (req, res) => {
     }
 });
 
-router.get('/courseSelect', (req, res) => {
-    res.render('user/courseSelect');
+router.get('/courseSelect', async (req, res) => {
+    try {
+        const currentUser = req.session.email;
+
+        // Retrieve course enrollment history for the current user
+        const enrollmentHistoryList = await CourseEnrollmentHistory.find({ email: currentUser });
+
+        // Retrieve course evaluations for the current user
+        const courseEvaluationList = await CourseEvaluation.find({ email: currentUser });
+
+        // Create an array to store course items
+        const courseItems = [];
+
+        // Iterate through enrollment history
+        for (let i = 0; i < enrollmentHistoryList.length; i++) {
+            const courseId = enrollmentHistoryList[i].courseID;
+
+            // Retrieve course from CourseHistory
+            const courseInHistory = await CourseHistory.findOne({ courseID: courseId });
+
+            if (courseInHistory) {
+                const hasReviewed = courseEvaluationList.some(review => review.courseID === courseId && review.email === currentUser);
+                const courseItem = {
+                    courseID: courseInHistory.courseID,
+                    courseName: courseInHistory.courseName,
+                    lecturer: courseInHistory.lecturer,
+                    hasReviewed: hasReviewed
+                };
+                courseItems.push(courseItem);
+            }
+        }
+
+        // Render the view with the course items
+        res.render('user/courseSelect', { courseItems });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+// Add or Edit Course Review
+router.get('/user/courseSelect/:action', async (req, res) => {
+    try {
+        const currentUser = req.session.email;
+        const { action } = req.params;
+        const { courseID } = req.query;
+
+        // Check if the courseID exists in the user's course history
+        const courseInHistory = await CourseHistory.findOne({ email: currentUser, courseID });
+
+        if (!courseInHistory) {
+            return res.status(400).send('Course not found in user\'s history');
+        }
+
+        // Check if the user has already reviewed the course
+        const existingReview = await CourseEvaluation.findOne({ email: currentUser, courseID });
+
+        if (action === 'add' && existingReview) {
+            return res.status(400).send('User has already reviewed the course');
+        }
+
+        if (action === 'edit' && !existingReview) {
+            return res.status(400).send('User has not reviewed the course yet');
+        }
+
+        // Render the appropriate form for adding or editing the review
+        res.render('user/courseReviewForm', { currentUser, courseID, action, existingReview });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Handle the form submission for adding or editing the review
+router.post('/user/courseSelect/:action', async (req, res) => {
+    try {
+        // Process the form submission and update the database accordingly
+        // ...
+
+        // Redirect to the My Course Review page
+        res.redirect('/user/courseSelect');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 router.get('/writeReview', (req, res) => {
