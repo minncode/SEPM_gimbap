@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="/stylesheets/writeReview.css">
     <link rel="stylesheet" href="/stylesheets/header.css">
     <script src="/javascripts/writeReview.js" defer></script>
+    <script src="/javascripts/popup.js" defer></script>
     <title>RMITdays</title>
 </head>
 <body>
@@ -70,10 +71,18 @@
 
         </div>
         <div class="submit">
-            <a id="submit" href="course_evaluation" class="submit-button">Submit</a>
+            <a id="submit" class="submit-button" onclick="openPopup()">Submit</a>
         </div>
         
     </div>
+    <div id="popup" class="hide">
+        <div class="content">
+          <h1>Confirm your action</h1>
+          <p>Do you agree to submit your review?</p>
+            <button onclick="window.location.href='/course_evaluation'">YES</button>
+            <button href="#" onclick="closePopup()">NO</button>
+        </div>
+      </div>
     <script>
         function selectOption(option, sectionName) {
             const section = document.querySelector(`.section.${sectionName}`);
@@ -85,6 +94,7 @@
     
             option.classList.add('selected');
         }
+        
     </script>
 </body>
 </html>

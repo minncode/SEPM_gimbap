@@ -12,6 +12,8 @@ const Feedback = require('../models/feedback');
 const CourseHistory = require('../models/courseHistory');
 const CourseEnrollmentHistory = require('../models/courseEnrollmentHistory');
 const CourseEvaluation = require('../models/courseEvaluation');
+const QRCode = require('qrcode');
+
 
 router.use(session({
     secret: 'your secret key',
@@ -50,7 +52,8 @@ router.get('/register', (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-    const { year, major, email, name, password } = req.body;
+    const { year, major, name, password } = req.body;
+    const email = req.body.email + '@rmit.edu.vn';
 
     try {
         // Hashing the password
@@ -77,11 +80,19 @@ router.post("/register", async (req, res) => {
 });
 
 router.get('/main', async (req, res) => {
-    res.render('user/main', {
-        displayname: req.session.name,
-        displayemail: req.session.email,
-        displaymajor: req.session.major
-    });
+    const userEmail = req.session.email;
+    try {
+        const qrUrl = await QRCode.toDataURL(userEmail);
+        res.render('user/main', {
+            displayname: req.session.name,
+            displayemail: req.session.email,
+            displaymajor: req.session.major,
+            qrUrl: qrUrl
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to generate QR code' });
+    }
 });
 
 router.get('/profile', async (req, res) => {
