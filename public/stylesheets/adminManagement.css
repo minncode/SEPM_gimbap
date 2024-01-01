@@ -83,7 +83,7 @@ th {
 
 /* Make buttons the same width */
 .action-buttons button {
-  width: 60px; /* 조정 가능한 버튼 최대 너비 */
+  width: 60px; 
   margin: 2px 0px 2px 5px;
 }
 
@@ -102,7 +102,7 @@ th {
   padding: 20px;
   border: 1px solid #ccc;
   z-index: 1000;
-  max-width: 400px; /* 조정 가능한 팝업 최대 너비 */
+  max-width: 400px; 
   width: 100%;
 }
 
@@ -158,12 +158,12 @@ th {
 }
 
 .custom-button {
-  /* 원하는 스타일을 여기에 추가하세요 */
-  background-color: #E61E2A; /* 배경색 */
-  color: white; /* 텍스트 색상 */
-  padding: 10px 20px; /* 안쪽 여백 */
-  border-radius: 5px; /* 모서리 둥글게 만들기 */
-  font-size: 16px; /* 글꼴 크기 */
+
+  background-color: #E61E2A; 
+  color: white; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  font-size: 16px;
   border: none;
   display: flex;
   float: right;
@@ -173,4 +173,9 @@ th {
 .custom-button:hover {
   background-color: #860f17;
 
+}
+
+.custom-textarea {
+  width:100%;
+  margin-top:10px;
 }
