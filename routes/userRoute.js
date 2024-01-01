@@ -9,6 +9,9 @@ const CourseEnrollment = require('../models/courseEnrollment');
 const PaymentBalance = require('../models/paymentBalance');
 const PaymentRecord = require('../models/paymentRecord');
 const Feedback = require('../models/feedback');
+const CourseHistory = require('../models/courseHistory');
+const CourseEnrollmentHistory = require('../models/courseEnrollmentHistory');
+const CourseEvaluation = require('../models/courseEvaluation');
 const QRCode = require('qrcode');
 
 
@@ -161,9 +164,17 @@ router.post('/course_list/enroll', async (req, res) => {
 
 
 
-router.get('/course_evaluation', (req, res) => {
-    res.render('user/course_evaluation');
+// Display Course Evaluation Page
+router.get('/course_evaluation', async (req, res) => {
+    try {
+        const courseHistoryList = await CourseHistory.find();
+        res.render('user/course_evaluation', { courseHistoryList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
 });
+
 
 
 router.get('/editprofile', (req, res) => {

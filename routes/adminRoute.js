@@ -9,7 +9,9 @@ const CourseEnrollment = require('../models/courseEnrollment');
 const PaymentBalance = require('../models/paymentBalance');
 const PaymentRecord = require('../models/paymentRecord');
 const Feedback = require('../models/feedback');
-
+const CourseHistory = require('../models/courseHistory');
+const CourseEnrollmentHistory = require('../models/courseEnrollmentHistory');
+const CourseEvaluation = require('../models/courseEvaluation');
 
 router.use(session({
     secret: 'your secret key',
@@ -628,6 +630,352 @@ router.get('/feedbackManagement', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+
+// Display Course History List
+router.get('/courseHistoryManagement', async (req, res) => {
+    try {
+        const courseHistoryList = await CourseHistory.find();
+        res.render('admin/courseHistoryManagement', { courseHistoryList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Add Course History
+router.post('/courseHistoryManagement/add', async (req, res) => {
+    const { courseID, courseName, lecturer } = req.body;
+
+    try {
+        // Check if the courseID already exists in courseHistory
+        const existingCourse = await CourseHistory.findOne({ courseID });
+
+        if (existingCourse) {
+            return res.status(400).send('The provided course ID already exists in the course history.');
+        }
+
+        const newCourse = new CourseHistory({
+            courseID,
+            courseName,
+            lecturer,
+        });
+
+        await newCourse.save();
+        res.redirect('/admin/courseHistoryManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Edit Course History
+router.post('/courseHistoryManagement/edit', async (req, res) => {
+    const { courseIdEdit, newCourseID, newCourseName, newLecturer } = req.body;
+
+    try {
+        const courseToEdit = await CourseHistory.findById(courseIdEdit);
+
+        if (!courseToEdit) {
+            return res.status(404).send('Course not found');
+        }
+
+        // Check if the new courseID already exists in courseHistory, excluding the current course being edited
+        const existingCourse = await CourseHistory.findOne({
+            courseID: newCourseID,
+            _id: { $ne: courseToEdit._id },
+        });
+
+        if (existingCourse) {
+            return res.status(400).send('The new course ID already exists in the course history.');
+        }
+
+        // Update course details
+        courseToEdit.courseID = newCourseID;
+        courseToEdit.courseName = newCourseName;
+        courseToEdit.lecturer = newLecturer;
+
+        await courseToEdit.save();
+
+        res.redirect('/admin/courseHistoryManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Delete Course History
+router.post('/courseHistoryManagement/delete', async (req, res) => {
+    const { courseIdDelete } = req.body;
+
+    try {
+        const courseToDelete = await CourseHistory.findByIdAndDelete(courseIdDelete);
+
+        if (!courseToDelete) {
+            return res.status(404).send('Course not found');
+        }
+
+        res.redirect('/admin/courseHistoryManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
+// Display Course Enrollment History List
+router.get('/courseEnrollmentHistoryManagement', async (req, res) => {
+    try {
+        const enrollmentHistoryList = await CourseEnrollmentHistory.find();
+        res.render('admin/courseEnrollmentHistoryManagement', { enrollmentHistoryList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/courseEnrollmentHistoryManagement/add', async (req, res) => {
+    const { email, courseID, enrollmentSemester } = req.body;
+
+    try {
+        // Check if the email exists in the 'collection' collection
+        const existingUser = await collection.findOne({ email });
+
+        if (!existingUser) {
+            return res.status(400).send('User with the provided email does not exist.');
+        }
+
+        // Check if the courseID exists in the 'CourseHistory' collection
+        const existingCourse = await CourseHistory.findOne({ courseID });
+
+        if (!existingCourse) {
+            return res.status(400).send('Course with the provided courseID does not exist.');
+        }
+
+        // Check if the enrollment history already exists for the given email, courseID, and enrollmentSemester
+        const existingEnrollment = await CourseEnrollmentHistory.findOne({ email, courseID, enrollmentSemester });
+
+        if (existingEnrollment) {
+            return res.status(400).send('Enrollment history already exists for the given email, courseID, and enrollmentSemester.');
+        }
+
+        // Create a new enrollment history
+        const newEnrollmentHistory = new CourseEnrollmentHistory({
+            email,
+            courseID,
+            enrollmentSemester,
+        });
+
+        await newEnrollmentHistory.save();
+        res.redirect('/admin/courseEnrollmentHistoryManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Edit Course Enrollment History
+router.post('/courseEnrollmentHistoryManagement/edit', async (req, res) => {
+    const { enrollmentIdEdit, newEmail, newCourseID, newEnrollmentSemester } = req.body;
+
+    try {
+        // Check if the newEmail exists in the 'collection' collection
+        const existingUser = await collection.findOne({ email: newEmail });
+
+        if (!existingUser) {
+            return res.status(400).send('User with the provided newEmail does not exist.');
+        }
+
+        // Check if the newCourseID exists in the 'CourseHistory' collection
+        const existingCourse = await CourseHistory.findOne({ courseID: newCourseID });
+
+        if (!existingCourse) {
+            return res.status(400).send('Course with the provided newCourseID does not exist.');
+        }
+
+        // Check if the enrollment history to edit exists
+        const enrollmentToEdit = await CourseEnrollmentHistory.findById(enrollmentIdEdit);
+
+        if (!enrollmentToEdit) {
+            return res.status(404).send('Enrollment history to edit not found');
+        }
+
+        // Check if the edited enrollment history already exists for the new email, new courseID, and new enrollmentSemester
+        const existingEnrollment = await CourseEnrollmentHistory.findOne({
+            email: newEmail,
+            courseID: newCourseID,
+            enrollmentSemester: newEnrollmentSemester,
+            _id: { $ne: enrollmentIdEdit } // Exclude the current enrollment being edited
+        });
+
+        if (existingEnrollment) {
+            return res.status(400).send('Enrollment history already exists for the given new email, new courseID, and new enrollmentSemester.');
+        }
+
+        // Perform additional validations or checks if needed
+
+        // Update enrollment history details
+        enrollmentToEdit.email = newEmail;
+        enrollmentToEdit.courseID = newCourseID;
+        enrollmentToEdit.enrollmentSemester = newEnrollmentSemester;
+
+        await enrollmentToEdit.save();
+        res.redirect('/admin/courseEnrollmentHistoryManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Delete Course Enrollment History
+router.post('/courseEnrollmentHistoryManagement/delete', async (req, res) => {
+    const { enrollmentIdDelete } = req.body;
+
+    try {
+        const enrollmentToDelete = await CourseEnrollmentHistory.findByIdAndDelete(enrollmentIdDelete);
+
+        if (!enrollmentToDelete) {
+            return res.status(404).send('Enrollment history not found');
+        }
+
+        // Perform additional cleanup or related actions if needed
+
+        res.redirect('/admin/courseEnrollmentHistoryManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
+
+
+
+
+// Display Course Evaluation List
+router.get('/courseEvaluationManagement', async (req, res) => {
+    try {
+        const courseEvaluationList = await CourseEvaluation.find();
+        res.render('admin/courseEvaluationManagement', { courseEvaluationList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Add Course Evaluation
+router.post('/courseEvaluationManagement/add', async (req, res) => {
+    const {
+        courseID,
+        email,
+        status,
+        enrollmentSemester,
+        starRating,
+        assignmentsCount,
+        examsCount,
+        groupProjectsCount,
+        difficulty,
+        textFeedback,
+    } = req.body;
+
+    try {
+        const newEvaluation = new CourseEvaluation({
+            courseID,
+            email,
+            status,
+            enrollmentSemester,
+            starRating,
+            assignmentsCount,
+            examsCount,
+            groupProjectsCount,
+            difficulty,
+            textFeedback,
+        });
+
+        await newEvaluation.save();
+        res.redirect('/admin/courseEvaluationManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Edit Course Evaluation
+router.post('/courseEvaluationManagement/edit', async (req, res) => {
+    const {
+        evaluationIdEdit,
+        newCourseID,
+        newEmail,
+        newStatus,
+        newEnrollmentSemester,
+        newStarRating,
+        newAssignmentsCount,
+        newExamsCount,
+        newGroupProjectsCount,
+        newDifficulty,
+        newTextFeedback,
+    } = req.body;
+
+    try {
+        const evaluationToEdit = await CourseEvaluation.findById(evaluationIdEdit);
+
+        if (!evaluationToEdit) {
+            return res.status(404).send('Course evaluation to edit not found');
+        }
+
+        // Perform additional validations or checks if needed
+
+        // Update evaluation details
+        evaluationToEdit.courseID = newCourseID;
+        evaluationToEdit.email = newEmail;
+        evaluationToEdit.status = newStatus;
+        evaluationToEdit.enrollmentSemester = newEnrollmentSemester;
+        evaluationToEdit.starRating = newStarRating;
+        evaluationToEdit.assignmentsCount = newAssignmentsCount;
+        evaluationToEdit.examsCount = newExamsCount;
+        evaluationToEdit.groupProjectsCount = newGroupProjectsCount;
+        evaluationToEdit.difficulty = newDifficulty;
+        evaluationToEdit.textFeedback = newTextFeedback;
+
+        await evaluationToEdit.save();
+        res.redirect('/admin/courseEvaluationManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Delete Course Evaluation
+router.post('/courseEvaluationManagement/delete', async (req, res) => {
+    const { evaluationIdDelete } = req.body;
+
+    try {
+        const evaluationToDelete = await CourseEvaluation.findByIdAndDelete(evaluationIdDelete);
+
+        if (!evaluationToDelete) {
+            return res.status(404).send('Course evaluation not found');
+        }
+
+        // Perform additional cleanup or related actions if needed
+
+        res.redirect('/admin/courseEvaluationManagement');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+module.exports = router;
+
+
+
+
 
 
 
