@@ -1,47 +1,34 @@
 <%- include("../partials/header") %>
+<link rel="stylesheet" href="/stylesheets/courseSelect.css">
+<link rel="stylesheet" href="/stylesheets/header.css">
 
-    <link rel="stylesheet" href="/stylesheets/courseSelect.css">
-    <link rel="stylesheet" href="/stylesheets/header.css">
-
-    <title>RMITdays</title>
+<title>RMITdays</title>
 </head>
 <body>
     <%- include("../partials/navigation") %>
     <div class="CourseSelectionHeader">
-        <a href="course_evaluation">    <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></a>
+        <a href="course_evaluation">
+            <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon>
+        </a>
     </div>
     <div class="mainContent">
         <div class="courseContainer">
             <h3>My Course Review</h3>
             
-            <br>
-            <a class="courseItem">
-                <div class="courseInfo">
-                    <h3 class="courseCode">ISYS2101</h3>
-                    <h3 class="courseName">Software Engineering Project Management</h3>
-                    <p class="professorName">Tuan Tran Mihn</p>
-                </div>
-                <button class="reviewBtn" onclick="window.location.href = 'writeReview'">Review</button>
-            </a>
-            <a class="courseItem">
-                <div class="courseInfo">
-                    <h3 class="courseCode">ISYS2101</h3>
-                    <h3 class="courseName">Software Engineering Project Management</h3>
-                    <p class="professorName">Tuan Tran Mihn</p>
-                </div>
-                <button class="reviewBtn" onclick="window.location.href = 'writeReview'">Review</button>
-            </a>
-            <a class="courseItem">
-                <div class="courseInfo">
-                    <h3 class="courseCode">ISYS2101</h3>
-                    <h3 class="courseName">Software Engineering Project Management</h3>
-                    <p class="professorName">Tuan Tran Mihn</p>
-                </div>
-                <button class="reviewBtn" onclick="window.location.href = 'writeReview'">Review</button>
-            </a>
+            <% for (let i = 0; i < courseItems.length; i++) { %>
+                <a class="courseItem">
+                    <div class="courseInfo">
+                        <h3 class="comment-title"><%= courseItems[i].courseID %> - <%= courseItems[i].courseName %></h3>
+                        <p class="author"><%= courseItems[i].lecturer %></p>
+                    </div>
+                    <% if (!courseItems[i].hasReviewed) { %>
+                        <button class="reviewBtn" onclick="window.location.href = '/user/courseSelect/add?courseID=<%= courseItems[i].courseID %>'">Review</button>
+                    <% } else { %>
+                        <button class="reviewBtn" onclick="window.location.href = '/user/courseSelect/edit?courseID=<%= courseItems[i].courseID %>'">Edit Review</button>
+                    <% } %>
+                </a>
+            <% } %>
         </div>
     </div>
-    
-
 </body>
 </html>

@@ -1,7 +1,7 @@
 <%- include("../partials/header") %>
-    <link rel="stylesheet" href="/stylesheets/courseEvaluationMain.css">
+<link rel="stylesheet" href="/stylesheets/courseEvaluationMain.css">
 
-    <title>RMITdays</title>
+<title>RMITdays</title>
 </head>
 <body>
 
@@ -10,10 +10,14 @@
         <a href="main">    <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></a>
     </div>
     
-    <div class="search">
-        <input type="text" placeholder="Search i.e. ISYS2101 or 교수이름">
-        <ion-icon class="searchIcon" name="search-outline"></ion-icon>
-    </div>
+    <form action="/course_evaluation" method="get">
+        <div class="search">
+            <input type="text" name="q" placeholder="Search i.e. ISYS2101 or 교수이름" value="<%= searchQuery || '' %>">
+            <button type="submit">
+                <ion-icon class="searchIcon" name="search-outline"></ion-icon>
+            </button>
+        </div>
+    </form>
     
     <div class="mainContent">
         <h4>All courses</h4>
@@ -29,6 +33,10 @@
                         </div>
                     </a>
                 </div>
+            <% } %>
+
+            <% if (courseHistoryList.length === 0 && searchQuery) { %>
+                <p>No results found for "<%= searchQuery %>"</p>
             <% } %>
         </div>
 
