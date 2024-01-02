@@ -3,11 +3,9 @@ const mongoose = require('mongoose');
 const courseEvaluationSchema = new mongoose.Schema({
     courseID: {
         type: String,
-        required: true,
     },
     email: {
         type: String,
-        required: true,
     },
     status: {
         type: String,
@@ -33,7 +31,6 @@ const courseEvaluationSchema = new mongoose.Schema({
     difficulty: {
         type: String,
         //enum: ['Easy', 'Moderate', 'Difficult'], 
-        required: true,
     },
     textFeedback: {
         type: String,

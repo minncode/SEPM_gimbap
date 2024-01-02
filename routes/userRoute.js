@@ -274,57 +274,139 @@ router.get('/courseSelect', async (req, res) => {
     }
 });
 
+// router.get('/courseSelect/:action', async (req, res) => {
+//     try {
+//         const currentUser = req.session.email;
+//         const { action } = req.params;
+//         const { courseID } = req.query;
+    
+//         const courseInHistory = await CourseHistory.findOne({ courseID });
+    
+//         if (!courseInHistory) {
+//             return res.status(400).send('Course not found in course history');
+//         }
+    
+//         const existingReview = await CourseEvaluation.findOne({ email: currentUser, courseID });
+    
+//         if (action === 'add' && existingReview) {
+//             return res.status(400).send('User has already reviewed the course');
+//         }
+    
+//         if (action === 'edit' && !existingReview) {
+//             return res.status(400).send('User has not reviewed the course yet');
+//         }
+    
+//         // Check if courseInHistory is not null or undefined before spreading
+//         const courseInfoForReview = courseInHistory ? { ...courseInHistory } : {};
+    
+//         res.render('user/writeReview', { currentUser, courseID, action, existingReview, userEmail: currentUser, ...courseInfoForReview });
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
 
-// Add or Edit Course Review
-router.get('/user/courseSelect/:action', async (req, res) => {
+// router.post('/courseReviewForm/:action', async (req, res) => {
+//     try {
+//         const { courseID, email, enrollmentSemester, starRating, assignmentsCount, examsCount, groupProjectsCount, difficulty, textFeedback } = req.body;
+//         const { action } = req.params;
+
+//         const newReview = new CourseEvaluation({
+//             courseID,
+//             email,
+//             status: 'Pending',
+//             enrollmentSemester,
+//             starRating,
+//             assignmentsCount,
+//             examsCount,
+//             groupProjectsCount,
+//             difficulty,
+//             textFeedback,
+//         });
+
+//         if (action === 'add') {
+//             await newReview.save();
+//         } else if (action === 'edit') {
+//             // Update existing review logic (if needed)
+//         }
+
+//         res.redirect('/user/courseSelect');
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
+
+
+
+
+
+
+
+
+
+
+
+router.get('/writeReview', async (req, res) => {
     try {
-        const currentUser = req.session.email;
-        const { action } = req.params;
-        const { courseID } = req.query;
+        const userEmail = req.session.email;
 
-        // Check if the courseID exists in the user's course history
-        const courseInHistory = await CourseHistory.findOne({ email: currentUser, courseID });
+        // 유저의 이메일을 사용하여 courseEnrollmentHistory에서 해당 유저의 courseID를 조회
+        const userEnrollments = await CourseEnrollmentHistory.find({ email: userEmail });
 
-        if (!courseInHistory) {
-            return res.status(400).send('Course not found in user\'s history');
-        }
+        // 해당 유저의 courseID 목록
+        const userCourseIDs = userEnrollments.map(enrollment => enrollment.courseID);
 
-        // Check if the user has already reviewed the course
-        const existingReview = await CourseEvaluation.findOne({ email: currentUser, courseID });
+        // CourseHistory에서 해당 courseIDs에 해당하는 데이터 조회
+        const courses = await CourseHistory.find({ courseID: { $in: userCourseIDs } });
 
-        if (action === 'add' && existingReview) {
-            return res.status(400).send('User has already reviewed the course');
-        }
-
-        if (action === 'edit' && !existingReview) {
-            return res.status(400).send('User has not reviewed the course yet');
-        }
-
-        // Render the appropriate form for adding or editing the review
-        res.render('user/courseReviewForm', { currentUser, courseID, action, existingReview });
-    } catch (err) {
-        console.error(err);
+        res.render('user/writeReview', { courses, userEmail });
+    } catch (error) {
+        console.error('Error rendering writeReview:', error);
         res.status(500).send('Internal Server Error');
     }
 });
 
-// Handle the form submission for adding or editing the review
-router.post('/user/courseSelect/:action', async (req, res) => {
+router.post('/writeReview', async (req, res) => {
     try {
-        // Process the form submission and update the database accordingly
-        // ...
+        const {
+            courseID,
+            courseName,
+            lecturer,
+            email,
+            status,
+            starRating,
+            assignmentsCount,
+            examsCount,
+            groupProjectsCount,
+            difficulty,
+            textFeedback
+        } = req.body;
 
-        // Redirect to the My Course Review page
-        res.redirect('/user/courseSelect');
-    } catch (err) {
-        console.error(err);
+        // CourseEvaluation에 새로운 리뷰 추가
+        const newEvaluation = new CourseEvaluation({
+            courseID,
+            courseName,
+            lecturer,
+            email,
+            status,
+            starRating,
+            assignmentsCount,
+            examsCount,
+            groupProjectsCount,
+            difficulty,
+            textFeedback
+        });
+
+        await newEvaluation.save();
+
+        res.redirect('/writeReview'); // 리뷰 작성 후 writeReview 페이지로 리다이렉트
+    } catch (error) {
+        console.error('Error submitting review:', error);
         res.status(500).send('Internal Server Error');
     }
 });
 
-router.get('/writeReview', (req, res) => {
-    res.render('user/writeReview');
-});
 
 router.get('/reviewDetail', (req, res) => {
     res.render('user/reviewDetail');
