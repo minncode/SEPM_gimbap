@@ -22,9 +22,9 @@
                         <p class="author"><%= courseItems[i].lecturer %></p>
                     </div>
                     <% if (!courseItems[i].hasReviewed) { %>
-                        <button class="reviewBtn" onclick="window.location.href = '/user/courseSelect/add?courseID=<%= courseItems[i].courseID %>'">Review</button>
+                        <button class="reviewBtn" onclick="window.location.href = '/writeReview'">Review</button>
                     <% } else { %>
-                        <button class="reviewBtn" onclick="window.location.href = '/user/courseSelect/edit?courseID=<%= courseItems[i].courseID %>'">Edit Review</button>
+                        <button class="reviewBtn" onclick="window.location.href = '/writeReview'">Edit Review</button>
                     <% } %>
                 </a>
             <% } %>
