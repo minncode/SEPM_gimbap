@@ -7,9 +7,6 @@
 <body>
     <%- include("../partials/navigation") %>
     <div class="CourseSelectionHeader">
-        <a href="course_evaluation">
-            <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon>
-        </a>
     </div>
     <div class="mainContent">
         <div class="courseContainer">
@@ -30,5 +27,9 @@
             <% } %>
         </div>
     </div>
+    <a id="goback-btn" href="#">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+        <p>Go Back to Profile</p>
+    </a>
 </body>
 </html>

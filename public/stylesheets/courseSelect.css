@@ -1,15 +1,3 @@
-.courseList-delete-icon{
-  margin: 10px;
-  width: 30px;
-  height: 30px;
-  color: #E3E5E0;
-  float: right;
-  padding:5px;
-}
-
-.courseList-delete-icon:hover{
-  color: #222160;
-}
 .mainContent {
     margin:15px;
     border: 1px solid #E3E5E0;
@@ -53,5 +41,26 @@
 
 .courseContainer a {
   text-decoration: none;
+  margin-bottom: 60px;
 }
 
+#goback-btn{
+  text-decoration: none;
+  color: black;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  border: none;
+  width: 100%;
+  background-color: #E3E5E070 ;
+  padding: 15px;
+}
+
+#goback-btn ion-icon{
+  margin-right: 5px;
+}
+
+
+#goback-btn:hover {
+  opacity: 0.3;
+}
