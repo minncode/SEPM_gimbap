@@ -28,7 +28,7 @@
         </div>
         <div class="buttons">
           <button class="wallet-btn"><a href="paymentMain"><ion-icon class="btn-icon" name="wallet-outline"></ion-icon><p>E-wallet</p></a></button>
-          <button type="button" id="open-sheet" aria-controls="sheet" class="qr-btn"><a href="#"><ion-icon class="btn-icon" name="qr-code-outline"></ion-icon><p>QR</p></a></button>
+          <button type="button" id="open-sheet" aria-controls="sheet" class="sheet-trigger qr-btn"><a href="#"><ion-icon class="btn-icon" name="qr-code-outline"></ion-icon><p>QR</p></a></button>
         </div>
       </div>
 
@@ -41,17 +41,12 @@
         </ul>
       </div>
     </section>
-    <!-- 여기에 새로 bottom sheet 추가 예정 -->
-    <!-- The sheet component -->
+    
+    <!-- 바텀시트 -->
     <div id="sheet" class="column items-center justify-end" aria-hidden="true">
-      <!-- Dark background for the sheet -->
       <div class="overlay"></div>
-
-      <!-- The sheet itself -->
       <div class="contents column">
-        <!-- Sheet controls -->
         <header class="controls">
-          <!-- The thing to drag if you want to resize the sheet -->
           <div class="draggable-area">
             <div class="draggable-thumb"></div>
           </div>
@@ -86,11 +81,21 @@
       const $ = document.querySelector.bind(document)
       
       const openSheetButton = $("#open-sheet")
+      const sheetTriggers = document.querySelectorAll('.sheet-trigger')
       const sheet = $("#sheet")
       const sheetContents = sheet.querySelector(".contents")
       const draggableArea = sheet.querySelector(".draggable-area")
       
       let sheetHeight // in vh
+
+      const openSheet = () => {
+    setSheetHeight(Math.min(75, 720 / window.innerHeight * 100))
+    setIsSheetShown(true)
+  };
+
+  sheetTriggers.forEach(trigger => {
+    trigger.addEventListener('click', openSheet);
+  });
       
       const setSheetHeight = (value) => {
         sheetHeight = Math.max(0, Math.min(100, value))
