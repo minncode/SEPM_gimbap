@@ -1,4 +1,5 @@
 <!-- courseEvaluationManagement.ejs -->
+<%- include("../partials/header") %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,111 +7,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Evaluation Management</title>
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border: 1px solid #ccc;
-            z-index: 1000;
-            max-width: 400px; /* 조정 가능한 팝업 최대 너비 */
-            width: 100%;
-        }
-
-        .popup-header {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 10px;
-        }
-
-        .popup-close {
-            cursor: pointer;
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            font-size: 16px;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        /* Remove list styles and make each list item a flex container */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        /* Make buttons the same width */
-        .action-buttons button {
-            width: 100px; /* 조정 가능한 버튼 최대 너비 */
-            margin-right: 5px;
-        }
-    </style>
+    <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
+    <link rel="stylesheet" href="/stylesheets/adminManagement.css">
+    <link rel="stylesheet" href="/stylesheets/adminNavbar.css">
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Course Evaluation: Admin</title>
 </head>
 
 <body>
-    <h1>Course Evaluation Management</h1>
+    <!-- main -->
+    <div class="adminCourseManageContents">
+        <h1>Course Evaluation Management</h1>
 
-    <!-- Display Course Evaluation List -->
-    <h2>Course Evaluation List</h2>
-    <button onclick="showAddEvaluationForm()">Add Course Evaluation</button>
-    <table>
-        <tr>
-            <th>Course ID</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Enrollment Semester</th>
-            <th>Star Rating</th>
-            <th>Assignments Count</th>
-            <th>Exams Count</th>
-            <th>Group Projects Count</th>
-            <th>Difficulty</th>
-            <th>Text Feedback</th>
-            <th>Action</th>
-        </tr>
-        <% for (let i = 0; i < courseEvaluationList.length; i++) { %>
+        <!-- Display Course Evaluation List -->
+        <button class="admin-add-btn" onclick="showAddEvaluationForm()">
+            <ion-icon name="add-outline"></ion-icon>
+            <p>Add NEW</p>
+        </button>
+
+        <table>
             <tr>
-                <td><%= courseEvaluationList[i].courseID %></td>
-                <td><%= courseEvaluationList[i].email %></td>
-                <td><%= courseEvaluationList[i].status %></td>
-                <td><%= courseEvaluationList[i].enrollmentSemester %></td>
-                <td><%= courseEvaluationList[i].starRating %></td>
-                <td><%= courseEvaluationList[i].assignmentsCount %></td>
-                <td><%= courseEvaluationList[i].examsCount %></td>
-                <td><%= courseEvaluationList[i].groupProjectsCount %></td>
-                <td><%= courseEvaluationList[i].difficulty %></td>
-                <td><%= courseEvaluationList[i].textFeedback %></td>
-                <td class="action-buttons">
-                    <button onclick="showEditEvaluationForm('<%= courseEvaluationList[i]._id %>', '<%= courseEvaluationList[i].courseID %>', '<%= courseEvaluationList[i].email %>', '<%= courseEvaluationList[i].status %>', '<%= courseEvaluationList[i].enrollmentSemester %>', '<%= courseEvaluationList[i].starRating %>', '<%= courseEvaluationList[i].assignmentsCount %>', '<%= courseEvaluationList[i].examsCount %>', '<%= courseEvaluationList[i].groupProjectsCount %>', '<%= courseEvaluationList[i].difficulty %>', '<%= courseEvaluationList[i].textFeedback %>')">Edit</button>
-                    <button onclick="showDeleteEvaluationForm('<%= courseEvaluationList[i]._id %>')">Delete</button>
-                </td>
+                <th>Course ID</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Enrollment Semester</th>
+                <th>Star Rating</th>
+                <th>Assignments Count</th>
+                <th>Exams Count</th>
+                <th>Group Projects Count</th>
+                <th>Difficulty</th>
+                <th>Text Feedback</th>
+                <th>Action</th>
             </tr>
-        <% } %>
-    </table>
+            <% for (let i = 0; i < courseEvaluationList.length; i++) { %>
+                <tr>
+                    <td><%= courseEvaluationList[i].courseID %></td>
+                    <td><%= courseEvaluationList[i].email %></td>
+                    <td><%= courseEvaluationList[i].status %></td>
+                    <td><%= courseEvaluationList[i].enrollmentSemester %></td>
+                    <td><%= courseEvaluationList[i].starRating %></td>
+                    <td><%= courseEvaluationList[i].assignmentsCount %></td>
+                    <td><%= courseEvaluationList[i].examsCount %></td>
+                    <td><%= courseEvaluationList[i].groupProjectsCount %></td>
+                    <td><%= courseEvaluationList[i].difficulty %></td>
+                    <td><%= courseEvaluationList[i].textFeedback %></td>
+                    <td class="action-buttons">
+                        <button id="action-edit" onclick="showEditEvaluationForm('<%= courseEvaluationList[i]._id %>', '<%= courseEvaluationList[i].courseID %>', '<%= courseEvaluationList[i].email %>', '<%= courseEvaluationList[i].status %>', '<%= courseEvaluationList[i].enrollmentSemester %>', '<%= courseEvaluationList[i].starRating %>', '<%= courseEvaluationList[i].assignmentsCount %>', '<%= courseEvaluationList[i].examsCount %>', '<%= courseEvaluationList[i].groupProjectsCount %>', '<%= courseEvaluationList[i].difficulty %>', '<%= courseEvaluationList[i].textFeedback %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteEvaluationForm('<%= courseEvaluationList[i]._id %>')">Delete</button>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
 
     <!-- Add Evaluation Form -->
     <div class="popup" id="addEvaluationPopup">
@@ -118,27 +68,27 @@
             <button class="popup-close" onclick="closePopup('addEvaluationPopup')">X</button>
         </div>
         <form action="/admin/courseEvaluationManagement/add" method="post">
-            <label for="courseID">Course ID:</label>
-            <input type="text" name="courseID" required><br>
-            <label for="email">Email:</label>
-            <input type="text" name="email" required><br>
-            <label for="status">Status:</label>
-            <input type="text" name="status"><br>
-            <label for="enrollmentSemester">Enrollment Semester:</label>
-            <input type="text" name="enrollmentSemester"><br>
-            <label for="starRating">Star Rating:</label>
-            <input type="number" name="starRating" min="1" max="5"><br>
-            <label for="assignmentsCount">Assignments Count:</label>
-            <input type="number" name="assignmentsCount"><br>
-            <label for="examsCount">Exams Count:</label>
-            <input type="number" name="examsCount"><br>
-            <label for="groupProjectsCount">Group Projects Count:</label>
-            <input type="number" name="groupProjectsCount"><br>
-            <label for="difficulty">Difficulty:</label>
-            <input type="text" name="difficulty" required><br>
-            <label for="textFeedback">Text Feedback:</label>
-            <textarea name="textFeedback"></textarea><br>
-            <button type="submit">Add Course Evaluation</button>
+            <label for="courseID" class="custom-label">Course ID:</label>
+            <input type="text" name="courseID" required class="custom-input"><br>
+            <label for="email" class="custom-label">Email:</label>
+            <input type="text" name="email" required class="custom-input"><br>
+            <label for="status" class="custom-label">Status:</label>
+            <input type="text" name="status" class="custom-input"><br>
+            <label for="enrollmentSemester" class="custom-label">Enrollment Semester:</label>
+            <input type="text" name="enrollmentSemester" class="custom-input"><br>
+            <label for="starRating" class="custom-label">Star Rating:</label>
+            <input type="number" name="starRating" min="1" max="5" class="custom-input"><br>
+            <label for="assignmentsCount" class="custom-label">Assignments Count:</label>
+            <input type="number" name="assignmentsCount" class="custom-input"><br>
+            <label for="examsCount" class="custom-label">Exams Count:</label>
+            <input type="number" name="examsCount" class="custom-input"><br>
+            <label for="groupProjectsCount" class="custom-label">Group Projects Count:</label>
+            <input type="number" name="groupProjectsCount" class="custom-input"><br>
+            <label for="difficulty" class="custom-label">Difficulty:</label>
+            <input type="text" name="difficulty" required class="custom-input"><br>
+            <label for="textFeedback" class="custom-label">Text Feedback:</label>
+            <textarea name="textFeedback" class="custom-textarea"></textarea><br>
+            <button type="submit" class="custom-button">Add Course Evaluation</button>
         </form>
     </div>
 
@@ -148,28 +98,28 @@
             <button class="popup-close" onclick="closePopup('editEvaluationPopup')">X</button>
         </div>
         <form action="/admin/courseEvaluationManagement/edit" method="post">
-            <input type="text" name="evaluationIdEdit" required readonly style="display: none;">
-            <label for="newCourseID">New Course ID:</label>
-            <input type="text" name="newCourseID" required><br>
-            <label for="newEmail">New Email:</label>
-            <input type="text" name="newEmail" required><br>
-            <label for="newStatus">New Status:</label>
-            <input type="text" name="newStatus"><br>
-            <label for="newEnrollmentSemester">New Enrollment Semester:</label>
-            <input type="text" name="newEnrollmentSemester"><br>
-            <label for="newStarRating">New Star Rating:</label>
-            <input type="number" name="newStarRating" min="1" max="5"><br>
-            <label for="newAssignmentsCount">New Assignments Count:</label>
-            <input type="number" name="newAssignmentsCount"><br>
-            <label for="newExamsCount">New Exams Count:</label>
-            <input type="number" name="newExamsCount"><br>
-            <label for="newGroupProjectsCount">New Group Projects Count:</label>
-            <input type="number" name="newGroupProjectsCount"><br>
-            <label for="newDifficulty">New Difficulty:</label>
-            <input type="text" name="newDifficulty" required><br>
-            <label for="newTextFeedback">New Text Feedback:</label>
-            <textarea name="newTextFeedback"></textarea><br>
-            <button type="submit">Edit Course Evaluation</button>
+            <input type="text" name="evaluationIdEdit" required readonly class="custom-input" style="display: none;">
+            <label for="newCourseID" class="custom-label">New Course ID:</label>
+            <input type="text" name="newCourseID" required class="custom-input"><br>
+            <label for="newEmail" class="custom-label">New Email:</label>
+            <input type="text" name="newEmail" required class="custom-input"><br>
+            <label for="newStatus" class="custom-label">New Status:</label>
+            <input type="text" name="newStatus" class="custom-input"><br>
+            <label for="newEnrollmentSemester" class="custom-label">New Enrollment Semester:</label>
+            <input type="text" name="newEnrollmentSemester" class="custom-input"><br>
+            <label for="newStarRating" class="custom-label">New Star Rating:</label>
+            <input type="number" name="newStarRating" min="1" max="5" class="custom-input"><br>
+            <label for="newAssignmentsCount" class="custom-label">New Assignments Count:</label>
+            <input type="number" name="newAssignmentsCount" class="custom-input"><br>
+            <label for="newExamsCount" class="custom-label">New Exams Count:</label>
+            <input type="number" name="newExamsCount" class="custom-input"><br>
+            <label for="newGroupProjectsCount" class="custom-label">New Group Projects Count:</label>
+            <input type="number" name="newGroupProjectsCount" class="custom-input"><br>
+            <label for="newDifficulty" class="custom-label">New Difficulty:</label>
+            <input type="text" name="newDifficulty" required class="custom-input"><br>
+            <label for="newTextFeedback" class="custom-label">New Text Feedback:</label>
+            <textarea name="newTextFeedback" class="custom-textarea"></textarea><br>
+            <button type="submit" class="custom-button">Edit Course Evaluation</button>
         </form>
     </div>
 
@@ -179,12 +129,12 @@
             <button class="popup-close" onclick="closePopup('deleteEvaluationPopup')">X</button>
         </div>
         <form action="/admin/courseEvaluationManagement/delete" method="post">
-            <input type="text" name="evaluationIdDelete" required readonly style="display: none;">
-            <label for="courseIDDelete">Course ID:</label>
-            <input type="text" name="courseIDDelete" required readonly><br>
-            <label for="emailDelete">Email:</label>
-            <input type="text" name="emailDelete" required readonly><br>
-            <button type="submit">Delete Course Evaluation</button>
+            <input type="text" name="evaluationIdDelete" required readonly class="custom-input" style="display: none;">
+            <label for="courseIDDelete" class="custom-label">Course ID:</label>
+            <input type="text" name="courseIDDelete" required readonly class="custom-input"><br>
+            <label for="emailDelete" class="custom-label">Email:</label>
+            <input type="text" name="emailDelete" required readonly class="custom-input"><br>
+            <button type="submit" class="custom-button">Delete Course Evaluation</button>
         </form>
     </div>
 

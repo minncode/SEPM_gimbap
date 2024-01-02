@@ -1,16 +1,15 @@
 <!-- user/feedback.ejs -->
-
 <%- include("../partials/header") %>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/stylesheets/feedback.css">
 <link rel="stylesheet" href="/stylesheets/header.css">
 <title>User Feedback</title>
-
 </head>
+
 <body>
     <%- include("../partials/navigation") %>
-    <div class="contentConatiner">
+    <div class="contentContainer">
         <div class="feedback-form">
             <h2>Leave Feedback</h2>
             <select id="feedbackType">
@@ -27,55 +26,70 @@
     </div>
     <div id="popup" class="hide">
         <div class="content">
-          <h1>Confirm your action</h1>
-          <p>Do you agree to submit your feedback?</p>
-            <button onclick="submitFeedback()">YES</button>
+            <h1>Confirm your action</h1>
+            <p>Do you agree to submit your feedback?</p>
+            <button onclick="confirmFeedback()">YES</button>
             <button href="#" onclick="closePopup()">NO</button>
         </div>
-      </div>
+    </div>
+    <div id="successPopup" class="hide">
+        <div class="success-content">
+            <h1>Feedback Submitted!</h1>
+            <p>Your feedback has been successfully submitted.</p>
+            <button onclick="redirectToProfile()">Go to Profile</button>
+        </div>
+    </div>
 
-      <script>
+    <script>
         function openPopup() {
-          document.getElementById('popup').classList.remove('hide');
+            document.getElementById('popup').classList.remove('hide');
         }
 
         function closePopup() {
-          document.getElementById('popup').classList.add('hide');
+            document.getElementById('popup').classList.add('hide');
+        }
+
+        function confirmFeedback() {
+            closePopup(); // Close confirmation popup
+            submitFeedback(); // Submit feedback
         }
 
         async function submitFeedback() {
-          const feedbackType = document.getElementById('feedbackType').value;
-          const feedbackText = document.getElementById('feedbackText').value;
+            const feedbackType = document.getElementById('feedbackType').value;
+            const feedbackText = document.getElementById('feedbackText').value;
 
-          openPopup();
+            try {
+                const response = await fetch('/submit-feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        feedbackType: feedbackType,
+                        feedbackDetails: feedbackText,
+                    }),
+                });
 
-          try {
-            const response = await fetch('/submit-feedback', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    feedbackType: feedbackType,
-                    feedbackDetails: feedbackText,
-                }),
-            });
+                const result = await response.json();
 
-            const result = await response.json();
-
-            if (result.success) {
-                console.log('Feedback submitted successfully');
-
-                // Redirect to /profile
-                window.location.href = '/profile';
-            } else {
-                console.error('Failed to submit feedback');
+                if (result.success) {
+                    console.log('Feedback submitted successfully');
+                    openSuccessPopup();
+                } else {
+                    console.error('Failed to submit feedback');
+                }
+            } catch (error) {
+                console.error('An error occurred:', error);
+                closePopup();
             }
-        } catch (error) {
-            console.error('An error occurred:', error);
-            closePopup();
         }
+
+        function openSuccessPopup() {
+            document.getElementById('successPopup').classList.remove('hide');
+        }
+        function redirectToProfile() {
+        window.location.href = '/profile';
     }
-      </script>
+    </script>
 </body>
 </html>

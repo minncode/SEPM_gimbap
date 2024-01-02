@@ -1,4 +1,5 @@
 <!-- courseEnrollmentHistoryManagement.ejs -->
+<%- include("../partials/header") %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,97 +7,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Enrollment History Management</title>
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border: 1px solid #ccc;
-            z-index: 1000;
-            max-width: 400px; /* 조정 가능한 팝업 최대 너비 */
-            width: 100%;
-        }
+    <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
+    <link rel="stylesheet" href="/stylesheets/adminManagement.css">
+    <link rel="stylesheet" href="/stylesheets/adminNavbar.css">
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Enrollment History: Admin</title>
 
-        .popup-header {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 10px;
-        }
-
-        .popup-close {
-            cursor: pointer;
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            font-size: 16px;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        /* Remove list styles and make each list item a flex container */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        /* Make buttons the same width */
-        .action-buttons button {
-            width: 100px; /* 조정 가능한 버튼 최대 너비 */
-            margin-right: 5px;
-        }
-    </style>
 </head>
 
 <body>
-    <h1>Course Enrollment History Management</h1>
+    <!-- main -->
+    <div class="adminCourseManageContents">
+        <h1>Course Enrollment History Management</h1>
 
-    <!-- Display Course Enrollment History List -->
-    <h2>Course Enrollment History List</h2>
-    <button onclick="showAddHistoryForm()">Add Enrollment History</button>
-    <table>
-        <tr>
-            <th>Email</th>
-            <th>Course ID</th>
-            <th>Enrollment Semester</th>
-            <th>Action</th>
-        </tr>
-        <% for (let i = 0; i < enrollmentHistoryList.length; i++) { %>
+        <!-- Display Course Enrollment History List -->
+        <button class="admin-add-btn" onclick="showAddHistoryForm()">
+            <ion-icon name="add-outline"></ion-icon>
+            <p>Add NEW</p>
+        </button>
+
+        <table>
             <tr>
-                <td><%= enrollmentHistoryList[i].email %></td>
-                <td><%= enrollmentHistoryList[i].courseID %></td>
-                <td><%= enrollmentHistoryList[i].enrollmentSemester %></td>
-                <td class="action-buttons">
-                    <button onclick="showEditHistoryForm('<%= enrollmentHistoryList[i]._id %>', '<%= enrollmentHistoryList[i].email %>', '<%= enrollmentHistoryList[i].courseID %>', '<%= enrollmentHistoryList[i].enrollmentSemester %>')">Edit</button>
-                    <button onclick="showDeleteHistoryForm('<%= enrollmentHistoryList[i]._id %>', '<%= enrollmentHistoryList[i].email %>', '<%= enrollmentHistoryList[i].courseID %>', '<%= enrollmentHistoryList[i].enrollmentSemester %>')">Delete</button>
-                </td>
+                <th>Email</th>
+                <th>Course ID</th>
+                <th>Enrollment Semester</th>
+                <th>Action</th>
             </tr>
-        <% } %>
-    </table>
+            <% for (let i = 0; i < enrollmentHistoryList.length; i++) { %>
+                <tr>
+                    <td><%= enrollmentHistoryList[i].email %></td>
+                    <td><%= enrollmentHistoryList[i].courseID %></td>
+                    <td><%= enrollmentHistoryList[i].enrollmentSemester %></td>
+                    <td class="action-buttons">
+                        <button id="action-edit" onclick="showEditHistoryForm('<%= enrollmentHistoryList[i]._id %>', '<%= enrollmentHistoryList[i].email %>', '<%= enrollmentHistoryList[i].courseID %>', '<%= enrollmentHistoryList[i].enrollmentSemester %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteHistoryForm('<%= enrollmentHistoryList[i]._id %>', '<%= enrollmentHistoryList[i].email %>', '<%= enrollmentHistoryList[i].courseID %>', '<%= enrollmentHistoryList[i].enrollmentSemester %>')">Delete</button>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
 
     <!-- Add Enrollment History Form -->
     <div class="popup" id="addHistoryPopup">
@@ -104,13 +55,13 @@
             <button class="popup-close" onclick="closePopup('addHistoryPopup')">X</button>
         </div>
         <form action="/admin/courseEnrollmentHistoryManagement/add" method="post">
-            <label for="email">Email:</label>
-            <input type="text" name="email" required><br>
-            <label for="courseID">Course ID:</label>
-            <input type="text" name="courseID" required><br>
-            <label for="enrollmentSemester">Enrollment Semester:</label>
-            <input type="text" name="enrollmentSemester" required><br>
-            <button type="submit">Add Enrollment History</button>
+            <label for="email" class="custom-label">Email:</label>
+            <input type="text" name="email" required class="custom-input"><br>
+            <label for="courseID" class="custom-label">Course ID:</label>
+            <input type="text" name="courseID" required class="custom-input"><br>
+            <label for="enrollmentSemester" class="custom-label">Enrollment Semester:</label>
+            <input type="text" name="enrollmentSemester" required class="custom-input"><br>
+            <button type="submit" class="custom-button">Add Enrollment History</button>
         </form>
     </div>
 
@@ -120,14 +71,14 @@
         <button class="popup-close" onclick="closePopup('editHistoryPopup')">X</button>
     </div>
     <form action="/admin/courseEnrollmentHistoryManagement/edit" method="post">
-        <input type="text" name="enrollmentIdEdit" required readonly style="display: none;">
-        <label for="newEmail">New Email:</label>
-        <input type="text" name="newEmail" required><br>
-        <label for="newCourseID">New Course ID:</label>
-        <input type="text" name="newCourseID" required><br>
-        <label for="newEnrollmentSemester">New Enrollment Semester:</label>
-        <input type="text" name="newEnrollmentSemester" required><br>
-        <button type="submit">Edit Enrollment History</button>
+        <input type="text" name="enrollmentIdEdit" required readonly class="custom-input" style="display: none;">
+        <label for="newEmail" class="custom-label">New Email:</label>
+        <input type="text" name="newEmail" required class="custom-input"><br>
+        <label for="newCourseID" class="custom-label">New Course ID:</label>
+        <input type="text" name="newCourseID" required class="custom-input"><br>
+        <label for="newEnrollmentSemester" class="custom-label">New Enrollment Semester:</label>
+        <input type="text" name="newEnrollmentSemester" required class="custom-input"><br>
+        <button type="submit" class="custom-button">Edit Enrollment History</button>
     </form>
 </div>
 
@@ -137,14 +88,14 @@
         <button class="popup-close" onclick="closePopup('deleteHistoryPopup')">X</button>
     </div>
     <form action="/admin/courseEnrollmentHistoryManagement/delete" method="post">
-        <input type="text" name="enrollmentIdDelete" required readonly style="display: none;">
-        <label for="emailDelete">Email:</label>
-        <input type="text" name="emailDelete" required readonly><br>
-        <label for="courseIDDelete">Course ID:</label>
-        <input type="text" name="courseIDDelete" required readonly><br>
-        <label for="enrollmentSemesterDelete">Enrollment Semester:</label>
-        <input type="text" name="enrollmentSemesterDelete" required readonly><br>
-        <button type="submit">Delete Enrollment History</button>
+        <input type="text" name="enrollmentIdDelete" required readonly class="custom-input" style="display: none;">
+        <label for="emailDelete" class="custom-label">Email:</label>
+        <input type="text" name="emailDelete" required readonly class="custom-input"><br>
+        <label for="courseIDDelete" class="custom-label">Course ID:</label>
+        <input type="text" name="courseIDDelete" required readonly class="custom-input"><br>
+        <label for="enrollmentSemesterDelete" class="custom-label">Enrollment Semester:</label>
+        <input type="text" name="enrollmentSemesterDelete" required readonly class="custom-input"><br>
+        <button type="submit" class="custom-button">Delete Enrollment History</button>
     </form>
 </div>
 
