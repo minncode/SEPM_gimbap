@@ -94,15 +94,20 @@
                     </div>
                 </div>
 
+                <div class="section newField">
+                    <h3>New Field</h3>
+                    <input type="text" class="input-box" placeholder="Enter New Field" name="newField">
+                </div>
+                
                 <div class="section">
                     <h3>Comments</h3>
                     <textarea class="comment-box" placeholder="Write your comment here..." name="textFeedback"></textarea>
                 </div>
-                <button type="submit" class="submit-button">Submit</button>
-            </form>
-        </div>
-    </div>
-    <script>
+                <button type="submit" class="submit-button" onclick="submitReview()">Submit</button>
+                </form>
+                </div>
+                </div>
+                <script>
         function selectStarRating(rating) {
             const starOptions = document.querySelectorAll('.starRating .option');
             starOptions.forEach((option, index) => {
@@ -120,52 +125,55 @@
         }
 
         function submitReview() {
-            const starOptions = document.querySelectorAll('.starRating .option');
-            const selectedStarRating = Array.from(starOptions).filter(option => option.classList.contains('selected')).length;
+        const starOptions = document.querySelectorAll('.starRating .option');
+        const selectedStarRating = Array.from(starOptions).filter(option => option.classList.contains('selected')).length;
 
-            const countTypes = ['assignmentsCount', 'examsCount', 'groupProjectsCount'];
-            let selectedCount = 0;
+        const countTypes = ['assignmentsCount', 'examsCount', 'groupProjectsCount'];
+        let selectedCount = 0;
 
-            countTypes.forEach(countType => {
-                const countOptions = document.querySelectorAll(`.${countType} .option`);
-                const selectedOption = Array.from(countOptions).find(option => option.classList.contains('selected'));
+        countTypes.forEach(countType => {
+            const countOptions = document.querySelectorAll(`.${countType} .option`);
+            const selectedOption = Array.from(countOptions).find(option => option.classList.contains('selected'));
 
-                if (selectedOption) {
-                    selectedCount = parseInt(selectedOption.getAttribute('data-value'));
-                }
-            });
+            if (selectedOption) {
+                selectedCount = parseInt(selectedOption.getAttribute('data-value'), 10); // Parse as an integer
+            }
+        });
 
-            const difficultyOptions = document.querySelectorAll('.difficulty .option.selected');
-            const selectedDifficulty = difficultyOptions.length > 0 ? difficultyOptions[0].getAttribute('data-value') : '';
+        const difficultyOptions = document.querySelectorAll('.difficulty .option.selected');
+        const selectedDifficulty = difficultyOptions.length > 0 ? difficultyOptions[0].getAttribute('data-value') : '';
 
-            // 서버로 전송
-            fetch('/writeReview', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    courseID: document.getElementById('courseID').value,
-                    courseName: document.querySelector('.courseName input').value,
-                    lecturer: document.querySelector('.lecturer input').value,
-                    email: document.querySelector('.email input').value,
-                    starRating: selectedStarRating,
-                    assignmentsCount: selectedCount,
-                    examsCount: selectedCount,
-                    groupProjectsCount: selectedCount,
-                    difficulty: selectedDifficulty,
-                    textFeedback: document.querySelector('.comment-box').value,
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // 서버 응답에 따른 동작
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    </script>
+        // 수정된 부분: newField 추가
+        const newField = document.querySelector('.newField input').value;
+
+        fetch('/writeReview', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                courseID: document.getElementById('courseID').value,
+                courseName: document.querySelector('.courseName input').value,
+                lecturer: document.querySelector('.lecturer input').value,
+                email: document.querySelector('.email input').value,
+                starRating: selectedStarRating,
+                assignmentsCount: selectedCount,
+                examsCount: selectedCount,
+                groupProjectsCount: selectedCount,
+                difficulty: selectedDifficulty,
+                newField: newField, // 수정된 부분
+                textFeedback: document.querySelector('.comment-box').value,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 서버 응답에 따른 동작
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
 </body>
 </html>

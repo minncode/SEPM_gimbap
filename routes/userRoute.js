@@ -374,35 +374,38 @@ router.post('/writeReview', async (req, res) => {
             courseName,
             lecturer,
             email,
-            status,
             starRating,
             assignmentsCount,
             examsCount,
             groupProjectsCount,
             difficulty,
-            textFeedback
+            newField,
+            textFeedback,
         } = req.body;
 
-        // CourseEvaluation에 새로운 리뷰 추가
-        const newEvaluation = new CourseEvaluation({
+        // CourseEvaluation 모델을 사용하여 데이터 저장
+        const courseEvaluation = new CourseEvaluation({
             courseID,
             courseName,
             lecturer,
             email,
-            status,
             starRating,
             assignmentsCount,
             examsCount,
             groupProjectsCount,
             difficulty,
-            textFeedback
+            newField,
+            textFeedback,
         });
 
-        await newEvaluation.save();
+        await courseEvaluation.save();
 
-        res.redirect('/writeReview'); // 리뷰 작성 후 writeReview 페이지로 리다이렉트
+        res.send({
+            success: true,
+            review: courseEvaluation.toObject(),
+        });
     } catch (error) {
-        console.error('Error submitting review:', error);
+        console.error(error);
         res.status(500).send('Internal Server Error');
     }
 });
