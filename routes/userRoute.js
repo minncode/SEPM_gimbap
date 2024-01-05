@@ -438,7 +438,6 @@ router.get('/paymentMain', async (req, res) => {
     }
 });
 
-// charging route
 router.get('/charging', (req, res) => {
     res.render('user/charging');
   });
@@ -447,36 +446,25 @@ router.get('/charging', (req, res) => {
     const { amount } = req.body;
   
     try {
-      // Retrieve the current user's email from the session
       const userEmail = req.session.email;
-  
-      // Fetch the payment balance for the user
       let paymentBalance = await PaymentBalance.findOne({ email: userEmail });
   
-      // If the balance doesn't exist, create a new one
       if (!paymentBalance) {
         paymentBalance = new PaymentBalance({ email: userEmail, balance: '0' });
         await paymentBalance.save();
       }
   
-      // Get the current balance
       const currentBalance = parseFloat(paymentBalance.balance) || 0;
-  
-      // Get the amount to increase
       const increaseAmount = parseFloat(amount) || 0;
-  
-      // Calculate the new balance
       const newBalance = currentBalance + increaseAmount;
   
-      // Convert the balance to a string and save
       paymentBalance.balance = newBalance.toString();
       await paymentBalance.save();
   
-      // Add a record to the Payment Record
       const paymentRecord = new PaymentRecord({
         email: userEmail,
         type: 'RMIT Pay charge',
-        amount: amount.toString(), // Save the button amount as a string
+        amount: amount.toString(),
         remainingBalance: paymentBalance.balance,
         paymentStatus: 'Success',
         paymentDate: new Date(),
@@ -484,11 +472,10 @@ router.get('/charging', (req, res) => {
   
       await paymentRecord.save();
   
-      // Redirect to the payment main page
-    //   res.redirect('/paymentMain');
+      res.json({ message: 'Charge successful' });
     } catch (error) {
       console.error(error);
-      res.status(500).send('Internal Server Error');
+      res.status(500).json({ message: 'Internal Server Error' });
     }
   });
 
