@@ -4,9 +4,9 @@
     <title>Upload and Scan QR Code</title>
 </head>
 <body>
-    <h1>Upload QR Code</h1>
+    <h1>Upload and Scan QR Code</h1>
     <input type="file" id="qr-input" accept="image/*">
-    <button onclick="uploadAndScan()">Upload and Scan</button>
+    <button onclick="uploadAndScan()">Scan QR Code</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.3.0/jsQR.min.js"></script>
     <script>
         function uploadAndScan() {
@@ -26,12 +26,10 @@
 
                         if (code) {
                             console.log("Found QR code", code.data);
-                            // QR 코드 처리 로직
-                            // 예: 찾은 QR 코드 데이터를 화면에 표시하거나, URL로 리디렉트
-                            alert("QR Code data: " + code.data);
-                            // window.location.href = code.data; // URL로 리디렉트하는 경우
+                            alert("QR Code found! Redirecting to: " + code.data);
+                            window.location.href = code.data; // URL로 리디렉트
                         } else {
-                            alert("QR Code not found. Please try another image.");
+                            alert("No QR Code found. Please try another image.");
                         }
                     };
                     img.src = e.target.result;
