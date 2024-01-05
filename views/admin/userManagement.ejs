@@ -7,11 +7,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User: Admin</title>
     <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
-    <link rel="stylesheet" href="/stylesheets/adminNavbar.css">
     <link rel="stylesheet" href="/stylesheets/adminManagement.css">
-    
+    <link rel="stylesheet" href="/stylesheets/adminNavbar.css">
+    <title>User Management</title>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
@@ -55,45 +54,45 @@
           </ul>
     </div>
     <div class="adminCourseManageContents">
-
         <h1>User Management</h1>
+    
 
-    <!-- Display User List -->
-    <button class="admin-add-btn" onclick="showAddUserForm()">
-        <ion-icon name="add-outline"></ion-icon>
-        <p>Add User</p>
-    </button>
-    <table>
-        <tr>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Major</th>
-            <th>Year</th>
-            <th>Action</th>
-        </tr>
-        <% for (let i = 0; i < userList.length; i++) { %>
+        <!-- Display User List -->
+        <button class="admin-add-btn" onclick="showAddUserForm()">
+            <ion-icon name="add-outline"></ion-icon>
+            <p>Add User</p>
+        </button>
+        <table>
             <tr>
-                <td><%= userList[i].email %></td>
-                <td><%= userList[i].name %></td>
-                <td><%= userList[i].role %></td>
-                <td><%= userList[i].major %></td>
-                <td><%= userList[i].year %></td>
-
-                <td class="action-buttons">
-                    <button id="action-edit" onclick="showEditUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Edit</button>
-                    <button id="action-delete" onclick="showDeleteUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Delete</button>
-                </td>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Major</th>
+                <th>Year</th>
+                <th>Action</th>
             </tr>
-        <% } %>
-    </table>
+            <% for (let i = 0; i < userList.length; i++) { %>
+                <tr>
+                    <td><%= userList[i].email %></td>
+                    <td><%= userList[i].name %></td>
+                    <td><%= userList[i].role %></td>
+                    <td><%= userList[i].major %></td>
+                    <td><%= userList[i].year %></td>
+                    <td class="action-buttons">
+                        <button id="action-edit" onclick="showEditUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Delete</button>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
 
     <!-- Add User Form -->
     <div class="popup" id="addUserPopup">
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('addUserPopup')">X</button>
         </div>
-        <form action="/admin/userManagement/add" method="post">
+        <form action="/userManagement/add" method="post">
             <label for="email" class="custom-label">Email:</label>
             <input type="email" name="email" required class="custom-input"><br>
             <label for="name" class="custom-label">Name:</label>
@@ -115,7 +114,7 @@
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('editUserPopup')">X</button>
         </div>
-        <form action="/admin/userManagement/edit" method="post">
+        <form action="/userManagement/edit" method="post">
             <input type="text" name="userIdEdit" required readonly class="custom-input" style="display: none;">
             <label for="newEmail" class="custom-label">New Email:</label>
             <input type="text" name="newEmail" required class="custom-input"><br>
@@ -132,14 +131,15 @@
 
             <button type="submit" class="custom-button">Edit User</button>
         </form>
+    </div>
 
     <!-- Delete User Form -->
     <div class="popup" id="deleteUserPopup">
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('deleteUserPopup')">X</button>
         </div>
-        <form action="/admin/userManagement/delete" method="post">
-            <input type="text" name="userIdDelete" required readonly class="custom-input"style="display: none;">
+        <form action="/userManagement/delete" method="post">
+            <input type="text" name="userIdDelete" required readonly class="custom-input" style="display: none;">
             <label for="emailDelete" class="custom-label">Email:</label>
             <input type="email" name="emailDelete" required readonly class="custom-input"><br>
             <label for="nameDelete" class="custom-label">Name:</label>
@@ -169,6 +169,10 @@
             document.querySelector('[name="newRole"]').value = role;
             document.querySelector('[name="newMajor"]').value = major;
             document.querySelector('[name="yearEdit"]').value = year;
+            
+            
+            
+            
         }
 
         function showDeleteUserForm(userId, email, name, role, major, year) {
@@ -196,10 +200,8 @@
             closePopup('editUserPopup');
             closePopup('deleteUserPopup');
         }
-
-
-
     </script>
 </body>
 
 </html>
+
