@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>QR Code Scanner</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.3.0/jsQR.min.js"></script>
 </head>
 <body>
     <video id="qr-video" width="300" height="300"></video>
     <button onclick="startScan()">Start Scan</button>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.3.0/jsQR.min.js"></script>
     <script>
         const videoElement = document.getElementById('qr-video');
         let scanning = false;
@@ -37,7 +37,7 @@
                     });
                     if (code) {
                         console.log("Found QR code", code.data);
-                        window.location.href = code.data; // Redirect to the URL in the QR code
+                        window.location.href = code.data; // QR 코드에 포함된 URL로 리디렉트
                         scanning = false;
                         videoElement.srcObject.getTracks().forEach(track => track.stop());
                     } else {
