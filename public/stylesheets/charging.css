@@ -60,6 +60,7 @@
     height:80px;
     font-weight: bold;
     margin: 3px;
+    color: black;
   }
 
   .chargeButton:hover {

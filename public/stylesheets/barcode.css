@@ -114,11 +114,13 @@ border-radius: 30px;
 .buttonContent span {
 font-size: 30px;
 font-weight: 700;
+color: black;
 }
 .buttonContent ion-icon {
 width: 40px;
 height: 40px;
 margin-right: 10px;
+color: black;
 }
 
 .btnContent-wrap{
