@@ -595,7 +595,9 @@ router.use(function (err, req, res, next) {
 });
 
 
-
+router.get('/qrscanner', (req, res) => {
+    res.render('user/qrscanner'); 
+});
 
 
 

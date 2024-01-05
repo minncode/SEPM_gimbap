@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Scanner</title>
+</head>
+<body>
+    <video id="qr-video" width="300" height="300"></video>
+    <button onclick="startScan()">Start Scan</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.3.0/jsQR.min.js"></script>
+    <script>
+        const videoElement = document.getElementById('qr-video');
+        let scanning = false;
+
+        function startScan() {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                .then(function(stream) {
+                    scanning = true;
+                    videoElement.srcObject = stream;
+                    videoElement.play();
+                    scanQRCode();
+                }).catch(function(error) {
+                    console.error("Cannot access camera", error);
+                });
+        }
+
+        function scanQRCode() {
+            requestAnimationFrame(() => {
+                if (scanning) {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = videoElement.videoWidth;
+                    canvas.height = videoElement.videoHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                        inversionAttempts: "dontInvert",
+                    });
+                    if (code) {
+                        console.log("Found QR code", code.data);
+                        window.location.href = code.data; // Redirect to the URL in the QR code
+                        scanning = false;
+                        videoElement.srcObject.getTracks().forEach(track => track.stop());
+                    } else {
+                        scanQRCode();
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
