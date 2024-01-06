@@ -29,6 +29,9 @@ const LogInSchema = new mongoose.Schema({
     },
     role:{
         type: String,
+    },
+    image:{
+        type: String,
     }
 })
 

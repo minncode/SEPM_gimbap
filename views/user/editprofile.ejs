@@ -6,7 +6,7 @@
 </head>
 <body>
 
-  <form action="/editprofile" method="post">
+  <form action="/editprofile" method="post" enctype="multipart/form-data">
 
   <div class="editprofile-header">
     <h2>Edit My Profile</h2>
@@ -14,10 +14,11 @@
   </div>
   <div class="edit-profile">
     <div id="profile-pic">
-      <img src="/images/studentProfile.png" alt="">
+      <img src="<%= displayimage %>" alt="Profile Picture" onerror="this.onerror=null; this.src='/images/studentProfile.png';">
     </div>
     <div id="profilepic-btn">
-      <button id="uploadimg" >Uplaod Img</button>
+      <input type="file" name="image">
+      <button type="uploadimg">Upload</button>
       <button id="removeimg">Remove</button>
     </div>
   </div>
