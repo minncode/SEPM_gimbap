@@ -16,9 +16,28 @@
     <div id="profile-pic">
       <img src="<%= displayimage %>" alt="Profile Picture" onerror="this.onerror=null; this.src='/images/studentProfile.png';">
     </div>
+    <!-- profile btn -->
     <div id="profilepic-btn">
-      <input type="file" name="image">
-      <button type="uploadimg">Upload</button>
+      <div class="box-file-input">
+        <label>
+          <input type="file" name="image" class="file-input" accept="image/*">
+        </label>
+      </div>
+      <script>
+
+  $(document).on("change", ".file-input", function(){
+   
+   $filename = $(this).val();
+
+   if($filename == "")
+     $filename = "파일을 선택해주세요.";
+
+   $(".filename").text($filename);
+
+ })
+      </script>
+
+      <!-- remove -->
       <button id="removeimg">Remove</button>
     </div>
   </div>
