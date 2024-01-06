@@ -15,44 +15,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
-<body>
-    <div class="admin-navbar">
-        <ul>
-            <a class="navlogo" href="#">
-                <img src="/images/rmitlogo.png" alt="">
-                <p>RMITdays</p>
-            </a>
-            <li>
-            <a class="admin-profile-wrap" href="#">
-                <div class="admin-profile">
-                    <img src="/images/studentProfile.png" alt="">
-                </div> 
-                <p>Admin Name</p>
-            </a>
-            </li>
-            <li>
-                <a class="backWeb" href="#">
-                    <ion-icon name="exit-outline"></ion-icon>
-                    <p>Go back to Website</p>
-                </a>
-            </li>
-
-            <p id="category1" >Management</p>
-            <li><a href="/admin/UserManagement">User</a></li>
-            <li><a href="/admin/courseListManagement">Course List</a></li>
-            <li><a href="/admin/CourseActivityManagement">Course Activity</a></li>
-            <li><a href="/admin/CourseEnrollmentManagement">Course Enrollment</a></li>
-            <li><a href="/admin/paymentBalanceManagement">Payment Balance</a></li>
-            <li><a href="/admin/paymentRecordManagement">Payment Record</a></li>
-            <li><a href="/admin/feedbackManagement">Feedback</a></li>
-            <li><a href="/admin/courseHistoryManagement">Course History</a></li>
-            <li><a href="/admin/courseEnrollmentHistoryManagement">Course Enrollment History</a></li>
-            <li><a href="/admin/courseEvaluationManagement">Course Evaluation</a></li>
-            <li><a href="#">Campus Map</a></li>
-            <li><a href="#">Payment</a></li>
-            <li><a href="#">Course Evaluation</a></li>
-          </ul>
-    </div>
+<%- include("../partials/adminNavigation") %>
     <div class="adminCourseManageContents">
         <h1>User Management</h1>
     
