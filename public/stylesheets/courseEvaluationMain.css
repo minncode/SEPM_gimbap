@@ -32,6 +32,7 @@ body {
     display: flex;
     align-items: center;
     margin: 0px 15px;
+    margin-top:70px;
 }
 
 /* 검색 아이콘에 대한 스타일 */
@@ -58,6 +59,7 @@ body {
 
 .mainContent {
     margin:20px;
+    margin-top:30px;
 }
 
 .author {
