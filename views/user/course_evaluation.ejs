@@ -25,7 +25,8 @@
         <div class="comment-list">
             <% for (let i = 0; i < courseHistoryList.length; i++) { %>
                 <div class="comment">
-                    <a href="reviewDetail">
+                    <!-- 강의 링크에 courseID를 파라미터로 추가 -->
+                    <a href="reviewDetail/<%= courseHistoryList[i].courseID %>">
                         <h3 class="comment-title"><%= courseHistoryList[i].courseID %> - <%= courseHistoryList[i].courseName %></h3>
                         <p class="author"><%= courseHistoryList[i].lecturer %></p>
                         <div class="rating">

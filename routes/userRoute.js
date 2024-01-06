@@ -395,45 +395,53 @@ router.get('/writeReview', async (req, res) => {
     }
 });
 
+router.get('/courseDetails/:courseID', async (req, res) => {
+    try {
+        const courseID = req.params.courseID;
+        const courseDetails = await CourseHistory.findOne({ courseID: courseID });
+        if(courseDetails) {
+            res.json({ courseName: courseDetails.courseName, lecturer: courseDetails.lecturer });
+        } else {
+            res.status(404).send('Course details not found');
+        }
+    } catch (error) {
+        console.error('Error fetching course details:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
 router.post('/writeReview', async (req, res) => {
     try {
-        const {
+        const { courseID, starRating, assignmentsCount, examsCount, groupProjectsCount, difficulty, textFeedback } = req.body;
+        const userEmail = req.session.email;
+
+
+        // delete existing review if same courseID, email evaluation exists
+        await CourseEvaluation.findOneAndDelete({ courseID, email: userEmail });
+
+        // CourseEnrollmentHistory에서 enrollmentSemester를 조회
+        const enrollmentRecord = await CourseEnrollmentHistory.findOne({ courseID, email: userEmail });
+        const enrollmentSemester = enrollmentRecord ? enrollmentRecord.enrollmentSemester : 'Unknown';
+
+        const newEvaluation = new CourseEvaluation({
             courseID,
-            courseName,
-            lecturer,
-            email,
+            email: userEmail,
+            status: 'Success', // 상태를 'Success'로 고정
+            enrollmentSemester,
             starRating,
             assignmentsCount,
             examsCount,
             groupProjectsCount,
             difficulty,
-            newField,
-            textFeedback,
-        } = req.body;
-
-        // CourseEvaluation 모델을 사용하여 데이터 저장
-        const courseEvaluation = new CourseEvaluation({
-            courseID,
-            courseName,
-            lecturer,
-            email,
-            starRating,
-            assignmentsCount,
-            examsCount,
-            groupProjectsCount,
-            difficulty,
-            newField,
             textFeedback,
         });
 
-        await courseEvaluation.save();
-
-        res.send({
-            success: true,
-            review: courseEvaluation.toObject(),
-        });
+        await newEvaluation.save();
+        res.redirect('/courseSelect');
     } catch (error) {
-        console.error(error);
+        console.error('Error on writeReview POST:', error);
         res.status(500).send('Internal Server Error');
     }
 });
@@ -442,6 +450,42 @@ router.post('/writeReview', async (req, res) => {
 router.get('/reviewDetail', (req, res) => {
     res.render('user/reviewDetail');
 });
+
+router.get('/reviewDetail/:courseID', async (req, res) => {
+    try {
+        const courseID = req.params.courseID;
+        const course = await CourseHistory.findOne({ courseID: courseID });
+        const evaluations = await CourseEvaluation.find({ courseID: courseID });
+
+        if (!course) {
+            return res.status(404).send('Course not found');
+        }
+
+        // 평균 계산 로직
+        let totalStarRating = 0, totalAssignmentsCount = 0, totalExamsCount = 0, totalGroupProjectsCount = 0, totalDifficulty = 0;
+        evaluations.forEach(eval => {
+            totalStarRating += eval.starRating;
+            totalAssignmentsCount += eval.assignmentsCount;
+            totalExamsCount += eval.examsCount;
+            totalGroupProjectsCount += eval.groupProjectsCount;
+            totalDifficulty += eval.difficulty;
+        });
+
+        const average = evaluations.length > 0 ? {
+            starRating: totalStarRating / evaluations.length,
+            assignmentsCount: totalAssignmentsCount / evaluations.length,
+            examsCount: totalExamsCount / evaluations.length,
+            groupProjectsCount: totalGroupProjectsCount / evaluations.length,
+            difficulty: totalDifficulty / evaluations.length
+        } : {};
+
+        res.render('user/reviewDetail', { course, evaluations, average });
+    } catch (error) {
+        console.error('Error fetching course details:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 router.get('/paymentMain', async (req, res) => {
     try {

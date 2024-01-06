@@ -1,81 +1,123 @@
 <%- include("../partials/header") %>
 
-    <title>Review Detail</title>
-    <link rel="stylesheet" href="/stylesheets/reviewDetail.css">
-
+<title>Review Detail</title>
+<link rel="stylesheet" href="/stylesheets/reviewDetail.css">
 </head>
-<body>
+<style>
+.star-rating-container {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+}
 
+.star-rating {
+    margin-right: 10px; /* 별점과 숫자 사이의 간격 */
+}
+
+.star-rating .star {
+    color: #ddd; /* 기본 별 색상 */
+    font-size: 20px;
+}
+
+.star-rating .star.filled {
+    color: #ffc107; /* 채워진 별 색상 */
+}
+
+.star-rating .star.half-filled::before {
+    content: '\2605'; /* 절반 채워진 별을 위한 콘텐츠 (유니코드 별 문자) */
+    color: #ffc107;
+    position: absolute;
+}
+
+.rating-number {
+    font-size: 15px; /* 평점 숫자의 크기 */
+}
+.difficulty-heading {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+}
+.difficulty-heading h3 {
+    margin-right: 10px; /* h3와 h5 사이의 간격 */
+}
+</style>
+<body>
     <div class="headerContainer">
         <div class="course_evaluation-header">
-            <h3 class="courseCode">ISYS2101</h3>
-            <h3 class="courseName">Software Engineering Project Management</h3>
-            <p class="professorName">Tuan Tran Minh</p>
+            <h3 class="courseID"><%= course.courseID %></h3>
+            <h3 class="courseName"><%= course.courseName %></h3>
+            <p class="lecturer"><%= course.lecturer %></p>
         </div>
         <div class="icon">
-            <a href="course_evaluation">    <ion-icon class="course_evaluation_detail-delete-icon" name="close-outline"></ion-icon></a>
+            <a href="course_evaluation"> <ion-icon class="course_evaluation_detail-delete-icon" name="close-outline"></ion-icon></a>
         </div>
-
     </div>
+    
     <div class="mainContent">
         <div class="review-section">
+            <h2>Average Ratings</h2>
             <div class="review">
-                <h3>Paper</h3>
-                <p>None</p>
+                <h3>Star Rating</h3>
+                <div class="star-rating-container">
+                    <div class="star-rating">
+                        <% for(let i = 1; i <= 5; i++) { %>
+                            <% if(i <= average.starRating) { %>
+                                <span class="star filled">&#9733;</span>
+                            <% } else if(i - average.starRating < 1) { %>
+                                <span class="star half-filled">&#9733;</span>
+                            <% } else { %>
+                                <span class="star">&#9733;</span>
+                            <% } %>
+                        <% } %>
+                    </div>
+                    <p class="rating-number"><%= average.starRating ? average.starRating.toFixed(1) : 'N/A' %>/5</p>
+                </div>
             </div>
             <div class="review">
-                <h3>Test</h3>
-                <p>3 Times</p>
+                <h3>Number of Assignments</h3>
+                <p><%= average.assignmentsCount ? average.assignmentsCount.toFixed(1) : 'N/A' %>/4</p>
             </div>
             <div class="review">
-                <h3>Grades</h3>
-                <div class="graph">
-                    <div class="bar" id="generosityBar">
-                        <span class="barText" id="generosityValue">Generosity</span>
-                    </div>
-                    <div class="bar" id="generalBar">
-                        <span class="barText" id="generalValue">In General</span>
-                    </div>
-                    <div class="bar" id="strictnessBar">
-                        <span class="barText" id="strictnessValue">Strictness</span>
-                    </div>
+                <h3>Number of Exams</h3>
+                <p><%= average.examsCount ? average.examsCount.toFixed(1) : 'N/A' %>/4</p>
             </div>
             <div class="review">
-                <h3>Group Project</h3>
-                <p>No</p>
+                <h3>Number of Group Projects</h3>
+                <p><%= average.groupProjectsCount ? average.groupProjectsCount.toFixed(1) : 'N/A' %>/4</p>
+            </div>
+            <div class="review">
+                <div class="difficulty-heading">
+                    <h3>Difficulty</h3>
+                    <h5>(1 = Very Easy ~ 5 = Very Hard)</h5>
+                </div>
+                <p><%= average.difficulty ? average.difficulty.toFixed(1) : 'N/A' %>/5</p>
             </div>
 
-            <div class="review">
-                <h3>Structure (about onine lecture)</h3>
-                <p>No</p>
-            </div>
+            <br><br>
+            <h2>Comments</h2>
 
-        </div>
             <div class="comment-list">
-                <div class="comment">
-                    <div class="rating"> 
-    
+                <% evaluations.forEach(function(evaluation) { %>
+                    <div class="comment">
+                        <p class="enrollmentSemester">Student who took <%= evaluation.enrollmentSemester %> class</p>
+                        <div class="star-rating-container">
+                            <div class="star-rating">
+                                <% for(let i = 1; i <= 5; i++) { %>
+                                    <% if(i <= evaluation.starRating) { %>
+                                        <span class="star filled">&#9733;</span>
+                                    <% } else { %>
+                                        <span class="star">&#9733;</span>
+                                    <% } %>
+                                <% } %>
+                            </div>
+                            <p class="rating-number"><%= evaluation.starRating.toFixed(1) %>/5</p>
+                        </div>
+                        <p class="textFeedback"><%= evaluation.textFeedback %></p>
                     </div>
-                    <p class="author">Students in the first semester of '22</p>
-                    <p class="comment-content">He was nice.</p>
-                </div>
-                <div class="comment">
-                    <div class="rating"> 
-    
-                    </div>
-                    <p class="author">Students in the first semester of '22</p>
-                    <p class="comment-content">He was nice.</p>
-                </div>
-                <div class="comment">
-                    <div class="rating"> 
-    
-                    </div>
-                    <p class="author">Students in the first semester of '22</p>
-                    <p class="comment-content">He was nice.</p>
-                </div>
+                <% }); %>
+            </div>
 
+                </div>
             </div>
         </div>
-    </div>
-</body>
-</html>
+    </body>
+
+    </html>

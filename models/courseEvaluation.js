@@ -9,7 +9,6 @@ const courseEvaluationSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        //enum: ['Enrolled', 'Completed', 'Dropped'], 
     },
     enrollmentSemester: {
         type: String,
@@ -21,16 +20,23 @@ const courseEvaluationSchema = new mongoose.Schema({
     },
     assignmentsCount: {
         type: Number,
+        min: 0,
+        max: 4,
     },
     examsCount: {
         type: Number,
+        min: 0,
+        max: 4,
     },
     groupProjectsCount: {
         type: Number,
+        min: 0,
+        max: 4,
     },
     difficulty: {
-        type: String,
-        //enum: ['Easy', 'Moderate', 'Difficult'], 
+        type: Number,
+        min: 1,
+        max: 5,
     },
     textFeedback: {
         type: String,

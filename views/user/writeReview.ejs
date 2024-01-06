@@ -2,10 +2,14 @@
 
 <link rel="stylesheet" href="/stylesheets/writeReview.css">
 <link rel="stylesheet" href="/stylesheets/header.css">
-<script src="/javascripts/writeReview.js" defer></script>
-<script src="/javascripts/popup.js" defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
+<!-- defer 속성 제거 -->
+<script src="/javascripts/writeReview.js"></script>
+<script src="/javascripts/popup.js"></script>
 <title>RMITdays</title>
+
 </head>
+
 <body>
     <%- include("../partials/navigation") %>
     <div class="CourseSelectionHeader">
@@ -21,27 +25,28 @@
 
                 <div class="section courseID">
                     <h3>Course ID</h3>
-                    <select name="courseID" id="courseID">
-                        <% for (let i = 0; i < courses.length; i++) { %>
-                            <option value="<%= courses[i].courseID %>"><%= courses[i].courseID %></option>
-                        <% } %>
+                    <select name="courseID" id="courseID" onchange="updateCourseDetails()">
+                        <% courses.forEach(course => { %>
+                            <option value="<%= course.courseID %>"><%= course.courseID %></option>
+                        <% }); %>
                     </select>
                 </div>
-
+            
                 <div class="section courseName">
                     <h3>Course Name</h3>
-                    <input type="text" class="input-box" placeholder="Enter Course Name" name="courseName">
+                    <input type="text" class="input-box" id="courseName" readonly>
+                    <input type="hidden" name="courseName">
                 </div>
-
+            
                 <div class="section lecturer">
                     <h3>Lecturer</h3>
-                    <input type="text" class="input-box" placeholder="Enter Lecturer name" name="lecturer">
+                    <input type="text" class="input-box" id="lecturer" readonly>
+                    <input type="hidden" name="lecturer">
                 </div>
-
-                <!-- 유저 세션에서 이메일 받아오기 -->
+            
                 <div class="section email">
                     <h3>Email</h3>
-                    <input type="text" class="input-box" placeholder="Enter Your Email" name="email" value="<%= userEmail %>">
+                    <input type="text" class="input-box" name="email" value="<%= userEmail %>" readonly>
                 </div>
 
                 <div class="section starRating">
@@ -53,127 +58,129 @@
                         <span class="option" onclick="selectStarRating(4)" data-value="4">★</span>
                         <span class="option" onclick="selectStarRating(5)" data-value="5">★</span>
                     </div>
+                    <input type="hidden" name="starRating" id="starRating" value="">
                 </div>
 
                 <div class="section assignmentsCount">
-                    <h3>Assignments Count</h3>
+                    <h3>Number of Assignments</h3>
+                    <h4>( How many Assignments are there? )</h4>
                     <div class="options">
+                        <span class="option" onclick="selectCount(this, 'assignmentsCount')" data-value="0">0</span>
                         <span class="option" onclick="selectCount(this, 'assignmentsCount')" data-value="1">1</span>
                         <span class="option" onclick="selectCount(this, 'assignmentsCount')" data-value="2">2</span>
                         <span class="option" onclick="selectCount(this, 'assignmentsCount')" data-value="3">3</span>
                         <span class="option" onclick="selectCount(this, 'assignmentsCount')" data-value="4">4</span>
                     </div>
+                    <input type="hidden" name="assignmentsCount" id="assignmentsCount" value="">
                 </div>
 
                 <div class="section examsCount">
-                    <h3>Exams Count</h3>
+                    <h3>Number of Exams</h3>
+                    <h4>( How many Exams are there? )</h4>
                     <div class="options">
+                        <span class="option" onclick="selectCount(this, 'examsCount')" data-value="0">0</span>
                         <span class="option" onclick="selectCount(this, 'examsCount')" data-value="1">1</span>
                         <span class="option" onclick="selectCount(this, 'examsCount')" data-value="2">2</span>
                         <span class="option" onclick="selectCount(this, 'examsCount')" data-value="3">3</span>
                         <span class="option" onclick="selectCount(this, 'examsCount')" data-value="4">4</span>
                     </div>
+                    <input type="hidden" name="examsCount" id="examsCount" value="">
                 </div>
 
                 <div class="section groupProjectsCount">
-                    <h3>Group Projects Count</h3>
+                    <h3>Number of Group Projects</h3>
+                    <h4>( How many Group Projects are there? )</h4>
                     <div class="options">
+                        <span class="option" onclick="selectCount(this, 'groupProjectsCount')" data-value="0">0</span>
                         <span class="option" onclick="selectCount(this, 'groupProjectsCount')" data-value="1">1</span>
                         <span class="option" onclick="selectCount(this, 'groupProjectsCount')" data-value="2">2</span>
                         <span class="option" onclick="selectCount(this, 'groupProjectsCount')" data-value="3">3</span>
                         <span class="option" onclick="selectCount(this, 'groupProjectsCount')" data-value="4">4</span>
                     </div>
+                    <input type="hidden" name="groupProjectsCount" id="groupProjectsCount" value="">
                 </div>
 
                 <div class="section difficulty">
                     <h3>Difficulty</h3>
+                    <h4>( 1 = Very Easy ~ 5 = Very Hard )</h4>
                     <div class="options">
-                        <span class="option" onclick="selectOption(this, 'difficulty')" data-value="Easy">Easy</span>
-                        <span class="option" onclick="selectOption(this, 'difficulty')" data-value="Moderate">Moderate</span>
-                        <span class="option" onclick="selectOption(this, 'difficulty')" data-value="Difficult">Difficult</span>
+                        <span class="option" onclick="selectCount(this, 'difficulty')" data-value="1">1</span>
+                        <span class="option" onclick="selectCount(this, 'difficulty')" data-value="2">2</span>
+                        <span class="option" onclick="selectCount(this, 'difficulty')" data-value="3">3</span>
+                        <span class="option" onclick="selectCount(this, 'difficulty')" data-value="4">4</span>
+                        <span class="option" onclick="selectCount(this, 'difficulty')" data-value="5">5</span>
                     </div>
+                    <input type="hidden" name="difficulty" id="difficulty" value="">
                 </div>
 
-                <div class="section newField">
-                    <h3>New Field</h3>
-                    <input type="text" class="input-box" placeholder="Enter New Field" name="newField">
-                </div>
-                
                 <div class="section">
                     <h3>Comments</h3>
                     <textarea class="comment-box" placeholder="Write your comment here..." name="textFeedback"></textarea>
                 </div>
-                <button type="submit" class="submit-button" onclick="submitReview()">Submit</button>
-                </form>
-                </div>
-                </div>
-                <script>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script>
+
+function updateCourseDetails() {
+            var courseID = $('#courseID').val();
+            $.ajax({
+                url: '/courseDetails/' + courseID,
+                type: 'GET',
+                success: function(data) {
+                    $('#courseName').val(data.courseName);
+                    $('input[name="courseName"]').val(data.courseName);
+                    $('#lecturer').val(data.lecturer);
+                    $('input[name="lecturer"]').val(data.lecturer);
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+
         function selectStarRating(rating) {
+            document.getElementById('starRating').value = rating;
             const starOptions = document.querySelectorAll('.starRating .option');
             starOptions.forEach((option, index) => {
                 option.classList.toggle('selected', index < rating);
             });
         }
 
-        function selectCount(option, countType) {
-            const countOptions = option.parentNode.querySelectorAll('.option');
+        function selectCount(element, countType) {
+            document.getElementById(countType).value = element.dataset.value;
+            const countOptions = element.parentNode.querySelectorAll('.option');
             countOptions.forEach(opt => {
                 opt.classList.remove('selected');
             });
-
-            option.classList.add('selected');
+            element.classList.add('selected');
         }
 
-        function submitReview() {
-        const starOptions = document.querySelectorAll('.starRating .option');
-        const selectedStarRating = Array.from(starOptions).filter(option => option.classList.contains('selected')).length;
+        // function selectOption(element, fieldName) {
+        //     const selectedValue = element.getAttribute('data-value');
+        //     document.getElementById(fieldName).value = selectedValue;
+        
+        //     const options = element.parentNode.querySelectorAll('.option');
+        //     options.forEach(opt => {
+        //         opt.classList.remove('selected');
+        //     });
+        //     element.classList.add('selected');
+        // }
 
-        const countTypes = ['assignmentsCount', 'examsCount', 'groupProjectsCount'];
-        let selectedCount = 0;
 
-        countTypes.forEach(countType => {
-            const countOptions = document.querySelectorAll(`.${countType} .option`);
-            const selectedOption = Array.from(countOptions).find(option => option.classList.contains('selected'));
-
-            if (selectedOption) {
-                selectedCount = parseInt(selectedOption.getAttribute('data-value'), 10); // Parse as an integer
-            }
-        });
-
-        const difficultyOptions = document.querySelectorAll('.difficulty .option.selected');
-        const selectedDifficulty = difficultyOptions.length > 0 ? difficultyOptions[0].getAttribute('data-value') : '';
-
-        // 수정된 부분: newField 추가
-        const newField = document.querySelector('.newField input').value;
-
-        fetch('/writeReview', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                courseID: document.getElementById('courseID').value,
-                courseName: document.querySelector('.courseName input').value,
-                lecturer: document.querySelector('.lecturer input').value,
-                email: document.querySelector('.email input').value,
-                starRating: selectedStarRating,
-                assignmentsCount: selectedCount,
-                examsCount: selectedCount,
-                groupProjectsCount: selectedCount,
-                difficulty: selectedDifficulty,
-                newField: newField, // 수정된 부분
-                textFeedback: document.querySelector('.comment-box').value,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            // 서버 응답에 따른 동작
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-</script>
+        // 페이지 로드 시 초기화 함수
+        window.onload = function() {
+            selectStarRating(1);  // 기본 별점은 1로 설정
+            selectCount(document.querySelector('.assignmentsCount .option'), 'assignmentsCount');
+            selectCount(document.querySelector('.examsCount .option'), 'examsCount');
+            selectCount(document.querySelector('.groupProjectsCount .option'), 'groupProjectsCount');
+            selectCount(document.querySelector('.difficulty .option'), 'difficulty'); // Default difficulty
+        };
+    </script>
+    
 </body>
 </html>
