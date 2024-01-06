@@ -58,6 +58,13 @@ router.post("/register", upload.single('image'), async (req, res) => {
     const email = req.body.email + '@rmit.edu.vn';
 
     try {
+        const existingUser = await collection.findOne({ email: email });
+        if (existingUser) {
+            // User already exists, render register page with an error
+            return res.status(400).send('This email is already in use');
+        }
+
+
         // Hashing the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
