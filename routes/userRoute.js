@@ -100,9 +100,6 @@ router.get('/main', async (req, res) => {
     }
 });
 
-router.get('/camera', (req, res) => {
-    res.render('user/camera');
-});
 
 router.get('/profile', async (req, res) => {
     res.render('user/profile', {
