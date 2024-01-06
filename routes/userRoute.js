@@ -13,6 +13,7 @@ const CourseHistory = require('../models/courseHistory');
 const CourseEnrollmentHistory = require('../models/courseEnrollmentHistory');
 const CourseEvaluation = require('../models/courseEvaluation');
 const QRCode = require('qrcode');
+const upload = require('../middleware/uploadImages');
 
 
 router.use(session({
@@ -38,6 +39,7 @@ router.post('/', async (req, res) => {
             req.session.name = user.name;
             req.session.email = user.email;
             req.session.major = user.major;
+            req.session.image = user.image;
             res.redirect('/main');
         } else {
             res.render('user/login', { error: 'Failed to login' });
@@ -51,7 +53,7 @@ router.get('/register', (req, res) => {
     res.render("user/register")
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", upload.single('image'), async (req, res) => {
     const { year, major, name, password } = req.body;
     const email = req.body.email + '@rmit.edu.vn';
 
@@ -59,6 +61,7 @@ router.post("/register", async (req, res) => {
         // Hashing the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        
         // Creating a new document using the Mongoose model
         const newUser = new collection({
             year,
@@ -66,7 +69,8 @@ router.post("/register", async (req, res) => {
             email,
             name,
             password: hashedPassword, // Assigning the hashed password to the document
-            role: "student"
+            role: "student",
+            image: req.file ? '/images/' + req.file.filename : '/images/studentProfile.png',
         });
 
         // Saving the new user to the database
@@ -96,6 +100,7 @@ router.get('/main', async (req, res) => {
             displayname: req.session.name,
             displayemail: req.session.email,
             displaymajor: req.session.major,
+            displayimage: req.session.image,
             qrUrl: qrUrl
         });
     } catch (err) {
@@ -109,7 +114,8 @@ router.get('/profile', async (req, res) => {
     res.render('user/profile', {
         displayname: req.session.name,
         displayemail: req.session.email,
-        displaymajor: req.session.major
+        displaymajor: req.session.major,
+        displayimage: req.session.image
     });
 });
 
@@ -206,11 +212,12 @@ router.get('/editprofile', (req, res) => {
     res.render('user/editprofile', {
         displayname: req.session.name,
         displayemail: req.session.email,
-        displaymajor: req.session.major
+        displaymajor: req.session.major,
+        displayimage: req.session.image
     });
 });
 
-router.post('/editprofile', async (req, res) => {
+router.post('/editprofile', upload.single('image'), async (req, res) => {
     const { name, email, password, major } = req.body;
 
     try {
@@ -223,6 +230,9 @@ router.post('/editprofile', async (req, res) => {
         // Update user information
         user.name = name;
         user.major = major;
+        if (req.file) {
+            user.image = '/images/' + req.file.filename; // Update image path with the uploaded file
+        }
 
         // Only update password if a new one is provided
         if (password) {
@@ -236,6 +246,7 @@ router.post('/editprofile', async (req, res) => {
         req.session.name = user.name;
         req.session.email = user.email;
         req.session.major = user.major;
+        req.session.image = user.image;
 
         res.redirect('/profile');
     } catch (err) {

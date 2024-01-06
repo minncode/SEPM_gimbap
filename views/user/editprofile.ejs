@@ -6,7 +6,7 @@
 </head>
 <body>
 
-  <form action="/editprofile" method="post">
+  <form action="/editprofile" method="post" enctype="multipart/form-data">
 
   <div class="editprofile-header">
     <h2>Edit My Profile</h2>
@@ -14,10 +14,30 @@
   </div>
   <div class="edit-profile">
     <div id="profile-pic">
-      <img src="/images/studentProfile.png" alt="">
+      <img src="<%= displayimage %>" alt="Profile Picture" onerror="this.onerror=null; this.src='/images/studentProfile.png';">
     </div>
+    <!-- profile btn -->
     <div id="profilepic-btn">
-      <button id="uploadimg" >Uplaod Img</button>
+      <div class="box-file-input">
+        <label>
+          <input type="file" name="image" class="file-input" accept="image/*">
+        </label>
+      </div>
+      <script>
+
+  $(document).on("change", ".file-input", function(){
+   
+   $filename = $(this).val();
+
+   if($filename == "")
+     $filename = "파일을 선택해주세요.";
+
+   $(".filename").text($filename);
+
+ })
+      </script>
+
+      <!-- remove -->
       <button id="removeimg">Remove</button>
     </div>
   </div>

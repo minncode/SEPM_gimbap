@@ -3,19 +3,32 @@
   <script src="javascripts/jsQR.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
   <link rel="stylesheet" href="/stylesheets/camera.css">
-  <link rel="stylesheet" href="/stylesheets/header.css">
+  <!-- <link rel="stylesheet" href="/stylesheets/header.css"> -->
 </head>
 <body>
-  <%- include("../partials/navigation") %>
-    <h1>jsQR Demo</h1>
-    <a id="githubLink" href="javascripts/jsQR">View documentation on Github</a>
-    <p>Pure JavaScript QR code decoding library.</p>
-    <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
-    <canvas id="canvas" hidden></canvas>
-    <div id="output" hidden>
-      <div id="outputMessage">No QR code detected.</div>
-      <div hidden><b>Data:</b> <a id="outputLink" href="" target="_blank"></a></div>
+  <header>
+    <div class="header">
+        <img class="logo" src="/images/rmitlogo.png" alt="RMIT logo" >
+        <h2>RMIT Pay</h2>
     </div>
+    <a class="delete-btn" href="barcode"><ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></ion-icon></a>
+</header>
+  <div class="mainContent">
+    <div class="contentContainer">
+      <div class="qrSection">
+        <h1>QR Pay</h1>
+        <!-- <a id="githubLink" href="javascripts/jsQR">View documentation on Github</a> -->
+        <p>Scan the QR code to pay!</p>
+        <div id="loadingMessage">🎥 
+          You're unable to access the video stream (please ensure your webcam is enabled).</div>
+        <canvas id="canvas" hidden></canvas>
+        <div id="output" hidden>
+          <div id="outputMessage">Unable to detect a QR code.</div>
+          <div hidden><b>Data:</b> <a id="outputLink" href="" target="_blank"></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
     <script>
       var video = document.createElement("video");
       var canvasElement = document.getElementById("canvas");

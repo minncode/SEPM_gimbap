@@ -55,13 +55,33 @@ input[type="text"] {
   margin: 5px;
   padding: 5px 10px;
   border-radius: 10px;
+  font-size: 14px;
 }
 
-#uploadimg{
-  color: white;
+.box-file-input label{
+  display:inline-block;
   background-color: #222160;
-  font-weight: 600;
+  color:#fff;
   border: none;
+  margin: 5px;
+  padding: 9px 13px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor:pointer;
+}
+
+.box-file-input label:after{
+  content:"Upload";
+}
+
+.box-file-input .file-input{
+  display:none;
+}
+
+.box-file-input .filename{
+  display:inline-block;
+  padding-left:10px;
 }
 
 #removeimg{
