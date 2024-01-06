@@ -40,7 +40,6 @@ input[type="text"] {
 
 #profile-pic img{
   background-color: #E3E5E0;
-  border: 2.5px solid #C0C2BD;
   border-radius: 70%;
   margin: 10px 0px;
   width: 80px;
@@ -89,6 +88,10 @@ input[type="text"] {
   background-color: #E3E5E0;
   font-weight: 600;
   border: 1.5px solid #C0C2BD;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 7px 10px 5px;
+  font-size: 14px;
 }
 
 #editprofile-form {
@@ -96,6 +99,7 @@ input[type="text"] {
   flex-direction: column;
   justify-content: center;
   padding: 20px;
+  
 }
 
 #editprofile-form p{
