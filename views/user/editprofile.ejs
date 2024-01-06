@@ -38,7 +38,7 @@
       </script>
 
       <!-- remove -->
-      <button id="removeimg">Remove</button>
+      <label id="removeimg">Remove</label>
     </div>
   </div>
   
@@ -82,5 +82,23 @@
     <input type="reset" id="reset" value="reset">
   </div>
 </form>
+
+<script>
+  document.querySelector(".file-input").addEventListener("change", function() {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      document.querySelector('#profile-pic img').src = e.target.result;
+    }
+    
+    reader.readAsDataURL(this.files[0]);
+  });
+
+  var originalImageSrc = document.querySelector('#profile-pic img').src;
+
+  document.querySelector("#removeimg").addEventListener("click", function() {
+    document.querySelector('#profile-pic img').src = originalImageSrc;
+  });
+</script>
 </body>
 </html>
