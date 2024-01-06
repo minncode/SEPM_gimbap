@@ -25,13 +25,14 @@ color: white;
   vertical-align: middle;
   max-width: 40px;
   max-height: 40px;
-  padding: 20px;
+  padding: 10px;
 }
+
 .delete-btn ion-icon{
   color: white;
   width: 30px;
   height:30px;
-  padding: 20px;
+  padding: 10px;
 }
 
 .delete-btn ion-icon:hover{
@@ -57,8 +58,8 @@ padding: 20px;
 }
 
 .barCode img{
-min-width: 300px;
-height: 300px;
+min-width: 200px;
+height: 200px;
 }
 
 .info-btn-wrap{
@@ -82,7 +83,7 @@ border-radius: 10px;
 font-size: 15px;
 margin: 20px;
 padding: 20px;
-box-shadow: 5px 5px 5px rgba(128, 128, 128, 0.459)
+box-shadow: 5px 5px 5px rgba(128, 128, 128, 0.459);
 }
 
 .accountInfo img{

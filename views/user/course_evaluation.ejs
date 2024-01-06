@@ -1,14 +1,16 @@
 <%- include("../partials/header") %>
 <link rel="stylesheet" href="/stylesheets/courseEvaluationMain.css">
+<link rel="stylesheet" href="/stylesheets/header.css">
 
 <title>RMITdays</title>
 </head>
 <body>
+    <%- include("../partials/navigation") %>
 
-    <div class="CourseEvaluationHeader">
+    <!-- <div class="CourseEvaluationHeader">
         <h1>Course Evaluation</h1>
         <a href="main">    <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></a>
-    </div>
+    </div> -->
     
     <form action="/course_evaluation" method="get">
         <div class="search">
