@@ -1,0 +1,48 @@
+<%- include("../partials/header") %>
+
+<link rel="stylesheet" href="/stylesheets/qrpayment.css">
+<title>RMITdays - QR Payment</title>
+
+</head>
+<body>
+    <header>
+        <!-- Header content here -->
+    </header>
+    <div class="mainContent">
+        <h2>QR Payment</h2>
+        <form action="/qrpayment" method="post">
+            <div>
+                <label for="recipientEmail">Recipient's Email:</label>
+                <!-- Input field for recipient's email. It gets disabled if the email is verified -->
+                <input type="email" id="recipientEmail" name="recipientEmail" value="<%= recipientEmail %>" required <% if (verificationStatus === 'verified') { %>disabled<% } %>>
+                <!-- Hidden input to send the verified email to the server -->
+                <% if (verificationStatus === 'verified') { %>
+                    <input type="hidden" name="verifiedRecipientEmail" value="<%= recipientEmail %>">
+                <% } %>
+                <!-- Show verification button only if the email is not yet verified -->
+                <% if (verificationStatus !== 'verified') { %>
+                    <button type="submit" name="action" value="verify">Verify</button>
+                <% } %>
+                <!-- Display verification status -->
+                <% if (verificationStatus) { %>
+                    <% if (verificationStatus === 'verified') { %>
+                        <p style="color: blue;">Verified</p>
+                    <% } else { %>
+                        <p style="color: red;">User not found</p>
+                    <% } %>
+                <% } %>
+            </div>
+
+            <!-- Amount input and payment button are shown only after successful verification -->
+            <% if (verificationStatus === 'verified') { %>
+                <div>
+                    <label for="amount">Amount to Pay:</label>
+                    <input type="number" id="amount" name="amount" required>
+                    <button type="submit" name="action" value="pay">Pay Now!</button>
+                </div>
+            <% } %>
+        </form>
+    </div>
+</body>
+
+</html>

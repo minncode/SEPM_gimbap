@@ -72,6 +72,15 @@ router.post("/register", async (req, res) => {
         // Saving the new user to the database
         await newUser.save();
 
+        // Creating a new PaymentBalance document for the new user
+        const newPaymentBalance = new PaymentBalance({
+            email: email,
+            balance: 0 // Initialize the balance to 0
+        });
+
+        // Saving the new PaymentBalance document
+        await newPaymentBalance.save();
+
         res.render("user/login");
     } catch (err) {
         console.error(err);
@@ -599,6 +608,101 @@ router.use(function (err, req, res, next) {
 router.get('/qrscanner', (req, res) => {
     res.render('user/qrscanner'); 
 });
+
+
+// Render the QR Payment page
+router.get('/qrpayment', (req, res) => {
+    res.render('user/QRpayment', { verificationStatus: null, recipientEmail: '' });
+});
+
+// Handle QR Payment requests
+router.post('/qrpayment', async (req, res) => {
+    const { recipientEmail, verifiedRecipientEmail, amount, action } = req.body;
+    const senderEmail = req.session.email; // Ensure this session variable is correctly set
+    const emailToUse = verifiedRecipientEmail || recipientEmail;
+
+    if (action === 'verify') {
+        // Email verification process
+        const recipientExists = await collection.findOne({ email: recipientEmail });
+        req.session.recipientEmail = recipientExists ? recipientEmail : '';
+        return res.render('user/QRpayment', { 
+            verificationStatus: recipientExists ? 'verified' : 'not_found', 
+            recipientEmail 
+        });
+    } else if (action === 'pay') {
+        // Handle payment
+        try {
+            const transferAmount = parseFloat(amount);
+
+            // Check if the amount is negative or NaN
+            if (transferAmount < 0 || isNaN(transferAmount)) {
+                // Handle negative or invalid amount
+                return res.status(400).send('The amount entered cannot be negative or invalid.');
+            }
+
+            let senderBalance = await PaymentBalance.findOne({ email: senderEmail });
+            let recipientBalance = await PaymentBalance.findOne({ email: emailToUse });
+
+            // Check if sender has sufficient funds
+            if (!senderBalance || parseFloat(senderBalance.balance) < transferAmount) {
+                // Handle insufficient funds
+                return res.status(400).send('You do not have enough funds to complete this transaction.');
+            }
+
+            // Convert balance to number for calculation and update balances
+            const updatedSenderBalance = parseFloat(senderBalance.balance) - transferAmount;
+            const updatedRecipientBalance = (recipientBalance ? parseFloat(recipientBalance.balance) : 0) + transferAmount;
+
+            senderBalance.balance = updatedSenderBalance.toString();
+            if (recipientBalance) {
+                recipientBalance.balance = updatedRecipientBalance.toString();
+            } else {
+                // Create new balance record for recipient if not exists
+                recipientBalance = new PaymentBalance({ email: emailToUse, balance: updatedRecipientBalance.toString() });
+            }
+
+            await senderBalance.save();
+            await recipientBalance.save();
+
+            // Create Payment Records for both sender and recipient
+            const senderRecord = new PaymentRecord({
+                email: senderEmail,
+                type: `QR Pay to ${emailToUse}`,
+                amount: -transferAmount,
+                remainingBalance: senderBalance.balance,
+                paymentStatus: 'Success',
+                paymentDate: new Date(),
+            });
+
+            const recipientRecord = new PaymentRecord({
+                email: emailToUse,
+                type: `QR Pay from ${senderEmail}`,
+                amount: transferAmount,
+                remainingBalance: recipientBalance.balance,
+                paymentStatus: 'Success',
+                paymentDate: new Date(),
+            });
+
+            await senderRecord.save();
+            await recipientRecord.save();
+
+            req.session.recipientEmail = ''; // Clear the session email after payment
+            res.redirect('/paymentMain'); // Redirect to the main payment page after successful payment
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+});
+
+
+
+
+
+
+
+
+
 
 
 
