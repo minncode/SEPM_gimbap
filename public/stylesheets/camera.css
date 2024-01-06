@@ -160,6 +160,9 @@ margin:0;
 .delete-btn ion-icon:hover{
   opacity: .5;
 }
+.mainContent {
+  margin-bottom: 60px;
+}
 @media only screen and (max-device-width: 667px) {
   .contentContainer {
 
