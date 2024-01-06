@@ -26,6 +26,7 @@ textarea {
     border-radius: 5px;
     border: 1px solid #ccc;
     height:200px;
+    resize: none;
 
 }
 button {
