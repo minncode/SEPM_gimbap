@@ -50,6 +50,9 @@
             <p>Feedback</p>
           </li>
         </a>
+        <% if(userRole === 'admin') { %>
+          <li><a href="/admin">Go to Admin Home</a></li>
+      <% } %>
         <a href="logout">
           <li><ion-icon class="profile-menu-icon" name="log-out-outline"></ion-icon>
             <p>Logout</p>

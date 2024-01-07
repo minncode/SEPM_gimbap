@@ -118,11 +118,17 @@ router.get('/main', async (req, res) => {
 
 
 router.get('/profile', async (req, res) => {
+    const currentUser = req.session.email;
+
+    
+    const userInfo = await collection.findOne({ email: currentUser });
+
     res.render('user/profile', {
-        displayname: req.session.name,
-        displayemail: req.session.email,
-        displaymajor: req.session.major,
-        displayimage: req.session.image
+        displayname: userInfo.name,       
+        displayemail: userInfo.email,
+        displaymajor: userInfo.major,
+        displayimage: userInfo.image,
+        userRole: userInfo.role           
     });
 });
 
