@@ -17,6 +17,10 @@
     margin-top: 70px;
 }
 
+.options #stars.selected {
+  color: gold; 
+}
+
 .reviewContainer {
     /* display: flex; */
     margin:20px;
