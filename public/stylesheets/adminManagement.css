@@ -44,6 +44,10 @@
   font-weight: 600;
 }
 
+.adminMain-btn button:hover{
+  filter: brightness(80%);
+}
+
 /* basic design */
 
 .adminCourseManageContents{
