@@ -4,20 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
+    <link rel="stylesheet" href="/stylesheets/adminNavbar.css">
+    <link rel="stylesheet" href="/stylesheets/adminManagement.css">
 
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <title>Admin</title>
 </head>
-<body>
-    <a href="/admin/UserManagement"><button>User Management</button></a>
-    <a href="/admin/courseListManagement"><button>Course List Management</button></a>
-    <a href="/admin/CourseActivityManagement"><button>Course Activity Management</button></a>
-    <a href="/admin/CourseEnrollmentManagement"><button>Course Enrollment Management</button></a>
-    <a href="/admin/paymentBalanceManagement"><button>Payment Balance Management</button></a>
-    <a href="/admin/paymentRecordManagement"><button>Payment Record Management</button></a>
-    <a href="/admin/feedbackManagement"><button>Feedback Management</button></a>
-    <a href="/admin/courseHistoryManagement"><button>Course History Management</button></a>
-    <a href="/admin/courseEnrollmentHistoryManagement"><button>Course Enrollment History Management</button></a>
-    <a href="/admin/courseEvaluationManagement"><button>Course Evaluation Management</button></a>
-    <a href="#"><button>Campus Map Management</button></a>
+
+<%- include("../partials/adminNavigation") %>
+    <div class="adminCourseManageContents">
+        <div class="adminMain-header">
+            <img id="adminMain-logo" src="/images/rmitlogo.png" alt=""><h1>RMITdays</h1>
+        </div>
+        <h2 id="welcomeAdmin" >Welcome Administor!</h2>
+
+        <div id="adminMain-btns">
+            <a class="adminMain-btn" href="/admin/UserManagement"><button>User Management</button></a>
+            <a class="adminMain-btn" href="/admin/courseListManagement"><button>Course List Management</button></a>
+            <a class="adminMain-btn" href="/admin/CourseActivityManagement"><button>Course Activity Management</button></a>
+            <a class="adminMain-btn" href="/admin/CourseEnrollmentManagement"><button>Course Enrollment Management</button></a>
+            <a class="adminMain-btn" href="/admin/paymentBalanceManagement"><button>Payment Balance Management</button></a>
+            <a class="adminMain-btn" href="/admin/paymentRecordManagement"><button>Payment Record Management</button></a>
+            <a class="adminMain-btn" href="/admin/feedbackManagement"><button>Feedback Management</button></a>
+            <a class="adminMain-btn" href="/admin/courseHistoryManagement"><button>Course History Management</button></a>
+            <a class="adminMain-btn" href="/admin/courseEnrollmentHistoryManagement"><button>Course Enrollment History Management</button></a>
+            <a class="adminMain-btn" href="/admin/courseEvaluationManagement"><button>Course Evaluation Management</button></a>
+            <a class="adminMain-btn" href="#"><button>Campus Map Management</button></a>
+        </div>
+    </div>
 </body>
 </html>
