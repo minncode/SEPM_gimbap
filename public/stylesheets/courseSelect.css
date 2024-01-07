@@ -1,50 +1,70 @@
 .mainContent {
-    margin:15px;
-    border: 1px solid #E3E5E0;
-    border-radius: 15px;
-    margin-top: 70px;
+  margin: 15px;
+  border: 1px solid #E3E5E0;
+  border-radius: 15px;
+  margin-top: 70px;
+}
+
+.star-rating-container {
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+.star-rating {
+  margin-right: 10px; /* 별점과 숫자 사이의 간격 */
+}
+
+.star-rating .star {
+  color: #ddd; /* 기본 별 색상 */
+  font-size: 20px;
+}
+
+.star-rating .star.filled {
+  color: #ffc107; /* 채워진 별 색상 */
+}
+
+.star-rating .star.half-filled::before {
+  content: '\2605'; /* 절반 채워진 별을 위한 콘텐츠 (유니코드 별 문자) */
+  color: #ffc107;
+  position: absolute;
+}
+
+.rating-number {
+  font-size: 15px; /* 평점 숫자의 크기 */
 }
 
 .courseContainer {
-    /* display: flex; */
-    margin:20px;
-  
-}
-.courseContainer h2 {
-  margin:15px;
+  margin: 20px;
 }
 
+.courseContainer h2 {
+  margin: 15px;
+}
 
 .courseItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding:10px;
-    border-bottom: 1px solid #E3E5E0;
-    color:black;
-    /* margin-top:20px; */
-}
-.professorName {
-  color: #7D7F7A;
-  font-size: 13px;
-}
-/* 버튼 스타일 */
-.reviewBtn {
-    background-color: #E61E2A;
-    border-radius: 20px;
-    width: 6rem;
-    height:35px;
-    color: white;
-    border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #E3E5E0;
+  color: black;
 }
 
+.reviewBtn {
+  background-color: #E61E2A;
+  border-radius: 20px;
+  width: 6rem;
+  height: 35px;
+  color: white;
+  border: none;
+}
 
 .courseContainer a {
   text-decoration: none;
   margin-bottom: 60px;
 }
 
-#goback-btn{
+#goback-btn {
   text-decoration: none;
   color: black;
   display: flex;
@@ -52,14 +72,13 @@
   bottom: 0;
   border: none;
   width: 100%;
-  background-color: #E3E5E070 ;
+  background-color: #E3E5E070;
   padding: 15px;
 }
 
-#goback-btn ion-icon{
+#goback-btn ion-icon {
   margin-right: 5px;
 }
-
 
 #goback-btn:hover {
   opacity: 0.3;

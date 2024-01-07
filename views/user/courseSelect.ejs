@@ -12,24 +12,43 @@
         <div class="courseContainer">
             <h2>My Course Review</h2>
             
-            <% for (let i = 0; i < courseItems.length; i++) { %>
-                <a class="courseItem">
-                    <div class="courseInfo">
-                        <h3 class="comment-title"><%= courseItems[i].courseID %> - <%= courseItems[i].courseName %></h3>
-                        <p class="author"><%= courseItems[i].lecturer %></p>
+            <% for (let courseItem of courseItems) { %>
+                <div class="courseItem">
+                    <div>
+                        <div class="courseInfo">
+                            <h3 class="comment-title"><%= courseItem.courseID %> - <%= courseItem.courseName %></h3>
+                            <p class="author"><%= courseItem.lecturer %></p>
+                        </div>
+
+                        <% if (courseItem.starRating != null) { %>
+                            <div class="star-rating-container">
+                                <div class="star-rating">
+                                    <% for(let i = 1; i <= 5; i++) { %>
+                                        <% if(i <= courseItem.starRating) { %>
+                                            <span class="star filled">&#9733;</span>
+                                        <% } else { %>
+                                            <span class="star">&#9733;</span>
+                                        <% } %>
+                                    <% } %>
+                                </div>
+                                <p class="rating-number"><%= courseItem.starRating.toFixed(1) %>/5</p>
+                            </div>
+                        <% } else { %>
+                            <p>No ratings yet</p>
+                        <% } %>
                     </div>
-                    <% if (!courseItems[i].hasReviewed) { %>
-                        <button class="reviewBtn" onclick="window.location.href = '/writeReview'">Review</button>
+                    <% if (!courseItem.hasReviewed) { %>
+                        <button class="reviewBtn" onclick="window.location.href = '/writeReview/<%= courseItem.courseID %>'">Review</button>
                     <% } else { %>
-                        <button class="reviewBtn" onclick="window.location.href = '/writeReview'">Edit Review</button>
+                        <button class="reviewBtn" onclick="window.location.href = '/writeReview/<%= courseItem.courseID %>'">Edit Review</button>
                     <% } %>
-                </a>
+                </div>
             <% } %>
         </div>
     </div>
     <a id="goback-btn" href="course_evaluation">
         <ion-icon name="chevron-back-outline"></ion-icon>
-        <p>Go Back to Course Evaluation </p>
+        <p>Go Back to Course Evaluation</p>
     </a>
 </body>
 </html>

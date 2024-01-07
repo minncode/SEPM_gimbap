@@ -191,19 +191,19 @@ router.post('/course_list/enroll', async (req, res) => {
 router.get('/course_evaluation', async (req, res) => {
     try {
         let query = req.query.q; // Get the search query from the URL
-        let courseHistoryList;
+        let courseHistoryList = await CourseHistory.find(query ? {
+            $or: [
+                { courseName: { $regex: new RegExp(query, 'i') } },
+                { lecturer: { $regex: new RegExp(query, 'i') } }
+            ]
+        } : {});
 
-        if (query) {
-            // If there's a search query, filter the courseHistoryList based on the query
-            courseHistoryList = await CourseHistory.find({
-                $or: [
-                    { courseName: { $regex: new RegExp(query, 'i') } }, // Case-insensitive search for courseName
-                    { lecturer: { $regex: new RegExp(query, 'i') } } // Case-insensitive search for lecturer
-                ]
-            });
-        } else {
-            // If there's no search query, get all courseHistory
-            courseHistoryList = await CourseHistory.find();
+        // 각 과목별 평균 별점 계산
+        for (let course of courseHistoryList) {
+            const evaluations = await CourseEvaluation.find({ courseID: course.courseID });
+            let totalStarRating = 0;
+            evaluations.forEach(e => totalStarRating += e.starRating);
+            course.averageStarRating = evaluations.length > 0 ? totalStarRating / evaluations.length : null;
         }
 
         res.render('user/course_evaluation', { courseHistoryList, searchQuery: query });
@@ -266,35 +266,23 @@ router.get('/courseSelect', async (req, res) => {
     try {
         const currentUser = req.session.email;
 
-        // Retrieve course enrollment history for the current user
         const enrollmentHistoryList = await CourseEnrollmentHistory.find({ email: currentUser });
-
-        // Retrieve course evaluations for the current user
         const courseEvaluationList = await CourseEvaluation.find({ email: currentUser });
 
-        // Create an array to store course items
-        const courseItems = [];
-
-        // Iterate through enrollment history
-        for (let i = 0; i < enrollmentHistoryList.length; i++) {
-            const courseId = enrollmentHistoryList[i].courseID;
-
-            // Retrieve course from CourseHistory
-            const courseInHistory = await CourseHistory.findOne({ courseID: courseId });
-
+        const courseItems = await Promise.all(enrollmentHistoryList.map(async (enrollment) => {
+            const courseInHistory = await CourseHistory.findOne({ courseID: enrollment.courseID });
             if (courseInHistory) {
-                const hasReviewed = courseEvaluationList.some(review => review.courseID === courseId && review.email === currentUser);
-                const courseItem = {
+                const evaluation = courseEvaluationList.find(e => e.courseID === enrollment.courseID);
+                return {
                     courseID: courseInHistory.courseID,
                     courseName: courseInHistory.courseName,
                     lecturer: courseInHistory.lecturer,
-                    hasReviewed: hasReviewed
+                    starRating: evaluation ? evaluation.starRating : null,
+                    hasReviewed: !!evaluation
                 };
-                courseItems.push(courseItem);
             }
-        }
+        }));
 
-        // Render the view with the course items
         res.render('user/courseSelect', { courseItems });
     } catch (err) {
         console.error(err);
@@ -302,99 +290,28 @@ router.get('/courseSelect', async (req, res) => {
     }
 });
 
-// router.get('/courseSelect/:action', async (req, res) => {
-//     try {
-//         const currentUser = req.session.email;
-//         const { action } = req.params;
-//         const { courseID } = req.query;
-    
-//         const courseInHistory = await CourseHistory.findOne({ courseID });
-    
-//         if (!courseInHistory) {
-//             return res.status(400).send('Course not found in course history');
-//         }
-    
-//         const existingReview = await CourseEvaluation.findOne({ email: currentUser, courseID });
-    
-//         if (action === 'add' && existingReview) {
-//             return res.status(400).send('User has already reviewed the course');
-//         }
-    
-//         if (action === 'edit' && !existingReview) {
-//             return res.status(400).send('User has not reviewed the course yet');
-//         }
-    
-//         // Check if courseInHistory is not null or undefined before spreading
-//         const courseInfoForReview = courseInHistory ? { ...courseInHistory } : {};
-    
-//         res.render('user/writeReview', { currentUser, courseID, action, existingReview, userEmail: currentUser, ...courseInfoForReview });
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Internal Server Error');
-//     }
-// });
-
-// router.post('/courseReviewForm/:action', async (req, res) => {
-//     try {
-//         const { courseID, email, enrollmentSemester, starRating, assignmentsCount, examsCount, groupProjectsCount, difficulty, textFeedback } = req.body;
-//         const { action } = req.params;
-
-//         const newReview = new CourseEvaluation({
-//             courseID,
-//             email,
-//             status: 'Pending',
-//             enrollmentSemester,
-//             starRating,
-//             assignmentsCount,
-//             examsCount,
-//             groupProjectsCount,
-//             difficulty,
-//             textFeedback,
-//         });
-
-//         if (action === 'add') {
-//             await newReview.save();
-//         } else if (action === 'edit') {
-//             // Update existing review logic (if needed)
-//         }
-
-//         res.redirect('/user/courseSelect');
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Internal Server Error');
-//     }
-// });
 
 
 
 
-
-
-
-
-
-
-
-router.get('/writeReview', async (req, res) => {
+router.get('/writeReview/:courseID', async (req, res) => {
     try {
         const userEmail = req.session.email;
+        const courseID = req.params.courseID;
 
-        // 유저의 이메일을 사용하여 courseEnrollmentHistory에서 해당 유저의 courseID를 조회
-        const userEnrollments = await CourseEnrollmentHistory.find({ email: userEmail });
+        const course = await CourseHistory.findOne({ courseID: courseID });
+        if (!course) {
+            return res.status(404).send('Course not found');
+        }
 
-        // 해당 유저의 courseID 목록
-        const userCourseIDs = userEnrollments.map(enrollment => enrollment.courseID);
-
-        // CourseHistory에서 해당 courseIDs에 해당하는 데이터 조회
-        const courses = await CourseHistory.find({ courseID: { $in: userCourseIDs } });
-
-        res.render('user/writeReview', { courses, userEmail });
+        res.render('user/writeReview', { course, userEmail });
     } catch (error) {
-        console.error('Error rendering writeReview:', error);
+        console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
 });
 
+//api to automatically fetch form data by courseID
 router.get('/courseDetails/:courseID', async (req, res) => {
     try {
         const courseID = req.params.courseID;

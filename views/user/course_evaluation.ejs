@@ -4,6 +4,35 @@
 
 <title>RMITdays</title>
 </head>
+<style>
+    .star-rating-container {
+        display: flex;
+        align-items: center; /* 세로 중앙 정렬 */
+    }
+    
+    .star-rating {
+        margin-right: 10px; /* 별점과 숫자 사이의 간격 */
+    }
+    
+    .star-rating .star {
+        color: #ddd; /* 기본 별 색상 */
+        font-size: 20px;
+    }
+    
+    .star-rating .star.filled {
+        color: #ffc107; /* 채워진 별 색상 */
+    }
+    
+    .star-rating .star.half-filled::before {
+        content: '\2605'; /* 절반 채워진 별을 위한 콘텐츠 (유니코드 별 문자) */
+        color: #ffc107;
+        position: absolute;
+    }
+    
+    .rating-number {
+        font-size: 15px; /* 평점 숫자의 크기 */
+    }
+    </style>
 <body>
     <%- include("../partials/navigation") %>
 
@@ -14,7 +43,7 @@
     
     <form action="/course_evaluation" method="get">
         <div class="search">
-            <input type="text" name="q" placeholder="Search i.e. ISYS2101 or 교수이름" value="<%= searchQuery || '' %>">
+            <input type="text" name="q" placeholder="Search i.e. Jimin or Project Management" value="<%= searchQuery || '' %>">
             <button class="submitBtn" type="submit">
                 <ion-icon class="searchIcon" name="search-outline"></ion-icon>
             </button>
@@ -22,18 +51,29 @@
     </form>
     
     <div class="mainContent">
-        <h4>All courses</h4>
-
+        <h4>All courses</h4><br><br>
         <div class="comment-list">
-            <% for (let i = 0; i < courseHistoryList.length; i++) { %>
+            <% for (let course of courseHistoryList) { %>
                 <div class="comment">
-                    <!-- 강의 링크에 courseID를 파라미터로 추가 -->
-                    <a href="reviewDetail/<%= courseHistoryList[i].courseID %>">
-                        <h3 class="comment-title"><%= courseHistoryList[i].courseID %> - <%= courseHistoryList[i].courseName %></h3>
-                        <p class="author"><%= courseHistoryList[i].lecturer %></p>
-                        <div class="rating">
-                            <!-- 별점을 여기에 추가할 수 있어요. -->
-                        </div>
+                    <a href="reviewDetail/<%= course.courseID %>">
+                        <h3 class="comment-title"><%= course.courseID %> - <%= course.courseName %></h3>
+                        <p class="author"><%= course.lecturer %></p>
+                        <% if (course.averageStarRating != null) { %>
+                            <div class="star-rating-container">
+                                <div class="star-rating">
+                                    <% for(let i = 1; i <= 5; i++) { %>
+                                        <% if(i <= course.averageStarRating) { %>
+                                            <span class="star filled">&#9733;</span>
+                                        <% } else { %>
+                                            <span class="star">&#9733;</span>
+                                        <% } %>
+                                    <% } %>
+                                </div>
+                                <p class="rating-number"><%= course.averageStarRating.toFixed(1) %>/5</p>
+                            </div>
+                        <% } else { %>
+                            <p>No ratings yet</p>
+                        <% } %>
                     </a>
                 </div>
             <% } %>

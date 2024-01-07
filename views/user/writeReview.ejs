@@ -2,8 +2,7 @@
 
 <link rel="stylesheet" href="/stylesheets/writeReview.css">
 <link rel="stylesheet" href="/stylesheets/header.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
-<!-- defer 속성 제거 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/javascripts/writeReview.js"></script>
 <script src="/javascripts/popup.js"></script>
 <title>RMITdays</title>
@@ -13,7 +12,7 @@
 <body>
     <%- include("../partials/navigation") %>
     <div class="CourseSelectionHeader">
-        <a href="courseSelect">
+        <a href="/courseSelect">
             <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon>
         </a>
     </div>
@@ -25,23 +24,17 @@
 
                 <div class="section courseID">
                     <h3>Course ID</h3>
-                    <select name="courseID" id="courseID" onchange="updateCourseDetails()">
-                        <% courses.forEach(course => { %>
-                            <option value="<%= course.courseID %>"><%= course.courseID %></option>
-                        <% }); %>
-                    </select>
+                    <input type="text" class="input-box" name="courseID" value="<%= course.courseID %>" readonly>
                 </div>
             
                 <div class="section courseName">
                     <h3>Course Name</h3>
-                    <input type="text" class="input-box" id="courseName" readonly>
-                    <input type="hidden" name="courseName">
+                    <input type="text" class="input-box" name="courseName" value="<%= course.courseName %>" readonly>
                 </div>
             
                 <div class="section lecturer">
                     <h3>Lecturer</h3>
-                    <input type="text" class="input-box" id="lecturer" readonly>
-                    <input type="hidden" name="lecturer">
+                    <input type="text" class="input-box" name="lecturer" value="<%= course.lecturer %>" readonly>
                 </div>
             
                 <div class="section email">
