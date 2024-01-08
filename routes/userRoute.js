@@ -548,7 +548,7 @@ router.get('/campusMap', displayID, async (req, res) => {
     }
 });
 
-// 특정 장소의 상세  정보 불러오기
+// 특정 장소의 상세  정보 불러오 기
 router.get('/campusMap/:name', displayID, async (req, res) => {
     try {
         const name = req.params.name;
@@ -556,7 +556,7 @@ router.get('/campusMap/:name', displayID, async (req, res) => {
 
         if (relatedPlaces.length === 1 && relatedPlaces[0].location) {
             // 관련 장소가 하나만 있고, 위치 정보가 있는 경우 상세 페이지 렌더링
-            res.render('user/campusMapdetail', { detail: relatedPlaces[0] });
+            res.render('user/campusMapDetail', { detail: relatedPlaces[0] });
         } else {
             // 여러 관련 장소가 있는 경우 그 목록 렌더링
             res.render('user/campusMap', { mainCategories: relatedPlaces });
