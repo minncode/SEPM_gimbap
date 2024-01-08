@@ -12,6 +12,7 @@ const Feedback = require('../models/feedback');
 const CourseHistory = require('../models/courseHistory');
 const CourseEnrollmentHistory = require('../models/courseEnrollmentHistory');
 const CourseEvaluation = require('../models/courseEvaluation');
+const CampusMap = require('../models/campusMap');
 const QRCode = require('qrcode');
 const upload = require('../middleware/uploadImages');
 const {displayID} = require('../middleware/studentCard');

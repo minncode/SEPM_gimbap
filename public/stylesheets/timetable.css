@@ -141,6 +141,10 @@ table.time td {
     font-weight: bold;
 }
 
+.assigned {
+  background-color: #FAC800; /* 배경색 설정 */
+  border: 1px solid #FAC800; /* 테두리 색을 배경색과 동일하게 설정 */
+}
 
 
 @media screen and (max-width: 600px) {

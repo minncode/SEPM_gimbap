@@ -12,6 +12,10 @@ const Feedback = require('../models/feedback');
 const CourseHistory = require('../models/courseHistory');
 const CourseEnrollmentHistory = require('../models/courseEnrollmentHistory');
 const CourseEvaluation = require('../models/courseEvaluation');
+const CampusMap = require('../models/campusMap');
+const upload = require('../middleware/uploadImages');
+const path = require('path');
+const fs = require('fs');
 
 router.use(session({
     secret: 'your secret key',
@@ -972,6 +976,97 @@ router.post('/courseEvaluationManagement/delete', async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
+
+
+// Display Campus Map Management Page
+router.get('/campusMapManagement', async (req, res) => {
+    const sortField = req.query.sort || 'name'; // 기본 정렬 필드
+    const sortOrder = req.query.order === 'desc' ? -1 : 1; // 기본 정렬 순서
+
+    try {
+        let campusMaps = await CampusMap.find().sort({ [sortField]: sortOrder });
+        res.render('admin/campusMapManagement', { campusMaps });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Add Campus Map
+router.post('/campusMapManagement/add', upload.single('image'), async (req, res) => {
+    const { name, category, location, contact } = req.body;
+    const imagePath = req.file ? '/images/' + req.file.filename : '/images/default.png';
+    
+    const newMap = new CampusMap({ name, category, location, contact, image: imagePath });
+    await newMap.save();
+    res.redirect('/admin/campusMapManagement');
+});
+
+// Edit Campus Map
+router.post('/campusMapManagement/edit', upload.single('newImage'), async (req, res) => {
+    const { mapIdEdit, newName, newCategory, newLocation, newContact } = req.body;
+    const map = await CampusMap.findById(mapIdEdit);
+    
+    if (!map) {
+        return res.status(404).send('Campus map not found');
+    }
+
+    // 새 이미지가 업로드된 경우
+    if (req.file) {
+        // 기존 이미지가 있으면 삭제
+        if (map.image) {
+            const oldImagePath = path.join(__dirname, '../public', map.image);
+            if (fs.existsSync(oldImagePath)) {
+                fs.unlinkSync(oldImagePath);
+            }
+        }
+        // 새 이미지 경로 업데이트
+        map.image = '/images/' + req.file.filename;
+    }
+
+    map.name = newName;
+    map.category = newCategory;
+    map.location = newLocation;
+    map.contact = newContact;
+
+    await map.save();
+    res.redirect('/admin/campusMapManagement');
+});
+
+// Delete Campus Map
+router.post('/campusMapManagement/delete', async (req, res) => {
+    const { mapIdDelete } = req.body;
+
+    try {
+        const mapToDelete = await CampusMap.findById(mapIdDelete);
+
+        if (mapToDelete && mapToDelete.image) {
+            // 이미지 파일 경로
+            const imagePath = path.join(__dirname, '../public', mapToDelete.image);
+
+            // 이미지 파일이 존재하면 삭제
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        }
+
+        await CampusMap.findByIdAndDelete(mapIdDelete);
+    res.redirect('/admin/campusMapManagement');
+} catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+}
+});
+
+module.exports = router;
+
+
+
 
 
 

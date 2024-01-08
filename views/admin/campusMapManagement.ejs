@@ -1,0 +1,218 @@
+<%- include("../partials/header") %>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/rmitlogo.png" sizes = "16*16">
+    <link rel="stylesheet" href="/stylesheets/adminManagement.css">
+    <link rel="stylesheet" href="/stylesheets/adminNavbar.css">
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <title>Campus Map Management: Admin</title>
+</head>
+
+<%- include("../partials/adminNavigation") %>
+
+<style>   
+.map-thumbnail {
+    width: 300px; 
+    height: auto; 
+    border-radius: 5px; 
+}
+
+
+.image-preview {
+    width: 150px; 
+    height: auto; 
+    border: 1px solid #000000; 
+    border-radius: 5px; 
+    margin-top: 10px; 
+}
+.sort-arrow {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.sort-arrow:hover {
+    color: #0056b3; /* 또는 원하는 색상 */
+}
+</style>
+
+<div class="adminCourseManageContents">
+    <h1>Campus Map Management</h1>
+    <button class="admin-add-btn" onclick="showAddMapForm()">
+        <ion-icon name="add-outline"></ion-icon>
+        <p>Add NEW</p>
+    </button>
+
+    <table>
+        <tr>
+            <th>
+                Name 
+                <span class="sort-arrow" onclick="sortTable('name', 'asc')">&#9650;</span>
+                <span class="sort-arrow" onclick="sortTable('name', 'desc')">&#9660;</span>
+            </th>
+            <th>
+                Category 
+                <span class="sort-arrow" onclick="sortTable('category', 'asc')">&#9650;</span>
+                <span class="sort-arrow" onclick="sortTable('category', 'desc')">&#9660;</span>
+            </th>
+            <th>
+                Location 
+                <span class="sort-arrow" onclick="sortTable('location', 'asc')">&#9650;</span>
+                <span class="sort-arrow" onclick="sortTable('location', 'desc')">&#9660;</span>
+            </th>
+            <th>Contact</th>
+            <th>Image</th>
+            <th>Action</th>
+        </tr>
+        <% campusMaps.forEach(map => { %>
+            <tr>
+                <td><%= map.name %></td>
+                <td><%= map.category %></td>
+                <td><%= map.location %></td>
+                <td><%= map.contact %></td>
+                <td><img src="<%= map.image %>" alt="Map Image" class="map-thumbnail"></td>
+                <td class="action-buttons">
+                    <button id="action-edit" onclick="showEditMapForm('<%= map._id %>', '<%= map.name %>', '<%= map.category %>', '<%= map.location %>', '<%= map.contact %>', '<%= map.image %>')">Edit</button>
+                    <button id="action-delete" onclick="showDeleteMapForm('<%= map._id %>', '<%= map.name %>', '<%= map.category %>', '<%= map.location %>', '<%= map.contact %>', '<%= map.image %>')">Delete</button>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+</div>
+
+<!-- Add Campus Map Form -->
+<div class="popup" id="addMapPopup">
+    <div class="popup-header">
+        <button class="popup-close" onclick="closePopup('addMapPopup')">X</button>
+    </div>
+    <form action="/admin/campusMapManagement/add" method="post" enctype="multipart/form-data">
+        <label class="custom-label" for="name">Name:</label>
+        <input class="custom-input" type="text" name="name" required><br>
+        <label class="custom-label" for="category">Category:</label>
+        <input class="custom-input" type="text" name="category" required><br>
+        <label class="custom-label" for="location">Location:</label>
+        <input class="custom-input" type="text" name="location"><br>
+        <label class="custom-label" for="contact">Contact:</label>
+        <input class="custom-input" type="text" name="contact"><br>
+        <label class="custom-label" for="image">Image:</label>
+    <input class="custom-input" type="file" name="image" id="addImageInput" onchange="previewAddImage(event)"><br>
+    <img id="addImagePreview" src="" alt="Image preview" class="image-preview" style="display: none;">
+        <button class="custom-button" type="submit">Add Campus Map</button>
+    </form>
+</div>
+
+<!-- Edit Campus Map Form -->
+<div class="popup" id="editMapPopup">
+    <div class="popup-header">
+        <button class="popup-close" onclick="closePopup('editMapPopup')">X</button>
+    </div>
+    <form action="/admin/campusMapManagement/edit" method="post" enctype="multipart/form-data">
+        <input class="custom-input" type="hidden" name="mapIdEdit">
+        <label class="custom-label" for="newName">New Name:</label>
+        <input class="custom-input" type="text" name="newName" required><br>
+        <label class="custom-label" for="newCategory">New Category:</label>
+        <input class="custom-input" type="text" name="newCategory" required><br>
+        <label class="custom-label" for="newLocation">New Location:</label>
+        <input class="custom-input" type="text" name="newLocation"><br>
+        <label class="custom-label" for="newContact">New Contact:</label>
+        <input class="custom-input" type="text" name="newContact"><br>
+        <label class="custom-label" for="newImage">New Image:</label>
+        <input class="custom-input" type="file" name="newImage" onchange="updateImagePreview(this, 'editImagePreview')"><br>
+        <img id="editImagePreview" src="" alt="Image Preview" class="image-preview">
+        <button class="custom-button" type="submit">Edit Campus Map</button>
+    </form>
+</div>
+
+<!-- Delete Campus Map Form -->
+<div class="popup" id="deleteMapPopup">
+    <div class="popup-header">
+        <button class="popup-close" onclick="closePopup('deleteMapPopup')">X</button>
+    </div>
+    <form action="/admin/campusMapManagement/delete" method="post">
+        <input class="custom-input" type="hidden" name="mapIdDelete">
+        <label class="custom-label">Name:</label>
+        <input class="custom-input" type="text" name="nameDelete" readonly><br>
+        <label class="custom-label">Category:</label>
+        <input class="custom-input" type="text" name="categoryDelete" readonly><br>
+        <label class="custom-label">Location:</label>
+        <input class="custom-input" type="text" name="locationDelete" readonly><br>
+        <label class="custom-label">Contact:</label>
+        <input class="custom-input" type="text" name="contactDelete" readonly><br>
+        <label class="custom-label">Image:</label>
+    <img id="deleteImagePreview" src="" alt="Image Preview" class="image-preview">
+        <p>Are you sure you want to delete this campus map?</p>
+        <button class="custom-button" type="submit">Delete</button>
+    </form>
+</div>
+
+<div class="overlay" onclick="closeAllMapPopups()"></div>
+
+
+    <script>
+                function sortTable(field, order) {
+            window.location.href = `/admin/campusMapManagement?sort=${field}&order=${order}`;
+        }
+        function previewAddImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var output = document.getElementById('addImagePreview');
+        output.src = reader.result;
+        output.style.display = 'block'; // Show the preview
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+        function updateImagePreview(input, previewId) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById(previewId).src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+        function showAddMapForm() {
+            document.getElementById('addMapPopup').style.display = 'block';
+            document.querySelector('.overlay').style.display = 'block';
+        }
+    
+        function showEditMapForm(id, name, category, location, contact, image) {
+            document.getElementById('editMapPopup').style.display = 'block';
+            document.querySelector('.overlay').style.display = 'block';
+            document.querySelector('[name="mapIdEdit"]').value = id;
+            document.querySelector('[name="newName"]').value = name;
+            document.querySelector('[name="newCategory"]').value = category;
+            document.querySelector('[name="newLocation"]').value = location;
+            document.querySelector('[name="newContact"]').value = contact;
+            document.getElementById('editImagePreview').src = image;
+        }
+    
+        function showDeleteMapForm(id, name, category, location, contact, image) {
+    document.getElementById('deleteMapPopup').style.display = 'block';
+    document.querySelector('.overlay').style.display = 'block';
+    document.querySelector('[name="mapIdDelete"]').value = id;
+    document.querySelector('[name="nameDelete"]').value = name;
+    document.querySelector('[name="categoryDelete"]').value = category;
+    document.querySelector('[name="locationDelete"]').value = location;
+    document.querySelector('[name="contactDelete"]').value = contact;
+    document.getElementById('deleteImagePreview').src = image;
+}
+    
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
+            document.querySelector('.overlay').style.display = 'none';
+        }
+    
+        function closeAllMapPopups() {
+            closePopup('addMapPopup');
+            closePopup('editMapPopup');
+            closePopup('deleteMapPopup');
+        }
+    </script>
+</body>
+</html>
