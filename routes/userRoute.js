@@ -14,6 +14,7 @@ const CourseEnrollmentHistory = require('../models/courseEnrollmentHistory');
 const CourseEvaluation = require('../models/courseEvaluation');
 const QRCode = require('qrcode');
 const upload = require('../middleware/uploadImages');
+const {displayID} = require('../middleware/studentCard');
 
 
 router.use(session({
@@ -99,7 +100,7 @@ router.post("/register", upload.single('image'), async (req, res) => {
     }
 });
 
-router.get('/main', async (req, res) => {
+router.get('/main', displayID, async (req, res) => {
     const userEmail = req.session.email;
     try {
         const qrUrl = await QRCode.toDataURL(userEmail);
@@ -117,7 +118,7 @@ router.get('/main', async (req, res) => {
 });
 
 
-router.get('/profile', async (req, res) => {
+router.get('/profile', displayID, async (req, res) => {
     const currentUser = req.session.email;
 
     
@@ -132,7 +133,9 @@ router.get('/profile', async (req, res) => {
     });
 });
 
-router.get('/timetable', async (req, res, next) => {
+
+router.get('/timetable', displayID, async (req, res, next) => {
+
     try {
         const userEmail = req.session.email;
         const enrollments = await CourseEnrollment.find({ email: userEmail });
@@ -212,7 +215,7 @@ router.post('/course_list/enroll', async (req, res) => {
 
 
 // Display Course Evaluation Page with Search Results
-router.get('/course_evaluation', async (req, res) => {
+router.get('/course_evaluation', displayID, async (req, res) => {
     try {
         let query = req.query.q; // Get the search query from the URL
         let courseHistoryList = await CourseHistory.find(query ? {
@@ -286,7 +289,7 @@ router.post('/editprofile', upload.single('image'), async (req, res) => {
     }
 });
 
-router.get('/courseSelect', async (req, res) => {
+router.get('/courseSelect', displayID, async (req, res) => {
     try {
         const currentUser = req.session.email;
 
@@ -318,7 +321,7 @@ router.get('/courseSelect', async (req, res) => {
 
 
 
-router.get('/writeReview/:courseID', async (req, res) => {
+router.get('/writeReview/:courseID', displayID, async (req, res) => {
     try {
         const userEmail = req.session.email;
         const courseID = req.params.courseID;
@@ -428,7 +431,7 @@ router.get('/reviewDetail/:courseID', async (req, res) => {
 });
 
 
-router.get('/paymentMain', async (req, res) => {
+router.get('/paymentMain', displayID, async (req, res) => {
     try {
         const userEmail = req.session.email;
 

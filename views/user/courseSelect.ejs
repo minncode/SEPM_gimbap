@@ -6,6 +6,7 @@
 </head>
 <body>
     <%- include("../partials/navigation") %>
+    <%- include("../partials/studentCard") %>
     <div class="CourseSelectionHeader">
     </div>
     <div class="mainContent">
@@ -14,7 +15,7 @@
             
             <% for (let courseItem of courseItems) { %>
                 <div class="courseItem">
-                    <div>
+                    <div class="courseSection">
                         <div class="courseInfo">
                             <h3 class="comment-title"><%= courseItem.courseID %> - <%= courseItem.courseName %></h3>
                             <p class="author"><%= courseItem.lecturer %></p>
