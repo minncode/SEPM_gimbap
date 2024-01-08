@@ -67,6 +67,7 @@
                 <span class="sort-arrow" onclick="sortTable('location', 'desc')">&#9660;</span>
             </th>
             <th>Contact</th>
+            <th>Text</th>
             <th>Image</th>
             <th>Action</th>
         </tr>
@@ -76,10 +77,11 @@
                 <td><%= map.category %></td>
                 <td><%= map.location %></td>
                 <td><%= map.contact %></td>
+                <td><%= map.text %></td>
                 <td><img src="<%= map.image %>" alt="Map Image" class="map-thumbnail"></td>
                 <td class="action-buttons">
-                    <button id="action-edit" onclick="showEditMapForm('<%= map._id %>', '<%= map.name %>', '<%= map.category %>', '<%= map.location %>', '<%= map.contact %>', '<%= map.image %>')">Edit</button>
-                    <button id="action-delete" onclick="showDeleteMapForm('<%= map._id %>', '<%= map.name %>', '<%= map.category %>', '<%= map.location %>', '<%= map.contact %>', '<%= map.image %>')">Delete</button>
+                    <button id="action-edit" onclick="showEditMapForm('<%= map._id %>', '<%= map.name %>', '<%= map.category %>', '<%= map.location %>', '<%= map.contact %>', '<%= map.text %>', '<%= map.image %>')">Edit</button>
+                    <button id="action-delete" onclick="showDeleteMapForm('<%= map._id %>', '<%= map.name %>', '<%= map.category %>', '<%= map.location %>', '<%= map.contact %>', '<%= map.text %>', '<%= map.image %>')">Delete</button>
                 </td>
             </tr>
         <% }) %>
@@ -100,6 +102,8 @@
         <input class="custom-input" type="text" name="location"><br>
         <label class="custom-label" for="contact">Contact:</label>
         <input class="custom-input" type="text" name="contact"><br>
+        <label class="custom-label" for="text">Text:</label>
+        <input class="custom-input" type="text" name="Text"><br>
         <label class="custom-label" for="image">Image:</label>
     <input class="custom-input" type="file" name="image" id="addImageInput" onchange="previewAddImage(event)"><br>
     <img id="addImagePreview" src="" alt="Image preview" class="image-preview" style="display: none;">
@@ -122,6 +126,8 @@
         <input class="custom-input" type="text" name="newLocation"><br>
         <label class="custom-label" for="newContact">New Contact:</label>
         <input class="custom-input" type="text" name="newContact"><br>
+        <label class="custom-label" for="newText">New Text:</label>
+        <input class="custom-input" type="text" name="newText"><br>
         <label class="custom-label" for="newImage">New Image:</label>
         <input class="custom-input" type="file" name="newImage" onchange="updateImagePreview(this, 'editImagePreview')"><br>
         <img id="editImagePreview" src="" alt="Image Preview" class="image-preview">
@@ -144,6 +150,8 @@
         <input class="custom-input" type="text" name="locationDelete" readonly><br>
         <label class="custom-label">Contact:</label>
         <input class="custom-input" type="text" name="contactDelete" readonly><br>
+        <label class="custom-label">Text:</label>
+        <input class="custom-input" type="text" name="textDelete" readonly><br>
         <label class="custom-label">Image:</label>
     <img id="deleteImagePreview" src="" alt="Image Preview" class="image-preview">
         <p>Are you sure you want to delete this campus map?</p>
@@ -181,7 +189,7 @@
             document.querySelector('.overlay').style.display = 'block';
         }
     
-        function showEditMapForm(id, name, category, location, contact, image) {
+        function showEditMapForm(id, name, category, location, contact, text, image) {
             document.getElementById('editMapPopup').style.display = 'block';
             document.querySelector('.overlay').style.display = 'block';
             document.querySelector('[name="mapIdEdit"]').value = id;
@@ -189,10 +197,11 @@
             document.querySelector('[name="newCategory"]').value = category;
             document.querySelector('[name="newLocation"]').value = location;
             document.querySelector('[name="newContact"]').value = contact;
+            document.querySelector('[name="newText"]').value = text;
             document.getElementById('editImagePreview').src = image;
         }
     
-        function showDeleteMapForm(id, name, category, location, contact, image) {
+        function showDeleteMapForm(id, name, category, location, contact, text, image) {
     document.getElementById('deleteMapPopup').style.display = 'block';
     document.querySelector('.overlay').style.display = 'block';
     document.querySelector('[name="mapIdDelete"]').value = id;
@@ -200,6 +209,7 @@
     document.querySelector('[name="categoryDelete"]').value = category;
     document.querySelector('[name="locationDelete"]').value = location;
     document.querySelector('[name="contactDelete"]').value = contact;
+    document.querySelector('[name="textDelete"]').value = text;
     document.getElementById('deleteImagePreview').src = image;
 }
     

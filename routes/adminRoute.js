@@ -999,17 +999,17 @@ router.get('/campusMapManagement', async (req, res) => {
 
 // Add Campus Map
 router.post('/campusMapManagement/add', upload.single('image'), async (req, res) => {
-    const { name, category, location, contact } = req.body;
+    const { name, category, location, contact, text } = req.body;
     const imagePath = req.file ? '/images/' + req.file.filename : '/images/default.png';
     
-    const newMap = new CampusMap({ name, category, location, contact, image: imagePath });
+    const newMap = new CampusMap({ name, category, location, contact, image: imagePath, text });
     await newMap.save();
     res.redirect('/admin/campusMapManagement');
 });
 
 // Edit Campus Map
 router.post('/campusMapManagement/edit', upload.single('newImage'), async (req, res) => {
-    const { mapIdEdit, newName, newCategory, newLocation, newContact } = req.body;
+    const { mapIdEdit, newName, newCategory, newLocation, newContact, newText } = req.body;
     const map = await CampusMap.findById(mapIdEdit);
     
     if (!map) {
@@ -1033,6 +1033,7 @@ router.post('/campusMapManagement/edit', upload.single('newImage'), async (req, 
     map.category = newCategory;
     map.location = newLocation;
     map.contact = newContact;
+    map.text = newText;
 
     await map.save();
     res.redirect('/admin/campusMapManagement');

@@ -17,6 +17,9 @@ const campusMapSchema = new mongoose.Schema({
     },
     image:{
         type: String,
+    },
+    text:{
+        type: String,
     }
 });
 
