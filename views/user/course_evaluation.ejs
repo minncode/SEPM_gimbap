@@ -4,37 +4,10 @@
 
 <title>RMITdays</title>
 </head>
-<style>
-    .star-rating-container {
-        display: flex;
-        align-items: center; /* 세로 중앙 정렬 */
-    }
-    
-    .star-rating {
-        margin-right: 10px; /* 별점과 숫자 사이의 간격 */
-    }
-    
-    .star-rating .star {
-        color: #ddd; /* 기본 별 색상 */
-        font-size: 20px;
-    }
-    
-    .star-rating .star.filled {
-        color: #ffc107; /* 채워진 별 색상 */
-    }
-    
-    .star-rating .star.half-filled::before {
-        content: '\2605'; /* 절반 채워진 별을 위한 콘텐츠 (유니코드 별 문자) */
-        color: #ffc107;
-        position: absolute;
-    }
-    
-    .rating-number {
-        font-size: 15px; /* 평점 숫자의 크기 */
-    }
-    </style>
+
 <body>
     <%- include("../partials/navigation") %>
+    <%- include("../partials/studentCard") %>
 
     <!-- <div class="CourseEvaluationHeader">
         <h1>Course Evaluation</h1>
@@ -51,7 +24,7 @@
     </form>
     
     <div class="mainContent">
-        <h4>All courses</h4><br><br>
+        <h2>All courses</h2><br>
         <div class="comment-list">
             <% for (let course of courseHistoryList) { %>
                 <div class="comment">
@@ -72,7 +45,7 @@
                                 <p class="rating-number"><%= course.averageStarRating.toFixed(1) %>/5</p>
                             </div>
                         <% } else { %>
-                            <p>No ratings yet</p>
+                            <p class="noRating">No ratings yet</p>
                         <% } %>
                     </a>
                 </div>

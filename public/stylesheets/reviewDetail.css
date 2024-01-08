@@ -22,6 +22,9 @@
     
 
 }
+.review {
+    font-size: 16px;
+}
 .professorName {
     color: #7D7F7A;
     font-size: 10px;
@@ -34,6 +37,7 @@
     border-bottom: 1px solid #E3E5E0;
     padding:10px;
 }
+
 
 .author {
     color: #7D7F7A;
@@ -95,4 +99,64 @@
 
 #strictnessBar {
     background-color: #F8BBBB; 
+}
+.star-rating-container {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+
+}
+
+.star-rating {
+    margin-right: 10px; /* 별점과 숫자 사이의 간격 */
+}
+
+.star-rating .star {
+    color: #ddd; /* 기본 별 색상 */
+    font-size: 20px;
+}
+
+.star-rating .star.filled {
+    color: #ffc107; /* 채워진 별 색상 */
+}
+
+.star-rating .star.half-filled::before {
+    content: '\2605'; /* 절반 채워진 별을 위한 콘텐츠 (유니코드 별 문자) */
+    color: #ffc107;
+    position: absolute;
+}
+
+.rating-number {
+    font-size: 15px; /* 평점 숫자의 크기 */
+}
+.difficulty-heading {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+}
+.difficulty-heading h3 {
+    margin-right: 10px; /* h3와 h5 사이의 간격 */
+}
+
+.assignment-heading {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+}
+.assignment-heading h3 {
+    margin-right: 10px; /* h3와 h5 사이의 간격 */
+}
+
+
+.exam-heading {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+}
+.exam-heading h3 {
+    margin-right: 10px; /* h3와 h5 사이의 간격 */
+}
+
+.project-heading {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+}
+.project-heading h3 {
+    margin-right: 10px; /* h3와 h5 사이의 간격 */
 }

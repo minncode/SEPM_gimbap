@@ -1,441 +1,109 @@
 <%- include("../partials/header") %>
+<link rel="stylesheet" href="/stylesheets/timetable.css">
+<link rel="stylesheet" href="/stylesheets/header.css">
+<title>RMITdays</title>
+</head>
+<body>
+  <%- include("../partials/navigation") %>
 
-    <link rel="stylesheet" href="/stylesheets/timetable.css">
-    <link rel="stylesheet" href="/stylesheets/header.css">
-    <script src="/javascripts/timetablePopup.js" defer></script>
-    <title>RMITdays</title>
-    </head>
+  <div class="mainContent">
+    <div class="mainContentHeader">
+      <h3>Sem5</h3>
+      <div class="Category">
+        <h1>TimeTable</h1>
+        <!-- <a href="course_list"><img class="addIcon" src="/images/free-icon-add-2774757.png" alt="Add Course"></a> -->
+      </div>
+    </div>
 
-    <body>
+    <table border="1" class="time">
+      <thead>
+        <tr>
+          <th scope="row"></th>
+          <th>MON</th>
+          <th>TUE</th>
+          <th>WED</th>
+          <th>THU</th>
+          <th>FRI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 8; i <= 17; i++) { %>
+          <tr>
+            <td rowspan="2"><%= i %></td>
+            <% ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].forEach(day => { %>
+              <% let fullTime = day + '-' + i; %>
+              <td class="<%= timetableData.some(course => course.time && course.time.includes(day + ' ' + i)) ? 'assigned time-' + fullTime : 'not-assigned' %>"></td>
+            <% }) %>
+          </tr>
+          <tr>
+            <% ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].forEach(day => { %>
+              <% let fullTime = day + '-' + i + '-30'; %>
+              <td class="<%= timetableData.some(course => course.time && course.time.includes(day + ' ' + i + ':30')) ? 'assigned time-' + fullTime : 'not-assigned' %>"></td>
+            <% }) %>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
 
-        <%- include("../partials/navigation") %>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Course Name: <span id="courseName"></span></p>
+        <p>Activity: <span id="activity"></span></p>
+        <p>Course Code: <span id="courseCode"></span></p>
+        <p>Lecturer: <span id="lecturer"></span></p>
+        <p>Classroom: <span id="classroom"></span></p>
+        <p>Time: <span id="time"></span></p>
+        <p>Semester: <span id="semester"></span></p>
+        <p>Credits: <span id="credits"></span></p>
+      </div>
+    </div>
+  </div>
 
-            <div class="mainContent">
-                <div class="mainContentHeader">
-                    <h3>Sem5</h3>
-                    <div class="Category">
-                        <h1>TimeTable</h1>
-                        <a href="course_list"><img class="addIcon" src="/images/free-icon-add-2774757.png"
-                                alt="Add Course"></a>
-                    </div>
-                </div>
-
-                <table border="1" class="time">
-                    <thead>
-                        <tr>
-                            <th scope="row"></th>
-                            <th>MON</th>
-                            <th>TUE</th>
-                            <th>WED</th>
-                            <th>THU</th>
-                            <th>FRI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- 8:00 ~ 8:30 -->
-                        <tr>
-                            <td rowspan="2">8</td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 8')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 8')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 8')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 8')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 8')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 8:30 ~ 9:00 -->
-                        <tr>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 8:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 8:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 8:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 8:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 8:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-
-                        <!-- 9:00 ~ 9:30 -->
-                        <tr>
-                            <td rowspan="2">9</td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 9')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 9')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 9')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 9')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 9')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 9:30 ~ 10:00 -->
-                        <tr>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 9:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 9:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 9:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 9:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 9:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-
-                        <!-- 10:00 ~ 10:30 -->
-                        <tr>
-                            <td rowspan="2">10</td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 10')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 10')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 10')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 10')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 10')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 10:30 ~ 11:00 -->
-                        <tr>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 10:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 10:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 10:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 10:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 10:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-
-                        <!-- 11:00 ~ 11:30 -->
-                        <tr>
-                            <td rowspan="2">11</td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 11')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 11')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 11')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 11')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 11')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 11:30 ~ 12:00 -->
-                        <tr>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 11:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 11:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 11:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 11:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 11:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 12:00 ~ 12:30 -->
-                        <tr>
-                            <td rowspan="2">12</td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 12')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 12')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 12')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 12')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 12')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 12:30 ~ 13:00 -->
-                        <tr>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 12:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 12:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 12:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 12:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 12:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-
-                        <!-- 13:00 ~ 13:30 -->
-                        <tr>
-                            <td rowspan="2">13</td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 13')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 13')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 13')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 13')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 13')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 13:30 ~ 14:00 -->
-                        <tr>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 13:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 13:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 13:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 13:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 13:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-
-                        <!-- 14:00 ~ 14:30 -->
-                        <tr>
-                            <td rowspan="2">14</td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 14')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 14')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 14')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 14')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 14')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 14:30 ~ 15:00 -->
-                        <tr>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 14:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 14:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 14:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 14:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 14:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-
-                        <!-- 15:00 ~ 15:30 -->
-                        <tr>
-                            <td rowspan="2">15</td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 15')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 15')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 15')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 15')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 15')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 15:30 ~ 16:00 -->
-                        <tr>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 15:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 15:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 15:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 15:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 15:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-
-                        <!-- 16:00 ~ 16:30 -->
-                        <tr>
-                            <td rowspan="2">16</td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 16')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 16')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 16')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 16')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 16')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 16:30 ~ 17:00 -->
-                        <tr>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 16:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 16:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 16:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 16:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 16:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-
-                        <!-- 17:00 ~ 17:30 -->
-                        <tr>
-                            <td rowspan="2">17</td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 17')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 17')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 17')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 17')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 17')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-                        <!-- 17:30 ~ 18:00 -->
-                        <tr>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Mon, 17:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Tue, 17:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Wed, 17:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Thu, 17:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                            <td
-                                class="<%= userCourses.some(course => course.time.includes('Fri, 17:30')) ? 'assigned' : 'not-assigned' %>">
-                            </td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
-                <div id="myModal" class="timetableModal">
-                    <div class="modalContentHeader">
-                        <span class="close">&times;</span>
-                        <h2>Course Details</h2>
-                
-                        <div class="courseDetails">
-                            <p><span class="detail-label">Course Name</span> <span id="courseName">Building IT Systems</span></p>
-                            <p><span class="detail-label">Activity:</span> <span id="activity">1</span></p>
-                            <p><span class="detail-label">Course Code:</span> <span id="courseCode">COSC2634</span></p>
-                            <p><span class="detail-label">Lecturer:</span> <span id="lecturer">Phuc NHT</span></p>
-                            <p><span class="detail-label">Classroom:</span> <span id="classroom">2.4.002</span></p>
-                            <p><span class="detail-label">Time:</span> <span id="time">Tue, 16:30</span></p>
-                            <p><span class="detail-label">Semester:</span> <span id="semester:">Sem 5</span></p>
-                            <p><span class="detail-label">Credits:</span> <span id="credits:">12</span></p>
-                        </div>
-                        <button class="delete-button">Remove from timetable</button>
-                    </div>
-                </div>
-
-
-            </div>
-
-    </body>
-
-    </html>
+  <script>
+    const timetableData = <%- JSON.stringify(timetableData) %>;
+  
+    document.addEventListener('DOMContentLoaded', function() {
+      const cells = document.querySelectorAll('.assigned');
+  
+      cells.forEach(cell => {
+        cell.addEventListener('click', function() {
+          const classListArray = Array.from(this.classList);
+          const timeClass = classListArray.find(className => className.startsWith('time-'));
+          if (!timeClass) {
+            console.error('Time class not found in classList:', classListArray);
+            return;
+          }
+  
+          // 'time-Mon-8' 또는 'time-Tue-8-30' 형식에서 시간 정보 추출 및 형식 변환
+          const timeParts = timeClass.split('-').slice(1); // ['Mon', '8'] 또는 ['Tue', '8', '30']
+          const hourPart = timeParts.length === 3 ? timeParts[1] + ':' + timeParts[2] : timeParts[1];
+          const timeInfo = timeParts[0] + ' ' + hourPart; // 'Mon 8' 또는 'Tue 8:30'
+  
+          const course = timetableData.find(c => c.time && c.time.includes(timeInfo));
+          if (!course) {
+            console.error('No course found for time:', timeInfo);
+            return;
+          }
+  
+          document.getElementById('courseName').textContent = course.courseName || '';
+          document.getElementById('activity').textContent = course.activity || '';
+          document.getElementById('courseCode').textContent = course.courseCode || '';
+          document.getElementById('lecturer').textContent = course.lecturer || '';
+          document.getElementById('classroom').textContent = course.classroom || '';
+          document.getElementById('time').textContent = timeInfo || '';
+          document.getElementById('semester').textContent = course.semester || '';
+          document.getElementById('credits').textContent = course.credits || '';
+  
+          document.getElementById('myModal').style.display = 'block';
+        });
+      });
+  
+      document.querySelector('.close').addEventListener('click', function() {
+        document.getElementById('myModal').style.display = 'none';
+      });
+    });
+  </script>
+  
+</body>
+</html>

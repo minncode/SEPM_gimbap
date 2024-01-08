@@ -12,8 +12,10 @@ const Feedback = require('../models/feedback');
 const CourseHistory = require('../models/courseHistory');
 const CourseEnrollmentHistory = require('../models/courseEnrollmentHistory');
 const CourseEvaluation = require('../models/courseEvaluation');
+const CampusMap = require('../models/campusMap');
 const QRCode = require('qrcode');
 const upload = require('../middleware/uploadImages');
+const {displayID} = require('../middleware/studentCard');
 
 
 router.use(session({
@@ -99,7 +101,7 @@ router.post("/register", upload.single('image'), async (req, res) => {
     }
 });
 
-router.get('/main', async (req, res) => {
+router.get('/main', displayID, async (req, res) => {
     const userEmail = req.session.email;
     try {
         const qrUrl = await QRCode.toDataURL(userEmail);
@@ -117,7 +119,7 @@ router.get('/main', async (req, res) => {
 });
 
 
-router.get('/profile', async (req, res) => {
+router.get('/profile', displayID, async (req, res) => {
     const currentUser = req.session.email;
 
     
@@ -132,20 +134,40 @@ router.get('/profile', async (req, res) => {
     });
 });
 
-router.get('/timetable', async (req, res) => {
+
+router.get('/timetable', displayID, async (req, res, next) => {
+
     try {
-        const userEmail = req.session.email; // 현재 로그인한 유저의 이메일
+        const userEmail = req.session.email;
+        const enrollments = await CourseEnrollment.find({ email: userEmail });
+        let timetableData = [];
 
-        // MongoDB에서 해당 유저의 수업 시간 정보를 불러오는 쿼리
-        const userCourses = await courseEnrollment.find({ email: userEmail });
+        for (const enrollment of enrollments) {
+            const activities = await CourseActivity.find({ 
+                courseID: enrollment.courseID, 
+                activity: enrollment.activity 
+            });
 
-        // 유저의 수업 정보를 기반으로 timetable.ejs를 렌더링
-        res.render('user/timetable', { userCourses });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
+            for (const activity of activities) {
+                const courseInfo = await CourseList.findOne({ courseID: activity.courseID });
+
+                timetableData.push({
+                    ...activity.toObject(),
+                    courseName: courseInfo.courseName,
+                    courseCode: courseInfo.courseCode,
+                    semester: courseInfo.semester,
+                    credits: courseInfo.credits
+                });
+            }
+        }
+
+        console.log(timetableData); // 데이터 로그 출력
+        res.render('user/timetable', { timetableData });
+    } catch (error) {
+        next(error);
     }
 });
+
 
 
 router.get('/course_list', (req, res) => {
@@ -194,7 +216,7 @@ router.post('/course_list/enroll', async (req, res) => {
 
 
 // Display Course Evaluation Page with Search Results
-router.get('/course_evaluation', async (req, res) => {
+router.get('/course_evaluation', displayID, async (req, res) => {
     try {
         let query = req.query.q; // Get the search query from the URL
         let courseHistoryList = await CourseHistory.find(query ? {
@@ -268,7 +290,7 @@ router.post('/editprofile', upload.single('image'), async (req, res) => {
     }
 });
 
-router.get('/courseSelect', async (req, res) => {
+router.get('/courseSelect', displayID, async (req, res) => {
     try {
         const currentUser = req.session.email;
 
@@ -300,7 +322,7 @@ router.get('/courseSelect', async (req, res) => {
 
 
 
-router.get('/writeReview/:courseID', async (req, res) => {
+router.get('/writeReview/:courseID', displayID, async (req, res) => {
     try {
         const userEmail = req.session.email;
         const courseID = req.params.courseID;
@@ -410,7 +432,7 @@ router.get('/reviewDetail/:courseID', async (req, res) => {
 });
 
 
-router.get('/paymentMain', async (req, res) => {
+router.get('/paymentMain', displayID, async (req, res) => {
     try {
         const userEmail = req.session.email;
 
@@ -584,10 +606,6 @@ router.get('/logout', (req, res) => {
     });
 });
 
-router.use(function (err, req, res, next) {
-    console.error('Error in :', error);
-    res.status(500).send('Something broke!');
-});
 
 
 router.get('/qrscanner', (req, res) => {
@@ -679,6 +697,7 @@ router.post('/qrpayment', async (req, res) => {
         }
     }
 });
+
 
 
 
