@@ -20,10 +20,17 @@
 
 <div class="adminCourseManageContents">
     <h1>Campus Map Management</h1>
-    <button class="admin-add-btn" onclick="showAddMapForm()">
-        <ion-icon name="add-outline"></ion-icon>
-        <p>Add NEW</p>
-    </button>
+    <div class="search">
+        <input type="text" placeholder="Search by name or category">
+        <button class="submitBtn" type="submit">
+            <ion-icon class="searchIcon" name="search-outline"></ion-icon>
+        </button>
+        <button class="admin-add-btn" onclick="showAddMapForm()">
+            <ion-icon class="addIcon" name="add-outline"></ion-icon>
+            <p>Add NEW</p>
+        </button>
+    </div>
+
 
     <table>
         <tr>

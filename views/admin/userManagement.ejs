@@ -17,40 +17,19 @@
 
 <%- include("../partials/adminNavigation") %>
 
-<style>   
-    .map-thumbnail {
-        width: 300px; 
-        height: auto; 
-        border-radius: 5px; 
-    }
-    
-    
-    .image-preview {
-        width: 150px; 
-        height: auto; 
-        border: 1px solid #000000; 
-        border-radius: 5px; 
-        margin-top: 10px; 
-    }
-    .sort-arrow {
-        cursor: pointer;
-        margin-left: 5px;
-    }
-    
-    .sort-arrow:hover {
-        color: #0056b3; /* 또는 원하는 색상 */
-    }
-    </style>
 
     <div class="adminCourseManageContents">
         <h1>User Management</h1>
-    
-
-        <!-- Display User List -->
-        <button class="admin-add-btn" onclick="showAddUserForm()">
-            <ion-icon name="add-outline"></ion-icon>
-            <p>Add User</p>
-        </button>
+        <div class="search">
+            <input type="text" placeholder="Search by email, name, major, and enrollment date">
+            <button class="submitBtn" type="submit">
+                <ion-icon class="searchIcon" name="search-outline"></ion-icon>
+            </button>
+            <button class="admin-add-btn" onclick="showAddMapForm()">
+                <ion-icon class="addIcon" name="add-outline"></ion-icon>
+                <p>Add NEW</p>
+            </button>
+        </div>
         <table>
             <tr>
                 <th>Email</th>
@@ -93,7 +72,7 @@
             <label for="major" class="custom-label">Major:</label>
             <input type="text" name="major" required class="custom-input"><br>
             <label for="year" class="custom-label">Year (optional):</label>
-            <input type="text" name="year"><br>
+            <input type="text" name="year" class="custom-input"><br>
             <label for="password" class="custom-label">Password:</label>
             <input type="password" name="password" required class="custom-input"><br>
             <label class="custom-label" for="image">Image:</label>
