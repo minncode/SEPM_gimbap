@@ -538,7 +538,7 @@ router.get('/addBank', (req, res) => {
 });
 
 // 메인 카테고리 장소 목록 불러오기
-router.get('/campusMap', async (req, res) => {
+router.get('/campusMap', displayID, async (req, res) => {
     try {
         const mainCategories = await CampusMap.find({ category: "Main" });
         res.render('user/campusMap', { mainCategories });
@@ -549,7 +549,7 @@ router.get('/campusMap', async (req, res) => {
 });
 
 // 특정 장소의 상세 정보 불러오기
-router.get('/campusMap/:name', async (req, res) => {
+router.get('/campusMap/:name', displayID, async (req, res) => {
     try {
         const name = req.params.name;
         const relatedPlaces = await CampusMap.find({ category: name });
@@ -568,7 +568,7 @@ router.get('/campusMap/:name', async (req, res) => {
 });
 
 // Route to render the feedback form
-router.get('/feedback', (req, res) => {
+router.get('/feedback', displayID, (req, res) => {
     res.render('user/feedback');
 });
 
