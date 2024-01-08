@@ -23,50 +23,14 @@
 
         <div class="contentContainers">
             <div class="contentContainer">
-                <div class="locationCategory">
-                    <a href="링크 주소">
-                        <h3>Library</h3>
-                        <ion-icon class="nextPage" name="chevron-forward-outline"></ion-icon>
-                    </a>
-                </div>
-                <div class="locationCategory">
-                    <a href="campusMapCategory">
-                        <h3>Restaurant & Cafe</h3>
-                        <ion-icon class="nextPage" name="chevron-forward-outline"></ion-icon>
-                    </a>
-                </div>
-
-                <div class="locationCategory">
-                    <a href="링크 주소">
-                        <h3>Convenience store</h3>
-                        <ion-icon class="nextPage" name="chevron-forward-outline"></ion-icon>
-                    </a>
-                </div>
-                <div class="locationCategory">
-                    <a href="링크 주소">
-                        <h3>GYM</h3>
-                        <ion-icon class="nextPage" name="chevron-forward-outline"></ion-icon>
-                    </a>
-                </div>
-                <div class="locationCategory">
-                    <a href="링크 주소">
-                        <h3>Student Connect</h3>
-                        <ion-icon class="nextPage" name="chevron-forward-outline"></ion-icon>
-                    </a>
-                </div>
-                <div class="locationCategory">
-                    <a href="링크 주소">
-                        <h3>Dorm</h3>
-                        <ion-icon class="nextPage" name="chevron-forward-outline"></ion-icon>
-                    </a>
-                </div>
-                <div class="locationCategory">
-                    <a href="링크 주소">
-                        <h3>IT Service Desk</h3>
-                        <ion-icon class="nextPage" name="chevron-forward-outline"></ion-icon>
-                    </a>
-                </div>
-
+                <% mainCategories.forEach(category => { %>
+                    <div class="locationCategory">
+                        <a href="/campusMap/<%= category.name %>">
+                            <h3><%= category.name %></h3>
+                            <ion-icon class="nextPage" name="chevron-forward-outline"></ion-icon>
+                        </a>
+                    </div>
+                <% }) %>
             </div>
         </div>
 

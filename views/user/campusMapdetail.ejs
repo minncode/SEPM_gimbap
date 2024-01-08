@@ -11,38 +11,37 @@
 </head>
 <body>
     <%- include("../partials/navigation") %>
-      <div class="mainContentHeader">
-        <div class="Category">
-            <h1>Noodle U</h1>
-            <a href="main">    <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></a>
+<div class="mainContentHeader">
+    <div class="Category">
+        <h1><%= detail.name %></h1>
+        <a href="/campusMap"> <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon></a>
+    </div>
+</div>
+
+<div class="contentContainers">
+    <div class="contentContainer">
+        <div class="locationImgcontainer">
+            <img class="locationimage" src="<%= detail.image %>" alt="<%= detail.name %>">
         </div>
-      </div>
-
-    
-        <div class="contentContainers">
-            <div class="contentContainer">
-                <div class="locationImgcontainer">
-                    <img class="locationimage" src="fic5.jpg">
-                </div>
-                <div class="detail">
-                    <div class="location">
-                        <ion-icon class="locationIcon" name="location-outline"></ion-icon>
-                        <p class="locationName">Building 1. Beanland Building</p>
-                    </div>
-                    <div class="opentime">
-                        <ion-icon class="time" name="time-outline"></ion-icon>
-                        <p class="opencloseTime">8:00 am ~ 17:00 pm</p>
-                    </div>
-
-                    <div class="phoneNumber">
-                        <ion-icon class="phone" name="call-outline"></ion-icon>
-                        <p class="call">1234-6778</p>
-                    </div>
-                </div>
+        <div class="detail">
+            <div class="location">
+                <ion-icon class="locationIcon" name="location-outline"></ion-icon>
+                <p class="locationName"><%= detail.location %></p>
             </div>
+            <% if (detail.contact) { %>
+            <div class="phoneNumber">
+                <ion-icon class="phone" name="call-outline"></ion-icon>
+                <p class="call"><%= detail.contact %></p>
+            </div>
+            <% } %>
+            <% if (detail.text) { %>
+            <div class="additionalText">
+                <p><%= detail.text %></p>
+            </div>
+            <% } %>
         </div>
-                
+    </div>
+</div>
 
-    
 </body>
 </html>

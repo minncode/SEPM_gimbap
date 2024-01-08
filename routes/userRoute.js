@@ -537,32 +537,34 @@ router.get('/addBank', (req, res) => {
     res.render('user/addBank');
 });
 
-router.get('/campusMap', (req, res) => {
-    res.render('user/campusMap');
+// 메인 카테고리 장소 목록 불러오기
+router.get('/campusMap', async (req, res) => {
+    try {
+        const mainCategories = await CampusMap.find({ category: "Main" });
+        res.render('user/campusMap', { mainCategories });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
-router.get('/campusMapCategory', (req, res) => {
-    res.render('user/campusMapCategory');
-});
+// 특정 장소의 상세 정보 불러오기
+router.get('/campusMap/:name', async (req, res) => {
+    try {
+        const name = req.params.name;
+        const relatedPlaces = await CampusMap.find({ category: name });
 
-router.get('/beanlandBuilding', (req, res) => {
-    res.render('user/beanlandBuilding');
-});
-
-router.get('/foodCourt', (req, res) => {
-    res.render('user/foodCourt');
-});
-
-router.get('/foodPavillion', (req, res) => {
-    res.render('user/foodPavillion');
-});
-
-router.get('/foodPavillion', (req, res) => {
-    res.render('user/foodPavillion');
-});
-
-router.get('/campusMapdetail', (req, res) => {
-    res.render('user/campusMapdetail');
+        if (relatedPlaces.length === 1 && relatedPlaces[0].location) {
+            // 관련 장소가 하나만 있고, 위치 정보가 있는 경우 상세 페이지 렌더링
+            res.render('user/campusMapDetail', { detail: relatedPlaces[0] });
+        } else {
+            // 여러 관련 장소가 있는 경우 그 목록 렌더링
+            res.render('user/campusMap', { mainCategories: relatedPlaces });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // Route to render the feedback form
