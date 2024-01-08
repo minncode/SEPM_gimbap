@@ -548,7 +548,7 @@ router.get('/campusMap', displayID, async (req, res) => {
     }
 });
 
-// 특정 장소의 상세 정보 불러오기
+// 특정 장소의 상세  정보 불러오기
 router.get('/campusMap/:name', displayID, async (req, res) => {
     try {
         const name = req.params.name;
