@@ -3,42 +3,7 @@
 <title>Review Detail</title>
 <link rel="stylesheet" href="/stylesheets/reviewDetail.css">
 </head>
-<style>
-.star-rating-container {
-    display: flex;
-    align-items: center; /* 세로 중앙 정렬 */
-}
 
-.star-rating {
-    margin-right: 10px; /* 별점과 숫자 사이의 간격 */
-}
-
-.star-rating .star {
-    color: #ddd; /* 기본 별 색상 */
-    font-size: 20px;
-}
-
-.star-rating .star.filled {
-    color: #ffc107; /* 채워진 별 색상 */
-}
-
-.star-rating .star.half-filled::before {
-    content: '\2605'; /* 절반 채워진 별을 위한 콘텐츠 (유니코드 별 문자) */
-    color: #ffc107;
-    position: absolute;
-}
-
-.rating-number {
-    font-size: 15px; /* 평점 숫자의 크기 */
-}
-.difficulty-heading {
-    display: flex;
-    align-items: center; /* 세로 중앙 정렬 */
-}
-.difficulty-heading h3 {
-    margin-right: 10px; /* h3와 h5 사이의 간격 */
-}
-</style>
 <body>
     <div class="headerContainer">
         <div class="course_evaluation-header">
@@ -72,16 +37,22 @@
                 </div>
             </div>
             <div class="review">
-                <h3>Number of Assignments</h3>
-                <p><%= average.assignmentsCount ? average.assignmentsCount.toFixed(1) : 'N/A' %>/4</p>
+                <div class="assignment-heading">
+                    <h3>Number of Assignments</h3>
+                </div>
+                    <p><%= average.assignmentsCount ? average.assignmentsCount.toFixed(1) : 'N/A' %>/4</p>
             </div>
             <div class="review">
-                <h3>Number of Exams</h3>
-                <p><%= average.examsCount ? average.examsCount.toFixed(1) : 'N/A' %>/4</p>
+                <div class="exam-heading">
+                    <h3>Number of Exams</h3>
+                </div>
+                    <p><%= average.examsCount ? average.examsCount.toFixed(1) : 'N/A' %>/4</p>
             </div>
             <div class="review">
-                <h3>Number of Group Projects</h3>
-                <p><%= average.groupProjectsCount ? average.groupProjectsCount.toFixed(1) : 'N/A' %>/4</p>
+                <div class="project-heading">
+                    <h3>Number of Group Projects</h3>
+                </div>
+                    <p><%= average.groupProjectsCount ? average.groupProjectsCount.toFixed(1) : 'N/A' %>/4</p>
             </div>
             <div class="review">
                 <div class="difficulty-heading">
@@ -89,35 +60,39 @@
                     <h5>(1 = Very Easy ~ 5 = Very Hard)</h5>
                 </div>
                 <p><%= average.difficulty ? average.difficulty.toFixed(1) : 'N/A' %>/5</p>
+                <br>
+            </div>
             </div>
 
-            <br><br>
-            <h2>Comments</h2>
+            <br>
+            <div class="comment-section">
+                <h2>Comments</h2>
 
-            <div class="comment-list">
-                <% evaluations.forEach(function(evaluation) { %>
-                    <div class="comment">
-                        <p class="enrollmentSemester">Student who took <%= evaluation.enrollmentSemester %> class</p>
-                        <div class="star-rating-container">
-                            <div class="star-rating">
-                                <% for(let i = 1; i <= 5; i++) { %>
-                                    <% if(i <= evaluation.starRating) { %>
-                                        <span class="star filled">&#9733;</span>
-                                    <% } else { %>
-                                        <span class="star">&#9733;</span>
+                <div class="comment-list">
+                    <% evaluations.forEach(function(evaluation) { %>
+                        <div class="comment">
+                            <p class="enrollmentSemester">Student who took <%= evaluation.enrollmentSemester %> class</p>
+                            <div class="star-rating-container">
+                                <div class="star-rating">
+                                    <% for(let i = 1; i <= 5; i++) { %>
+                                        <% if(i <= evaluation.starRating) { %>
+                                            <span class="star filled">&#9733;</span>
+                                        <% } else { %>
+                                            <span class="star">&#9733;</span>
+                                        <% } %>
                                     <% } %>
-                                <% } %>
+                                </div>
+                                <p class="rating-number"><%= evaluation.starRating.toFixed(1) %>/5</p>
                             </div>
-                            <p class="rating-number"><%= evaluation.starRating.toFixed(1) %>/5</p>
+                            <p class="textFeedback"><%= evaluation.textFeedback %></p>
                         </div>
-                        <p class="textFeedback"><%= evaluation.textFeedback %></p>
-                    </div>
-                <% }); %>
-            </div>
-
+                    <% }); %>
                 </div>
+
+
             </div>
         </div>
-    </body>
+    </div>
+</body>
 
     </html>

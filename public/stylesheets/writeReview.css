@@ -5,6 +5,7 @@
     color: #E3E5E0;
     float: right;
     padding:5px;
+    margin-top:80px;
   }
   
   .courseList-delete-icon:hover{
@@ -204,5 +205,14 @@ h3 {
   }
   .content button:active {
     background: #D6D6D6;
+  }
+  .input-box {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    width:95%;
+    margin-bottom: 15px;
+    background-color: #f0ecec;
+  
   }
 

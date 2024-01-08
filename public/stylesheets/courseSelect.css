@@ -36,11 +36,16 @@
 .courseContainer {
   margin: 20px;
 }
+.courseSection {
+  width:80%;
+}
 
 .courseContainer h2 {
   margin: 15px;
 }
+.comment-title {
 
+}
 .courseItem {
   display: flex;
   justify-content: space-between;
@@ -53,10 +58,11 @@
 .reviewBtn {
   background-color: #E61E2A;
   border-radius: 20px;
-  width: 6rem;
+  width:5rem;
   height: 35px;
   color: white;
   border: none;
+  
 }
 
 .courseContainer a {
