@@ -32,7 +32,10 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        let { email, password } = req.body;
+        console.log('Before:', email);
+        email += '@rmit.edu.vn';
+        console.log('After:', email);
         const user = await collection.findOne({ email });
 
         if (user) {
@@ -109,7 +112,7 @@ router.post("/register", upload.single('image'), async (req, res) => {
 router.get('/main', displayID, async (req, res) => {
     const userEmail = req.session.email;
     try {
-        const qrUrl = await QRCode.toDataURL(userEmail);
+        const qrUrl = await QRCode.toDataURL(userEmail+"@rmit.edu.vn");
         res.render('user/main', {
             displayname: req.session.name,
             displayemail: req.session.email,
