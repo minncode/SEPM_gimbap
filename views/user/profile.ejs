@@ -53,7 +53,12 @@
           </li>
         </a>
         <% if(userRole === 'admin') { %>
-          <li><a href="/admin">Go to Admin Home</a></li>
+          <a href="/admin">
+            <li>
+              <ion-icon class="profile-menu-icon" name="home-outline"></ion-icon>
+              <p>Go to Admin Home</p>
+            </li>
+          </a>
       <% } %>
         <a href="logout">
           <li><ion-icon class="profile-menu-icon" name="log-out-outline"></ion-icon>
