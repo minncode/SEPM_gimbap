@@ -393,7 +393,7 @@ router.get('/userManagement', async (req, res) => {
 });
 
 // Add User
-router.post('/userManagement/add', async (req, res) => {
+router.post('/userManagement/add', upload.single('image'), async (req, res) => {
     try {
         const { major, email, name, password, year, role } = req.body;
 
@@ -407,9 +407,21 @@ router.post('/userManagement/add', async (req, res) => {
             return res.status(400).send('User with this email already exists');
         }
 
-        // Creating a new document using the Mongoose model
-        const newUser = new collection({ major, email, name, password: hashedPassword, year, role });
+
+
+        const imagePath = req.file ? '/images/' + req.file.filename : '/images/default.png';
+        const newUser = new collection({ major, email, name, password: hashedPassword, year, role, image: imagePath });
         await newUser.save();
+
+        // Creating a new PaymentBalance document for the new user
+        const newPaymentBalance = new PaymentBalance({
+            email: email,
+            balance: 0 // Initialize the balance to 0
+        });
+
+        // Saving the new PaymentBalance document
+        await newPaymentBalance.save();
+
         res.redirect('/admin/userManagement'); // Redirect to user list or wherever you want
     } catch (error) {
         console.error(error);
@@ -419,8 +431,8 @@ router.post('/userManagement/add', async (req, res) => {
 
 
 // Edit user
-router.post('/userManagement/edit', async (req, res) => {
-    const { userIdEdit, newMajor, newEmail, newName, newRole } = req.body;
+router.post('/userManagement/edit', upload.single('newImage'), async (req, res) => {
+    const { userIdEdit, newMajor, newEmail, newName, newRole, yearEdit } = req.body;
 
     try {
         const userToEdit = await collection.findById(userIdEdit).select('-password');
@@ -439,11 +451,23 @@ router.post('/userManagement/edit', async (req, res) => {
             return res.status(400).send('The new email is already in use by another user.');
         }
         
+        if (req.file) {
+            if (userToEdit.image && userToEdit.image !== '/images/default.png') {
+                const oldImagePath = path.join(__dirname, '../public', userToEdit.image);
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                }
+            }
+            userToEdit.image = '/images/' + req.file.filename;
+        }
+
+
         // Update user details
         userToEdit.major = newMajor;
         userToEdit.email = newEmail;
         userToEdit.name = newName;
         userToEdit.role = newRole;
+        userToEdit.year = yearEdit;
 
         await userToEdit.save();
 
@@ -453,6 +477,11 @@ router.post('/userManagement/edit', async (req, res) => {
         await PaymentBalance.updateMany({ email: oldEmail }, { $set: { email: newEmail } })
         // Update PaymentRecord records with the new email
         await PaymentRecord.updateMany({ email: oldEmail }, { $set: { email: newEmail } });
+        // Update CourseEnrollmentHistory records with the new email
+        await CourseEnrollmentHistory.updateMany({ email: oldEmail }, { $set: { email: newEmail } });
+        // Update CourseEvaluation records with the new email
+        await CourseEvaluation.updateMany({ email: oldEmail }, { $set: { email: newEmail } });
+
 
         res.redirect('/admin/userManagement');
     } catch (err) {
@@ -476,6 +505,10 @@ router.post('/userManagement/delete', async (req, res) => {
         await PaymentBalance.deleteMany({ email: userToDelete.email });
         // Delete corresponding records in courseEnrollment for the user's email
         await CourseEnrollment.deleteMany({ email: userToDelete.email });
+        // Delete corresponding records in CourseEnrollmentHistory for the user's email
+        await CourseEnrollmentHistory.deleteMany({ email: userToDelete.email });
+        // Delete corresponding records in CourseEvaluation for the user's email
+        await CourseEvaluation.deleteMany({ email: userToDelete.email });
 
         res.redirect('/admin/userManagement');
     } catch (err) {
@@ -694,12 +727,18 @@ router.post('/courseHistoryManagement/edit', async (req, res) => {
             return res.status(400).send('The new course ID already exists in the course history.');
         }
 
+        const oldCourseID = courseToEdit.courseID;
+
         // Update course details
         courseToEdit.courseID = newCourseID;
         courseToEdit.courseName = newCourseName;
         courseToEdit.lecturer = newLecturer;
 
         await courseToEdit.save();
+
+        // Update courseID in CourseEnrollmentHistory and CourseEvaluation using the old course ID
+        await CourseEnrollmentHistory.updateMany({ courseID: oldCourseID }, { $set: { courseID: newCourseID } });
+        await CourseEvaluation.updateMany({ courseID: oldCourseID }, { $set: { courseID: newCourseID } });
 
         res.redirect('/admin/courseHistoryManagement');
     } catch (err) {
@@ -713,11 +752,21 @@ router.post('/courseHistoryManagement/delete', async (req, res) => {
     const { courseIdDelete } = req.body;
 
     try {
-        const courseToDelete = await CourseHistory.findByIdAndDelete(courseIdDelete);
+        const courseToDelete = await CourseHistory.findById(courseIdDelete);
 
         if (!courseToDelete) {
             return res.status(404).send('Course not found');
         }
+
+        // Store the course ID before deleting
+        const courseID = courseToDelete.courseID;
+
+        // Delete the course from CourseHistory
+        await CourseHistory.findByIdAndDelete(courseIdDelete);
+
+        // Delete related records in CourseEnrollmentHistory and CourseEvaluation
+        await CourseEnrollmentHistory.deleteMany({ courseID: courseID });
+        await CourseEvaluation.deleteMany({ courseID: courseID });
 
         res.redirect('/admin/courseHistoryManagement');
     } catch (err) {
@@ -784,28 +833,33 @@ router.post('/courseEnrollmentHistoryManagement/add', async (req, res) => {
 // Edit Course Enrollment History
 router.post('/courseEnrollmentHistoryManagement/edit', async (req, res) => {
     const { enrollmentIdEdit, newEmail, newCourseID, newEnrollmentSemester } = req.body;
-
     try {
-        // Check if the newEmail exists in the 'collection' collection
-        const existingUser = await collection.findOne({ email: newEmail });
-
-        if (!existingUser) {
-            return res.status(400).send('User with the provided newEmail does not exist.');
-        }
-
-        // Check if the newCourseID exists in the 'CourseHistory' collection
-        const existingCourse = await CourseHistory.findOne({ courseID: newCourseID });
-
-        if (!existingCourse) {
-            return res.status(400).send('Course with the provided newCourseID does not exist.');
-        }
-
-        // Check if the enrollment history to edit exists
         const enrollmentToEdit = await CourseEnrollmentHistory.findById(enrollmentIdEdit);
-
         if (!enrollmentToEdit) {
             return res.status(404).send('Enrollment history to edit not found');
         }
+
+        // Check if the new email exists in the 'collection' collection
+        if (newEmail && newEmail !== enrollmentToEdit.email) {
+            const existingUser = await collection.findOne({ email: newEmail });
+            if (!existingUser) {
+                return res.status(400).send('User with the provided newEmail does not exist.');
+            }
+
+            // Update email in CourseEvaluation
+            await CourseEvaluation.updateMany({ email: enrollmentToEdit.email, courseID: enrollmentToEdit.courseID }, { $set: { email: newEmail } });
+        }
+
+
+        
+               // Check if the newCourseID exists in the 'CourseHistory' collection
+               if (newCourseID && newCourseID !== enrollmentToEdit.courseID) {
+                const existingCourse = await CourseHistory.findOne({ courseID: newCourseID });
+                if (!existingCourse) {
+                    return res.status(400).send('Course with the provided newCourseID does not exist.');
+                }
+
+
 
         // Check if the edited enrollment history already exists for the new email, new courseID, and new enrollmentSemester
         const existingEnrollment = await CourseEnrollmentHistory.findOne({
@@ -819,7 +873,9 @@ router.post('/courseEnrollmentHistoryManagement/edit', async (req, res) => {
             return res.status(400).send('Enrollment history already exists for the given new email, new courseID, and new enrollmentSemester.');
         }
 
-        // Perform additional validations or checks if needed
+        // Update courseID in CourseEvaluation
+        await CourseEvaluation.updateMany({ email: enrollmentToEdit.email, courseID: enrollmentToEdit.courseID }, { $set: { courseID: newCourseID } });
+    }
 
         // Update enrollment history details
         enrollmentToEdit.email = newEmail;
@@ -839,13 +895,20 @@ router.post('/courseEnrollmentHistoryManagement/delete', async (req, res) => {
     const { enrollmentIdDelete } = req.body;
 
     try {
-        const enrollmentToDelete = await CourseEnrollmentHistory.findByIdAndDelete(enrollmentIdDelete);
+        const enrollmentToDelete = await CourseEnrollmentHistory.findById(enrollmentIdDelete);
 
         if (!enrollmentToDelete) {
             return res.status(404).send('Enrollment history not found');
         }
 
-        // Perform additional cleanup or related actions if needed
+        // Delete corresponding CourseEvaluation records
+        await CourseEvaluation.deleteMany({
+            email: enrollmentToDelete.email, 
+            courseID: enrollmentToDelete.courseID
+        });
+
+        // Now delete the enrollment history record
+        await CourseEnrollmentHistory.findByIdAndDelete(enrollmentIdDelete);
 
         res.redirect('/admin/courseEnrollmentHistoryManagement');
     } catch (err) {
@@ -873,42 +936,42 @@ router.get('/courseEvaluationManagement', async (req, res) => {
     }
 });
 
-// Add Course Evaluation
-router.post('/courseEvaluationManagement/add', async (req, res) => {
-    const {
-        courseID,
-        email,
-        status,
-        enrollmentSemester,
-        starRating,
-        assignmentsCount,
-        examsCount,
-        groupProjectsCount,
-        difficulty,
-        textFeedback,
-    } = req.body;
+// Add Course Evaluation - I think this is not needed for the Administrators
+// router.post('/courseEvaluationManagement/add', async (req, res) => {
+//     const {
+//         courseID,
+//         email,
+//         status,
+//         enrollmentSemester,
+//         starRating,
+//         assignmentsCount,
+//         examsCount,
+//         groupProjectsCount,
+//         difficulty,
+//         textFeedback,
+//     } = req.body;
 
-    try {
-        const newEvaluation = new CourseEvaluation({
-            courseID,
-            email,
-            status,
-            enrollmentSemester,
-            starRating,
-            assignmentsCount,
-            examsCount,
-            groupProjectsCount,
-            difficulty,
-            textFeedback,
-        });
+//     try {
+//         const newEvaluation = new CourseEvaluation({
+//             courseID,
+//             email,
+//             status,
+//             enrollmentSemester,
+//             starRating,
+//             assignmentsCount,
+//             examsCount,
+//             groupProjectsCount,
+//             difficulty,
+//             textFeedback,
+//         });
 
-        await newEvaluation.save();
-        res.redirect('/admin/courseEvaluationManagement');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-    }
-});
+//         await newEvaluation.save();
+//         res.redirect('/admin/courseEvaluationManagement');
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
 
 // Edit Course Evaluation
 router.post('/courseEvaluationManagement/edit', async (req, res) => {
@@ -933,7 +996,15 @@ router.post('/courseEvaluationManagement/edit', async (req, res) => {
             return res.status(404).send('Course evaluation to edit not found');
         }
 
-        // Perform additional validations or checks if needed
+                // Check if a corresponding CourseEnrollmentHistory exists
+                const matchingEnrollmentHistory = await CourseEnrollmentHistory.findOne({
+                    email: newEmail,
+                    courseID: newCourseID
+                });
+        
+                if (!matchingEnrollmentHistory) {
+                    return res.status(400).send('No matching course enrollment history found for the given email and course ID.');
+                }
 
         // Update evaluation details
         evaluationToEdit.courseID = newCourseID;
@@ -1064,7 +1135,7 @@ router.post('/campusMapManagement/delete', async (req, res) => {
 }
 });
 
-module.exports = router;
+
 
 
 

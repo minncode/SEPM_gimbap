@@ -16,6 +16,32 @@
 </head>
 
 <%- include("../partials/adminNavigation") %>
+
+<style>   
+    .map-thumbnail {
+        width: 300px; 
+        height: auto; 
+        border-radius: 5px; 
+    }
+    
+    
+    .image-preview {
+        width: 150px; 
+        height: auto; 
+        border: 1px solid #000000; 
+        border-radius: 5px; 
+        margin-top: 10px; 
+    }
+    .sort-arrow {
+        cursor: pointer;
+        margin-left: 5px;
+    }
+    
+    .sort-arrow:hover {
+        color: #0056b3; /* 또는 원하는 색상 */
+    }
+    </style>
+
     <div class="adminCourseManageContents">
         <h1>User Management</h1>
     
@@ -32,6 +58,7 @@
                 <th>Role</th>
                 <th>Major</th>
                 <th>Year</th>
+                <th>Image</th>
                 <th>Action</th>
             </tr>
             <% for (let i = 0; i < userList.length; i++) { %>
@@ -41,9 +68,10 @@
                     <td><%= userList[i].role %></td>
                     <td><%= userList[i].major %></td>
                     <td><%= userList[i].year %></td>
+                    <td><img src="<%= userList[i].image %>" alt="Map Image" class="map-thumbnail"></td>
                     <td class="action-buttons">
-                        <button id="action-edit" onclick="showEditUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Edit</button>
-                        <button id="action-delete" onclick="showDeleteUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>')">Delete</button>
+                        <button id="action-edit" onclick="showEditUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>', '<%= userList[i].image %>')">Edit</button>
+                        <button id="action-delete" onclick="showDeleteUserForm('<%= userList[i]._id %>', '<%= userList[i].email %>', '<%= userList[i].name %>', '<%= userList[i].role %>', '<%= userList[i].major %>', '<%= userList[i].year %>', '<%= userList[i].image %>')">Delete</button>
                     </td>
                 </tr>
             <% } %>
@@ -55,7 +83,7 @@
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('addUserPopup')">X</button>
         </div>
-        <form action="/admin/userManagement/add" method="post">
+        <form action="/admin/userManagement/add" method="post" enctype="multipart/form-data">
             <label for="email" class="custom-label">Email:</label>
             <input type="email" name="email" required class="custom-input"><br>
             <label for="name" class="custom-label">Name:</label>
@@ -68,6 +96,9 @@
             <input type="text" name="year"><br>
             <label for="password" class="custom-label">Password:</label>
             <input type="password" name="password" required class="custom-input"><br>
+            <label class="custom-label" for="image">Image:</label>
+            <input class="custom-input" type="file" name="image" id="addImageInput" onchange="previewAddImage(event)">
+            <img id="addImagePreview" src="" alt="Image preview" class="image-preview" style="display: none;">
             <button type="submit" class="custom-button">Add User</button>
         </form>
     </div>
@@ -77,7 +108,7 @@
         <div class="popup-header">
             <button class="popup-close" onclick="closePopup('editUserPopup')">X</button>
         </div>
-        <form action="/admin/userManagement/edit" method="post">
+        <form action="/admin/userManagement/edit" method="post" enctype="multipart/form-data">
             <input type="text" name="userIdEdit" required readonly class="custom-input" style="display: none;">
             <label for="newEmail" class="custom-label">New Email:</label>
             <input type="text" name="newEmail" required class="custom-input"><br>
@@ -90,8 +121,9 @@
             <input type="text" name="newMajor" required class="custom-input"><br>
             <label for="yearEdit" class="custom-label">Year:</label>
             <input type="text" name="yearEdit" required class="custom-input"><br>
-
-
+            <label class="custom-label" for="newImage">New Image:</label>
+            <input class="custom-input" type="file" name="newImage" onchange="updateImagePreview(this, 'editImagePreview')">
+            <img id="editImagePreview" src="" alt="Image Preview" class="image-preview">
             <button type="submit" class="custom-button">Edit User</button>
         </form>
     </div>
@@ -113,6 +145,8 @@
             <input type="text" name="majorDelete" required readonly class="custom-input"><br>
             <label for="yearDelete" class="custom-label">Year:</label>
             <input type="text" name="yearDelete" required readonly class="custom-input"><br>
+            <label class="custom-label">Image:</label>
+    <img id="deleteImagePreview" src="" alt="Image Preview" class="image-preview">
             <button type="submit" class="custom-button">Delete User</button>
         </form>
     </div>
@@ -120,11 +154,32 @@
     <div class="overlay" onclick="closeAllUserPopups()"></div>
 
     <script>
+
+function previewAddImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var output = document.getElementById('addImagePreview');
+        output.src = reader.result;
+        output.style.display = 'block'; // Show the preview
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+        function updateImagePreview(input, previewId) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById(previewId).src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
         function showAddUserForm() {
             showPopup('addUserPopup');
         }
 
-        function showEditUserForm(userId, email, name, role, major, year) {
+        function showEditUserForm(userId, email, name, role, major, year, image) {
             showPopup('editUserPopup');
             document.querySelector('[name="userIdEdit"]').value = userId;
             document.querySelector('[name="newEmail"]').value = email;
@@ -132,13 +187,13 @@
             document.querySelector('[name="newRole"]').value = role;
             document.querySelector('[name="newMajor"]').value = major;
             document.querySelector('[name="yearEdit"]').value = year;
-            
+            document.getElementById('editImagePreview').src = image;
             
             
             
         }
 
-        function showDeleteUserForm(userId, email, name, role, major, year) {
+        function showDeleteUserForm(userId, email, name, role, major, year, image) {
             showPopup('deleteUserPopup');
             document.querySelector('[name="userIdDelete"]').value = userId;
             document.querySelector('[name="emailDelete"]').value = email;
@@ -146,6 +201,7 @@
             document.querySelector('[name="roleDelete"]').value = role;
             document.querySelector('[name="majorDelete"]').value = major;
             document.querySelector('[name="yearDelete"]').value = year;
+            document.getElementById('deleteImagePreview').src = image;
         }
 
         function showPopup(popupId) {

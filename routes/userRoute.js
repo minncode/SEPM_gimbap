@@ -567,6 +567,14 @@ router.get('/campusMap/:name', async (req, res) => {
     }
 });
 
+
+router.get('/1', (req, res) => {
+    res.render('campusMap');
+});
+router.get('/2', (req, res) => {
+    res.render('campusMap');
+});
+
 // Route to render the feedback form
 router.get('/feedback', (req, res) => {
     res.render('user/feedback');
