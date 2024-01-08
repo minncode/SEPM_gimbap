@@ -31,23 +31,28 @@ router.get('/', (req, res) => {
 
 
 router.post('/', async (req, res) => {
-    const { name, password } = req.body;
-    const user = await collection.findOne({ name });
+    try {
+        const { email, password } = req.body;
+        const user = await collection.findOne({ email });
 
-    if (user) {
-        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (user) {
+            const passwordMatch = await bcrypt.compare(password, user.password);
 
-        if (passwordMatch) {
-            req.session.name = user.name;
-            req.session.email = user.email;
-            req.session.major = user.major;
-            req.session.image = user.image;
-            res.redirect('/main');
+            if (passwordMatch) {
+                req.session.name = user.name;
+                req.session.email = user.email;
+                req.session.major = user.major;
+                req.session.image = user.image;
+                res.redirect('/main');
+            } else {
+                res.render('user/login', { error: 'Incorrect password' });
+            }
         } else {
-            res.render('user/login', { error: 'Failed to login' });
+            res.render('user/login', { error: 'Email not found' });
         }
-    } else {
-        res.render('user/login', { error: 'Failed to login' });
+    } catch (error) {
+        console.error(error);
+        res.render('user/login', { error: 'Server error' });
     }
 });
 
