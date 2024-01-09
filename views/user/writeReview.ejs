@@ -1,0 +1,113 @@
+<%- include("../partials/header") %>
+
+<link rel="stylesheet" href="/stylesheets/writeReview.css">
+<link rel="stylesheet" href="/stylesheets/header.css">
+<script src="/javascripts/writeReview.js" defer></script>
+<script src="/javascripts/popup.js" defer></script>
+<title>RMITdays</title>
+</head>
+<body>
+    <%- include("../partials/navigation") %>
+    <div class="CourseSelectionHeader">
+        <a href="courseSelect">
+            <ion-icon class="courseList-delete-icon" name="close-outline"></ion-icon>
+        </a>
+    </div>
+    <div class="mainContent">
+        <div class="reviewContainer">
+            <form action="/writeReview" method="post">
+                <h2>Lecture Review</h2>
+                <br>
+
+                <div class="section courseID">
+                    <h3>Course ID</h3>
+                    <select name="courseID" id="courseID">
+                        <% for (let i = 0; i < courses.length; i++) { %>
+                            <option value="<%= courses[i].courseID %>"><%= courses[i].courseID %></option>
+                        <% } %>
+                    </select>
+                </div>
+
+                <div class="section courseName">
+                    <h3>Course Name</h3>
+                    <input type="text" class="input-box" placeholder="Enter Course Name" name="courseName">
+                </div>
+
+                <div class="section lecturer">
+                    <h3>Lecturer</h3>
+                    <input type="text" class="input-box" placeholder="Enter Lecturer name" name="lecturer">
+                </div>
+
+                <!-- 유저 세션에서 이메일 받아오기 -->
+                <div class="section email">
+                    <h3>Email</h3>
+                    <input type="text" class="input-box" placeholder="Enter Your Email" name="email" value="<%= userEmail %>">
+                </div>
+
+                <div class="section starRating">
+                    <h3>Star Rating</h3>
+                    <div class="options">
+                        <span class="option" onclick="selectStarRating(1)" data-value="1">★</span>
+                        <span class="option" onclick="selectStarRating(2)" data-value="2">★</span>
+                        <span class="option" onclick="selectStarRating(3)" data-value="3">★</span>
+                        <span class="option" onclick="selectStarRating(4)" data-value="4">★</span>
+                        <span class="option" onclick="selectStarRating(5)" data-value="5">★</span>
+                    </div>
+                </div>
+
+                <div class="section assignmentsCount">
+                    <h3>Assignments Count</h3>
+                    <div class="options">
+                        <span class="option" onclick="selectCount(this, 'assignmentsCount')" data-value="1">1</span>
+                        <span class="option" onclick="selectCount(this, 'assignmentsCount')" data-value="2">2</span>
+                        <span class="option" onclick="selectCount(this, 'assignmentsCount')" data-value="3">3</span>
+                        <span class="option" onclick="selectCount(this, 'assignmentsCount')" data-value="4">4</span>
+                    </div>
+                </div>
+
+                <div class="section examsCount">
+                    <h3>Exams Count</h3>
+                    <div class="options">
+                        <span class="option" onclick="selectCount(this, 'examsCount')" data-value="1">1</span>
+                        <span class="option" onclick="selectCount(this, 'examsCount')" data-value="2">2</span>
+                        <span class="option" onclick="selectCount(this, 'examsCount')" data-value="3">3</span>
+                        <span class="option" onclick="selectCount(this, 'examsCount')" data-value="4">4</span>
+                    </div>
+                </div>
+
+                <div class="section groupProjectsCount">
+                    <h3>Group Projects Count</h3>
+                    <div class="options">
+                        <span class="option" onclick="selectCount(this, 'groupProjectsCount')" data-value="1">1</span>
+                        <span class="option" onclick="selectCount(this, 'groupProjectsCount')" data-value="2">2</span>
+                        <span class="option" onclick="selectCount(this, 'groupProjectsCount')" data-value="3">3</span>
+                        <span class="option" onclick="selectCount(this, 'groupProjectsCount')" data-value="4">4</span>
+                    </div>
+                </div>
+
+                <div class="section difficulty">
+                    <h3>Difficulty</h3>
+                    <div class="options">
+                        <span class="option" onclick="selectOption(this, 'difficulty')" data-value="Easy">Easy</span>
+                        <span class="option" onclick="selectOption(this, 'difficulty')" data-value="Moderate">Moderate</span>
+                        <span class="option" onclick="selectOption(this, 'difficulty')" data-value="Difficult">Difficult</span>
+                    </div>
+                </div>
+
+                <div class="section newField">
+                    <h3>New Field</h3>
+                    <input type="text" class="input-box" placeholder="Enter New Field" name="newField">
+                </div>
+                
+                <div class="section">
+                    <h3>Comments</h3>
+                    <textarea class="comment-box" placeholder="Write your comment here..." name="textFeedback"></textarea>
+                </div>
+                <button type="submit" class="submit-button" onclick="submitReview()">Submit</button>
+                </form>
+                </div>
+                </div>
+                <script>
+</script>
+</body>
+</html>
