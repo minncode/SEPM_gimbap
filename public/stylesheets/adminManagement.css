@@ -247,3 +247,64 @@ th {
 .sort-arrow:hover {
   color: #0056b3; /* 또는 원하는 색상 */
 }
+
+.custom-textarea {
+  resize: none;
+  background-color: #f0ecec;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+}
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0px 15px;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 415px;
+  cursor: pointer;
+  top: 15px;
+  color: #838481;
+}
+.submitBtn {
+  border: none;
+  background: none;
+}
+
+.search input[type="text"] {
+  width: 70%; 
+  padding: 8px 12.6667px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: #E3E5E0;
+}
+.searchIcon2 {
+  position: absolute;
+  right: 415px;
+  cursor: pointer;
+  top: 10px;
+  color: #838481;
+}
+.search2 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0px 15px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top:20px;
+  
+}
+.search2 input[type="text"] {
+  width: 70%; 
+  padding: 8px 12.6667px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: #E3E5E0;
+}
+

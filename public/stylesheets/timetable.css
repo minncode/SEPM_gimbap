@@ -51,11 +51,10 @@ table.time td {
   }
   
   .modal-content {
-    background-color: #f4f4f4;
-    margin: 20% auto;
+    background-color: #fff;
+    margin: 50% 20px;
     padding: 20px;
     border-radius: 8px;
-    max-width: 600px;
   }
   
   .close {
@@ -90,25 +89,10 @@ table.time td {
     background-color: rgba(0,0,0,0.4);
 }
 
-.modalContentHeader {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%;
-    border-radius: 30px;
-    
-}
-.modalContentHeader h2 {
-    border-bottom: 1px solid black;
-    padding:10px;
-    
-}
 .close {
     color: #aaa;
     float: right;
-    font-size: 50px;
-    font-weight: bold;
+    font-size: 20px;
 }
 
 .close:hover,
@@ -117,6 +101,27 @@ table.time td {
     text-decoration: none;
     cursor: pointer;
 }
+
+.modal-contents-wrap{
+  margin-top: 40px;
+}
+
+.modal-contents-wrap span{
+  float: right;
+  font-weight: 500;
+  color: rgb(84, 83, 83);
+}
+
+.modal-contents-wrap p{
+  font-weight: 800;
+  color: #222160;
+  border-bottom: 1px solid #E3E5E0;
+}
+
+.modal-contents-wrap span, p{
+  padding: 5px;
+}
+
 .delete-button {
     background-color: #E61E2A;
     color: white;
@@ -144,6 +149,7 @@ table.time td {
 .assigned {
   background-color: #FAC800; /* 배경색 설정 */
   border: 1px solid #FAC800; /* 테두리 색을 배경색과 동일하게 설정 */
+  
 }
 
 

@@ -22,12 +22,16 @@
         <!-- main -->
     <div class="adminCourseManageContents">
         <h1>Course History Management</h1>
-
-        <!-- Display Course History List -->
-        <button class="admin-add-btn" onclick="showAddCourseForm()">
-            <ion-icon name="add-outline"></ion-icon>
-            <p>Add Course</p>
-        </button>
+        <div class="search">
+            <input type="text" placeholder="Search by course ID, course name, and lecturer">
+            <button class="submitBtn" type="submit">
+                <ion-icon class="searchIcon" name="search-outline"></ion-icon>
+            </button>
+            <button class="admin-add-btn" onclick="showAddCourseForm()">
+                <ion-icon class="addIcon" name="add-outline"></ion-icon>
+                <p>Add NEW</p>
+            </button>
+        </div>
 
         <table>
             <tr>

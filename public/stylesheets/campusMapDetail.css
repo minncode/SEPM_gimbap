@@ -34,6 +34,7 @@
 .mainContentHeader {
     padding:25px;
     margin-top: 70px;
+    
 }
 .Category {
     display: flex;
@@ -45,7 +46,13 @@
       height: 30px;
       color: #E3E5E0;
     }
-    
+.contentContainers {
+  display: flex;
+}
+
+.contentContainer {
+  margin: 0 auto;
+}
   .courseList-delete-icon:hover{
       color: hsl(241, 49%, 25%);
     }
@@ -61,7 +68,7 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px;
-    width: 14%;
+    width: 100%;
     margin: 12px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -75,7 +82,17 @@
     margin-bottom: 10px;
     
   }
+  .additionalText {
+    display: flex;
+    padding:5px;
+}
 
+.additionalText p {
+    margin-left:10px;
+}
+.information {
+  font-size: 20px;
+}
   @media screen and (max-width: 767px) {
     .locationImgcontainer {
         border: 1px solid #ccc;
@@ -94,6 +111,9 @@
         object-fit: cover;
         margin-bottom: 10px;
         
+      }
+      .information {
+        font-size: 27px;
       }
 
   }

@@ -19,12 +19,16 @@
 
     <div class="adminCourseManageContents">
         <h1>Course Activity Management</h1>
-
-        <!-- Display Course Activity List -->
-        <button class="admin-add-btn" onclick="showAddActivityForm()">
-            <ion-icon name="add-outline"></ion-icon>
-            <p>Add New</p>
-        </button>
+        <div class="search">
+            <input type="text" placeholder="Search by course ID, activity, professor name, classroom number, and class date and time">
+            <button class="submitBtn" type="submit">
+                <ion-icon class="searchIcon" name="search-outline"></ion-icon>
+            </button>
+            <button class="admin-add-btn" onclick="showAddActivityForm()">
+                <ion-icon class="addIcon" name="add-outline"></ion-icon>
+                <p>Add NEW</p>
+            </button>
+        </div>
         <table>
             <tr>
                 <th>Course ID</th>
