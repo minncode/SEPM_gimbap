@@ -562,6 +562,14 @@ router.post('/userManagement/delete', async (req, res) => {
             return res.status(404).send('User not found');
         }
 
+        //delete image if its not default image
+        if (userToDelete.image && userToDelete.image !== '/images/studentProfile.png') {
+            const imagePath = path.join(__dirname, '../public', userToDelete.image);
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        }
+
         // Delete corresponding records in paymentBalance for the user's email
         await PaymentBalance.deleteMany({ email: userToDelete.email });
         // Delete corresponding records in courseEnrollment for the user's email
