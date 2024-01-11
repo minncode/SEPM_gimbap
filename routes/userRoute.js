@@ -16,6 +16,7 @@ const CampusMap = require('../models/campusMap');
 const QRCode = require('qrcode');
 const upload = require('../middleware/uploadImages');
 const {displayID} = require('../middleware/studentCard');
+const {checkUser} = require('../middleware/authentication');
 
 
 router.use(session({
@@ -45,7 +46,11 @@ router.post('/', async (req, res) => {
                 req.session.name = user.name;
                 req.session.email = user.email;
                 req.session.major = user.major;
+                req.session.role = user.role;
                 req.session.image = user.image;
+                role = req.session.role;
+                image = req.session.image;
+                userName = req.session.name;
                 res.redirect('/main');
             } else {
                 res.render('user/login', { error: 'Incorrect password' });
@@ -109,7 +114,7 @@ router.post("/register", upload.single('image'), async (req, res) => {
     }
 });
 
-router.get('/main', displayID, async (req, res) => {
+router.get('/main', checkUser, displayID, async (req, res) => {
     const userEmail = req.session.email;
     try {
         const qrUrl = await QRCode.toDataURL(userEmail+"@rmit.edu.vn");
@@ -117,7 +122,7 @@ router.get('/main', displayID, async (req, res) => {
             displayname: req.session.name,
             displayemail: req.session.email,
             displaymajor: req.session.major,
-            displayimage: req.session.image,
+            // displayimage: req.session.image,
             qrUrl: qrUrl
         });
     } catch (err) {
@@ -127,7 +132,7 @@ router.get('/main', displayID, async (req, res) => {
 });
 
 
-router.get('/profile', displayID, async (req, res) => {
+router.get('/profile', checkUser, displayID, async (req, res) => {
     const currentUser = req.session.email;
 
     
@@ -137,13 +142,13 @@ router.get('/profile', displayID, async (req, res) => {
         displayname: userInfo.name,       
         displayemail: userInfo.email,
         displaymajor: userInfo.major,
-        displayimage: userInfo.image,
+        // displayimage: userInfo.image,
         userRole: userInfo.role           
     });
 });
 
 
-router.get('/timetable', displayID, async (req, res, next) => {
+router.get('/timetable', checkUser, displayID, async (req, res, next) => {
 
     try {
         const userEmail = req.session.email;
@@ -178,11 +183,11 @@ router.get('/timetable', displayID, async (req, res, next) => {
 
 
 
-router.get('/course_list', (req, res) => {
+router.get('/course_list', checkUser, (req, res) => {
     res.render('user/course_list');
 });
 
-router.post('/course_list/enroll', async (req, res) => {
+router.post('/course_list/enroll', checkUser, async (req, res) => {
     const { courseCode, activity } = req.body;
     const userEmail = req.session.email;
 
@@ -224,7 +229,7 @@ router.post('/course_list/enroll', async (req, res) => {
 
 
 // Display Course Evaluation Page with Search Results
-router.get('/course_evaluation', displayID, async (req, res) => {
+router.get('/course_evaluation', checkUser, displayID, async (req, res) => {
     try {
         let query = req.query.q; // Get the search query from the URL
         let courseHistoryList = await CourseHistory.find(query ? {
@@ -251,16 +256,16 @@ router.get('/course_evaluation', displayID, async (req, res) => {
 
 
 
-router.get('/editprofile', (req, res) => {
+router.get('/editprofile', checkUser, (req, res) => {
     res.render('user/editprofile', {
         displayname: req.session.name,
         displayemail: req.session.email,
         displaymajor: req.session.major,
-        displayimage: req.session.image
+        // displayimage: req.session.image
     });
 });
 
-router.post('/editprofile', upload.single('image'), async (req, res) => {
+router.post('/editprofile', checkUser, upload.single('image'), async (req, res) => {
     const { name, email, password, major } = req.body;
 
     try {
@@ -290,6 +295,8 @@ router.post('/editprofile', upload.single('image'), async (req, res) => {
         req.session.email = user.email;
         req.session.major = user.major;
         req.session.image = user.image;
+        image = req.session.image;
+        userName = req.session.name;
 
         res.redirect('/profile');
     } catch (err) {
@@ -298,7 +305,7 @@ router.post('/editprofile', upload.single('image'), async (req, res) => {
     }
 });
 
-router.get('/courseSelect', displayID, async (req, res) => {
+router.get('/courseSelect', checkUser, displayID, async (req, res) => {
     try {
         const currentUser = req.session.email;
 
@@ -330,7 +337,7 @@ router.get('/courseSelect', displayID, async (req, res) => {
 
 
 
-router.get('/writeReview/:courseID', displayID, async (req, res) => {
+router.get('/writeReview/:courseID', checkUser, displayID, async (req, res) => {
     try {
         const userEmail = req.session.email;
         const courseID = req.params.courseID;
@@ -348,7 +355,7 @@ router.get('/writeReview/:courseID', displayID, async (req, res) => {
 });
 
 //api to automatically fetch form data by courseID
-router.get('/courseDetails/:courseID', async (req, res) => {
+router.get('/courseDetails/:courseID', checkUser, async (req, res) => {
     try {
         const courseID = req.params.courseID;
         const courseDetails = await CourseHistory.findOne({ courseID: courseID });
@@ -365,7 +372,7 @@ router.get('/courseDetails/:courseID', async (req, res) => {
 
 
 
-router.post('/writeReview', async (req, res) => {
+router.post('/writeReview', checkUser, async (req, res) => {
     try {
         const { courseID, starRating, assignmentsCount, examsCount, groupProjectsCount, difficulty, textFeedback } = req.body;
         const userEmail = req.session.email;
@@ -400,11 +407,11 @@ router.post('/writeReview', async (req, res) => {
 });
 
 
-router.get('/reviewDetail', (req, res) => {
+router.get('/reviewDetail', checkUser, (req, res) => {
     res.render('user/reviewDetail');
 });
 
-router.get('/reviewDetail/:courseID', async (req, res) => {
+router.get('/reviewDetail/:courseID', checkUser, async (req, res) => {
     try {
         const courseID = req.params.courseID;
         const course = await CourseHistory.findOne({ courseID: courseID });
@@ -440,7 +447,7 @@ router.get('/reviewDetail/:courseID', async (req, res) => {
 });
 
 
-router.get('/paymentMain', displayID, async (req, res) => {
+router.get('/paymentMain', displayID, checkUser, async (req, res) => {
     try {
         const userEmail = req.session.email;
 
@@ -463,11 +470,11 @@ router.get('/paymentMain', displayID, async (req, res) => {
     }
 });
 
-router.get('/charging', (req, res) => {
+router.get('/charging', checkUser, (req, res) => {
     res.render('user/charging');
   });
   
-  router.post('/charging', async (req, res) => {
+  router.post('/charging', checkUser, async (req, res) => {
     const { amount } = req.body;
   
     try {
@@ -505,7 +512,7 @@ router.get('/charging', (req, res) => {
   });
 
 // Route to display the barcode page
-router.get('/barcode', async (req, res) => {
+router.get('/barcode', checkUser, async (req, res) => {
     try {
         const userEmail = req.session.email;
 
@@ -529,16 +536,16 @@ router.get('/barcode', async (req, res) => {
 
 
 
-router.get('/bankManage', (req, res) => {
+router.get('/bankManage', checkUser, (req, res) => {
     res.render('user/bankManage');
 });
 
-router.get('/addBank', (req, res) => {
+router.get('/addBank', checkUser, (req, res) => {
     res.render('user/addBank');
 });
 
 // 메인 카테고리 장소 목록 불러오기
-router.get('/campusMap', displayID, async (req, res) => {
+router.get('/campusMap', checkUser, displayID, async (req, res) => {
     try {
         const mainCategories = await CampusMap.find({ category: "Main" });
         res.render('user/campusMap', { mainCategories });
@@ -549,7 +556,7 @@ router.get('/campusMap', displayID, async (req, res) => {
 });
 
 // 특정 장소의 상세  정보 불러오 기
-router.get('/campusMap/:name', displayID, async (req, res) => {
+router.get('/campusMap/:name', checkUser, displayID, async (req, res) => {
     try {
         const name = req.params.name;
         const relatedPlaces = await CampusMap.find({ category: name });
@@ -568,20 +575,14 @@ router.get('/campusMap/:name', displayID, async (req, res) => {
 });
 
 
-router.get('/1', (req, res) => {
-    res.render('campusMap');
-});
-router.get('/2', (req, res) => {
-    res.render('campusMap');
-});
 
 // Route to render the feedback form
-router.get('/feedback', displayID, (req, res) => {
+router.get('/feedback', checkUser, displayID, (req, res) => {
     res.render('user/feedback');
 });
 
 // Route to handle feedback submission
-router.post('/submit-feedback', async (req, res) => {
+router.post('/submit-feedback', checkUser, async (req, res) => {
     try {
         const { feedbackType, feedbackDetails } = req.body;
 
@@ -626,18 +627,18 @@ router.get('/logout', (req, res) => {
 
 
 
-router.get('/qrscanner', (req, res) => {
+router.get('/qrscanner', checkUser, (req, res) => {
     res.render('user/qrscanner'); 
 });
 
 
 // Render the QR Payment page
-router.get('/qrpayment', (req, res) => {
+router.get('/qrpayment', checkUser, (req, res) => {
     res.render('user/QRpayment', { verificationStatus: null, recipientEmail: '' });
 });
 
 // Handle QR Payment requests
-router.post('/qrpayment', async (req, res) => {
+router.post('/qrpayment', checkUser, async (req, res) => {
     const { recipientEmail, verifiedRecipientEmail, amount, action } = req.body;
     const senderEmail = req.session.email; // Ensure this session variable is correctly set
     const emailToUse = verifiedRecipientEmail || recipientEmail;

@@ -2,7 +2,9 @@
     <a href="/main"><img class="logo" src="/images/rmitlogo.png" alt="RMIT logo" ></a>
     <nav>
       <ul>
-        <li><a href="/admin"><ion-icon class="header-icon" name="home-outline"></ion-icon></a></li>
+        <% if (role === 'admin') { %>
+          <li><a href="/admin"><ion-icon class="header-icon" name="home-outline"></ion-icon></a></li>
+        <% } %>
         <li><a href="/paymentMain"><ion-icon class="header-icon" name="wallet-outline"></ion-icon></a></li>
         <li><a href="#" class="sheet-trigger"><ion-icon class="header-icon" name="id-card-outline"></ion-icon></a></li>
         <li><a href="/profile"><ion-icon class="header-icon" name="person-outline"></ion-icon></ion-icon></a></li>

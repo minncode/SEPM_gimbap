@@ -16,6 +16,7 @@ const CampusMap = require('../models/campusMap');
 const upload = require('../middleware/uploadImages');
 const path = require('path');
 const fs = require('fs');
+const {checkAdmin} = require('../middleware/authentication');
 
 router.use(session({
     secret: 'your secret key',
@@ -25,7 +26,7 @@ router.use(session({
 
 
 // Admin Page
-router.get('/', async (req, res) => {
+router.get('/', checkAdmin, async (req, res) => {
     try {
         res.render('admin/adminMain');
     } catch (err) {
@@ -483,6 +484,7 @@ router.post('/userManagement/add', upload.single('image'), async (req, res) => {
 // Edit user
 router.post('/userManagement/edit', upload.single('newImage'), async (req, res) => {
     const { userIdEdit, newMajor, newEmail, newName, newRole, yearEdit } = req.body;
+    let editMe = 0;
 
     try {
         const userToEdit = await collection.findById(userIdEdit).select('-password');
@@ -493,6 +495,9 @@ router.post('/userManagement/edit', upload.single('newImage'), async (req, res) 
 
         // Get the existing user email
         const oldEmail = userToEdit.email;
+        if (req.session.email == oldEmail) {
+            editMe = 1;
+        }
 
         // Check if the new email is already in use by another user (excluding the current user)
         const existingUserWithEmail = await collection.findOne({ email: newEmail, _id: { $ne: userIdEdit } });
@@ -518,6 +523,12 @@ router.post('/userManagement/edit', upload.single('newImage'), async (req, res) 
         userToEdit.name = newName;
         userToEdit.role = newRole;
         userToEdit.year = yearEdit;
+
+        if (editMe == 1) {
+        role = userToEdit.role;
+        image = userToEdit.image;
+        userName = userToEdit.name;
+        };
 
         await userToEdit.save();
 

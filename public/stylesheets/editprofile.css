@@ -43,6 +43,7 @@ input[type="text"] {
   border-radius: 70%;
   margin: 10px 0px;
   width: 80px;
+  height: 80px;
 }
 
 #profilepic-btn{
