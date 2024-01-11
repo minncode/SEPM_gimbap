@@ -460,7 +460,7 @@ router.post('/userManagement/add', upload.single('image'), async (req, res) => {
 
 
 
-        const imagePath = req.file ? '/images/' + req.file.filename : '/images/default.png';
+        const imagePath = req.file ? '/images/' + req.file.filename : '/images/studentProfile.png';
         const newUser = new collection({ major, email, name, password: hashedPassword, year, role, image: imagePath });
         await newUser.save();
 
@@ -507,7 +507,7 @@ router.post('/userManagement/edit', upload.single('newImage'), async (req, res) 
         }
         
         if (req.file) {
-            if (userToEdit.image && userToEdit.image !== '/images/default.png') {
+            if (userToEdit.image && userToEdit.image !== '/images/studentProfile.png') {
                 const oldImagePath = path.join(__dirname, '../public', userToEdit.image);
                 if (fs.existsSync(oldImagePath)) {
                     fs.unlinkSync(oldImagePath);

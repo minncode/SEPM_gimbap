@@ -282,7 +282,7 @@ router.post('/editprofile', checkUser, upload.single('image'), async (req, res) 
         user.major = major;
 
         if (req.file) {
-            if (user.image && user.image !== '/images/default.png') {
+            if (user.image && user.image !== '/images/studentProfile.png') {
                 const oldImagePath = path.join(__dirname, '../public', user.image);
                 if (fs.existsSync(oldImagePath)) {
                     fs.unlinkSync(oldImagePath);
