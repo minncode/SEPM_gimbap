@@ -21,12 +21,14 @@
     <!-- main -->
     <div class="adminCourseManageContents">
         <h1>Payment Balance Management</h1>
+        <form action="/admin/paymentBalanceManagement" method="get">
         <div class="search">
-            <input type="text" placeholder="Search by email, and balance">
+            <input type="text" name="search" placeholder="Search by email, and balance">
             <button class="submitBtn" type="submit">
                 <ion-icon class="searchIcon" name="search-outline"></ion-icon>
             </button>
         </div>
+    </form>
         <button class="admin-add-btn" onclick="showAddBalanceForm()">
             <ion-icon class="addIcon" name="add-outline"></ion-icon>
             <p>Add NEW</p>

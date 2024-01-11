@@ -20,13 +20,14 @@
 
 <div class="adminCourseManageContents">
     <h1>Campus Map Management</h1>
+    <form action="/admin/campusMapManagement" method="get">
     <div class="search">
-        <input type="text" placeholder="Search by name or category">
+        <input type="text" name="search" placeholder="Search by name, category, location, contact, description">
         <button class="submitBtn" type="submit">
             <ion-icon class="searchIcon" name="search-outline"></ion-icon>
         </button>
-
     </div>
+    </form>
     <button class="admin-add-btn" onclick="showAddMapForm()">
         <ion-icon class="addIcon" name="add-outline"></ion-icon>
         <p>Add NEW</p>
@@ -51,7 +52,7 @@
                 <span class="sort-arrow" onclick="sortTable('location', 'desc')">&#9660;</span>
             </th>
             <th>Contact</th>
-            <th>Text</th>
+            <th>Description</th>
             <th>Image</th>
             <th>Action</th>
         </tr>

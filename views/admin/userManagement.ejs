@@ -44,12 +44,14 @@
 
     <div class="adminCourseManageContents">
         <h1>User Management</h1>
+        <form action="/admin/userManagement" method="get">
         <div class="search">
-            <input type="text" placeholder="Search by email, name, major, and enrollment date">
+            <input type="text" name="search" placeholder="Search by email, name, and major">
             <button class="submitBtn" type="submit">
                 <ion-icon class="searchIcon" name="search-outline"></ion-icon>
             </button>
         </div>
+    </form>
         <button class="admin-add-btn" onclick="showAddUserForm()">
             <ion-icon name="add-outline"></ion-icon>
             <p>Add NEW</p>

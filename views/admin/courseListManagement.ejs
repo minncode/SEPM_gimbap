@@ -18,12 +18,14 @@
 <%- include("../partials/adminNavigation") %>
     <div class="adminCourseManageContents">
         <h1>Course List Management</h1>
+        <form action="/admin/courseListManagement" method="get">
         <div class="search">
-            <input type="text" placeholder="Search by course ID, course code, course name, semester, and credits">
+            <input type="text" name="search" placeholder="Search by course ID, course code, course name, semester, and credits">
             <button class="submitBtn" type="submit">
                 <ion-icon class="searchIcon" name="search-outline"></ion-icon>
             </button>
         </div>
+    </form>
         <button class="admin-add-btn" onclick="showAddForm()">
             <ion-icon class="addIcon" name="add-outline"></ion-icon>
             <p>Add NEW</p>

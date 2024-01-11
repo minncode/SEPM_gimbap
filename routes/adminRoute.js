@@ -38,8 +38,21 @@ router.get('/', async (req, res) => {
 // Course List Management Page
 router.get('/courseListManagement', async (req, res) => {
     try {
-        // Fetch all courses from MongoDB
-        const courseList = await CourseList.find();
+        let searchQuery = {};
+        if (req.query.search) {
+            const search = req.query.search;
+            searchQuery = {
+                $or: [
+                    { courseID: new RegExp(search, 'i') },
+                    { courseCode: new RegExp(search, 'i') },
+                    { courseName: new RegExp(search, 'i') },
+                    { semester: new RegExp(search, 'i') },
+                    { credits: new RegExp(search, 'i') }
+                ]
+            };
+        }
+
+        const courseList = await CourseList.find(searchQuery);
         res.render('admin/courseListManagement', { courseList });
     } catch (err) {
         console.error(err);
@@ -149,13 +162,27 @@ router.post('/courseListManagement/delete', async (req, res) => {
 // Display Course Activity List
 router.get('/courseActivityManagement', async (req, res) => {
     try {
-      const activityList = await CourseActivity.find();
-      res.render('admin/courseActivityManagement', { activityList });
+        let searchQuery = {};
+        if (req.query.search) {
+            const search = req.query.search;
+            searchQuery = {
+                $or: [
+                    { courseID: new RegExp(search, 'i') },
+                    { activity: new RegExp(search, 'i') },
+                    { lecturer: new RegExp(search, 'i') },
+                    { classroom: new RegExp(search, 'i') },
+                    { time: new RegExp(search, 'i') }
+                ]
+            };
+        }
+
+        const activityList = await CourseActivity.find(searchQuery);
+        res.render('admin/courseActivityManagement', { activityList });
     } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
+        console.error(err);
+        res.status(500).send('Internal Server Error');
     }
-  });
+});
   
 // Add Course Activity
 router.post('/courseActivityManagement/add', async (req, res) => {
@@ -271,7 +298,19 @@ await CourseEnrollment.deleteMany({ courseID: activityToDelete.courseID, activit
 // Display Course Enrollment List
 router.get('/courseEnrollmentManagement', async (req, res) => {
     try {
-        const enrollmentList = await CourseEnrollment.find();
+        let searchQuery = {};
+        if (req.query.search) {
+            const search = req.query.search;
+            searchQuery = {
+                $or: [
+                    { email: new RegExp(search, 'i') },
+                    { courseID: new RegExp(search, 'i') },
+                    { activity: new RegExp(search, 'i') }
+                ]
+            };
+        }
+
+        const enrollmentList = await CourseEnrollment.find(searchQuery);
         res.render('admin/courseEnrollmentManagement', { enrollmentList });
     } catch (err) {
         console.error(err);
@@ -384,14 +423,25 @@ router.post('/courseEnrollmentManagement/delete', async (req, res) => {
 // Render User Management page
 router.get('/userManagement', async (req, res) => {
     try {
-        const userList = await collection.find().select('-password'); // Exclude password field
-        res.render('admin/userManagement', { userList });
+        let query = req.query.search; 
+
+       
+        let searchQuery = query ? {
+            $or: [
+                { email: new RegExp(query, 'i') },
+                { name: new RegExp(query, 'i') },
+                { major: new RegExp(query, 'i') },
+                { role: new RegExp(query, 'i') }
+            ]
+        } : {};
+
+        const userList = await collection.find(searchQuery).select('-password'); // 검색 쿼리에 맞는 사용자 찾기
+        res.render('admin/userManagement', { userList }); // 결과와 함께 템플릿 렌더링
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
     }
 });
-
 // Add User
 router.post('/userManagement/add', upload.single('image'), async (req, res) => {
     try {
@@ -527,14 +577,24 @@ router.post('/userManagement/delete', async (req, res) => {
 // Payment Balance Management Page
 router.get('/paymentBalanceManagement', async (req, res) => {
     try {
-        const balanceList = await PaymentBalance.find();
+        let searchQuery = {};
+        if (req.query.search) {
+            const search = req.query.search;
+            searchQuery = {
+                $or: [
+                    { email: new RegExp(search, 'i') },
+                    { balance: { $regex: new RegExp(search, 'i') } }
+                ]
+            };
+        }
+
+        const balanceList = await PaymentBalance.find(searchQuery);
         res.render('admin/paymentBalanceManagement', { balanceList });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
     }
 });
-
 // Add Payment Balance
 router.post('/paymentBalanceManagement/add', async (req, res) => {
     const { email, balance, adminNote } = req.body;
@@ -647,8 +707,22 @@ router.post('/paymentBalanceManagement/delete', async (req, res) => {
 // Render Payment Record Management page
 router.get('/paymentRecordManagement', async (req, res) => {
     try {
-        // Fetch all payment records from MongoDB
-        const paymentRecordList = await PaymentRecord.find();
+        let searchQuery = {};
+        if (req.query.search) {
+            const search = req.query.search;
+            searchQuery = {
+                $or: [
+                    { email: new RegExp(search, 'i') },
+                    { type: new RegExp(search, 'i') },
+                    { amount: new RegExp(search, 'i') },
+                    { remainingBalance: new RegExp(search, 'i') },
+                    { paymentStatus: new RegExp(search, 'i') },
+                    { adminNote: new RegExp(search, 'i') }
+                ]
+            };
+        }
+
+        const paymentRecordList = await PaymentRecord.find(searchQuery);
         res.render('admin/paymentRecordManagement', { paymentRecordList });
     } catch (err) {
         console.error(err);
@@ -659,8 +733,18 @@ router.get('/paymentRecordManagement', async (req, res) => {
 // Feedback Management
 router.get('/feedbackManagement', async (req, res) => {
     try {
-        const feedbackList = await Feedback.find();
+        let searchQuery = {};
+        if (req.query.search) {
+            const search = req.query.search;
+            searchQuery = {
+                $or: [
+                    { typeOfFeedback: new RegExp(search, 'i') },
+                    { feedbackDetails: new RegExp(search, 'i') }
+                ]
+            };
+        }
 
+        const feedbackList = await Feedback.find(searchQuery);
         res.render('admin/feedbackManagement', { feedbackList });
     } catch (error) {
         console.error(error);
@@ -672,7 +756,19 @@ router.get('/feedbackManagement', async (req, res) => {
 // Display Course History List
 router.get('/courseHistoryManagement', async (req, res) => {
     try {
-        const courseHistoryList = await CourseHistory.find();
+        let searchQuery = {};
+        if (req.query.search) {
+            const search = req.query.search;
+            searchQuery = {
+                $or: [
+                    { courseID: new RegExp(search, 'i') },
+                    { courseName: new RegExp(search, 'i') },
+                    { lecturer: new RegExp(search, 'i') }
+                ]
+            };
+        }
+
+        const courseHistoryList = await CourseHistory.find(searchQuery);
         res.render('admin/courseHistoryManagement', { courseHistoryList });
     } catch (err) {
         console.error(err);
@@ -782,7 +878,19 @@ router.post('/courseHistoryManagement/delete', async (req, res) => {
 // Display Course Enrollment History List
 router.get('/courseEnrollmentHistoryManagement', async (req, res) => {
     try {
-        const enrollmentHistoryList = await CourseEnrollmentHistory.find();
+        let searchQuery = {};
+        if (req.query.search) {
+            const search = req.query.search;
+            searchQuery = {
+                $or: [
+                    { email: new RegExp(search, 'i') },
+                    { courseID: new RegExp(search, 'i') },
+                    { enrollmentSemester: new RegExp(search, 'i') }
+                ]
+            };
+        }
+
+        const enrollmentHistoryList = await CourseEnrollmentHistory.find(searchQuery);
         res.render('admin/courseEnrollmentHistoryManagement', { enrollmentHistoryList });
     } catch (err) {
         console.error(err);
@@ -928,7 +1036,21 @@ router.post('/courseEnrollmentHistoryManagement/delete', async (req, res) => {
 // Display Course Evaluation List
 router.get('/courseEvaluationManagement', async (req, res) => {
     try {
-        const courseEvaluationList = await CourseEvaluation.find();
+        let searchQuery = {};
+        if (req.query.search) {
+            const search = req.query.search;
+            searchQuery = {
+                $or: [
+                    { courseID: new RegExp(search, 'i') },
+                    { email: new RegExp(search, 'i') },
+                    { status: new RegExp(search, 'i') },
+                    { enrollmentSemester: new RegExp(search, 'i') },
+                    { textFeedback: new RegExp(search, 'i') }
+                ]
+            };
+        }
+
+        const courseEvaluationList = await CourseEvaluation.find(searchQuery);
         res.render('admin/courseEvaluationManagement', { courseEvaluationList });
     } catch (err) {
         console.error(err);
@@ -1056,11 +1178,25 @@ module.exports = router;
 
 // Display Campus Map Management Page
 router.get('/campusMapManagement', async (req, res) => {
-    const sortField = req.query.sort || 'name'; // 기본 정렬 필드
-    const sortOrder = req.query.order === 'desc' ? -1 : 1; // 기본 정렬 순서
+    const sortField = req.query.sort || 'name'; // Default sort field
+    const sortOrder = req.query.order === 'desc' ? -1 : 1; // Default sort order
 
     try {
-        let campusMaps = await CampusMap.find().sort({ [sortField]: sortOrder });
+        let searchQuery = {};
+        if (req.query.search) {
+            const search = req.query.search;
+            searchQuery = {
+                $or: [
+                    { name: new RegExp(search, 'i') },
+                    { category: new RegExp(search, 'i') },
+                    { location: new RegExp(search, 'i') },
+                    { contact: new RegExp(search, 'i') },
+                    { text: new RegExp(search, 'i') }
+                ]
+            };
+        }
+
+        let campusMaps = await CampusMap.find(searchQuery).sort({ [sortField]: sortOrder });
         res.render('admin/campusMapManagement', { campusMaps });
     } catch (err) {
         console.error(err);

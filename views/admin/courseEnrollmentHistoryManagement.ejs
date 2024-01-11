@@ -21,12 +21,14 @@
     <!-- main -->
     <div class="adminCourseManageContents">
         <h1>Course Enrollment History Management</h1>
+        <form action="/admin/courseEnrollmentHistoryManagement" method="get">
         <div class="search">
-            <input type="text" placeholder="Search by email, course ID, and enrollment semester">
+            <input type="text" name="search" placeholder="Search by email, course ID, and enrollment semester">
             <button class="submitBtn" type="submit">
                 <ion-icon class="searchIcon" name="search-outline"></ion-icon>
             </button>
         </div>
+        </form>
         <button class="admin-add-btn" onclick="showAddHistoryForm()">
             <ion-icon class="addIcon" name="add-outline"></ion-icon>
             <p>Add NEW</p>
