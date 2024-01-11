@@ -14,6 +14,8 @@ const CourseEnrollmentHistory = require('../models/courseEnrollmentHistory');
 const CourseEvaluation = require('../models/courseEvaluation');
 const CampusMap = require('../models/campusMap');
 const QRCode = require('qrcode');
+const path = require('path');
+const fs = require('fs');
 const upload = require('../middleware/uploadImages');
 const {displayID} = require('../middleware/studentCard');
 const {checkUser} = require('../middleware/authentication');
@@ -278,8 +280,15 @@ router.post('/editprofile', checkUser, upload.single('image'), async (req, res) 
         // Update user information
         user.name = name;
         user.major = major;
+
         if (req.file) {
-            user.image = '/images/' + req.file.filename; // Update image path with the uploaded file
+            if (user.image && user.image !== '/images/default.png') {
+                const oldImagePath = path.join(__dirname, '../public', user.image);
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                }
+            }
+            user.image = '/images/' + req.file.filename;
         }
 
         // Only update password if a new one is provided

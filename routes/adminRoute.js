@@ -37,7 +37,7 @@ router.get('/', checkAdmin, async (req, res) => {
 
 
 // Course List Management Page
-router.get('/courseListManagement', async (req, res) => {
+router.get('/courseListManagement', checkAdmin, async (req, res) => {
     try {
         let searchQuery = {};
         if (req.query.search) {
@@ -161,7 +161,7 @@ router.post('/courseListManagement/delete', async (req, res) => {
 
 
 // Display Course Activity List
-router.get('/courseActivityManagement', async (req, res) => {
+router.get('/courseActivityManagement', checkAdmin, async (req, res) => {
     try {
         let searchQuery = {};
         if (req.query.search) {
@@ -297,7 +297,7 @@ await CourseEnrollment.deleteMany({ courseID: activityToDelete.courseID, activit
 
 
 // Display Course Enrollment List
-router.get('/courseEnrollmentManagement', async (req, res) => {
+router.get('/courseEnrollmentManagement', checkAdmin, async (req, res) => {
     try {
         let searchQuery = {};
         if (req.query.search) {
@@ -422,7 +422,7 @@ router.post('/courseEnrollmentManagement/delete', async (req, res) => {
 
 
 // Render User Management page
-router.get('/userManagement', async (req, res) => {
+router.get('/userManagement', checkAdmin, async (req, res) => {
     try {
         let query = req.query.search; 
 
@@ -586,7 +586,7 @@ router.post('/userManagement/delete', async (req, res) => {
 
 
 // Payment Balance Management Page
-router.get('/paymentBalanceManagement', async (req, res) => {
+router.get('/paymentBalanceManagement', checkAdmin, async (req, res) => {
     try {
         let searchQuery = {};
         if (req.query.search) {
@@ -720,7 +720,7 @@ router.post('/paymentBalanceManagement/delete', async (req, res) => {
 
 
 // Render Payment Record Management page
-router.get('/paymentRecordManagement', async (req, res) => {
+router.get('/paymentRecordManagement', checkAdmin, async (req, res) => {
     try {
         let searchQuery = {};
         if (req.query.search) {
@@ -749,7 +749,7 @@ router.get('/paymentRecordManagement', async (req, res) => {
 });
 
 // Feedback Management
-router.get('/feedbackManagement', async (req, res) => {
+router.get('/feedbackManagement', checkAdmin, async (req, res) => {
     try {
         let searchQuery = {};
         if (req.query.search) {
@@ -776,7 +776,7 @@ const sortField = req.query.sort || 'submissionTime'; // Default sort field
 
 
 // Display Course History List
-router.get('/courseHistoryManagement', async (req, res) => {
+router.get('/courseHistoryManagement', checkAdmin, async (req, res) => {
     try {
         let searchQuery = {};
         if (req.query.search) {
@@ -898,7 +898,7 @@ router.post('/courseHistoryManagement/delete', async (req, res) => {
 
 
 // Display Course Enrollment History List
-router.get('/courseEnrollmentHistoryManagement', async (req, res) => {
+router.get('/courseEnrollmentHistoryManagement', checkAdmin, async (req, res) => {
     try {
         let searchQuery = {};
         if (req.query.search) {
@@ -1056,7 +1056,7 @@ router.post('/courseEnrollmentHistoryManagement/delete', async (req, res) => {
 
 
 // Display Course Evaluation List
-router.get('/courseEvaluationManagement', async (req, res) => {
+router.get('/courseEvaluationManagement', checkAdmin, async (req, res) => {
     try {
         let searchQuery = {};
         if (req.query.search) {
@@ -1199,7 +1199,7 @@ module.exports = router;
 
 
 // Display Campus Map Management Page
-router.get('/campusMapManagement', async (req, res) => {
+router.get('/campusMapManagement', checkAdmin, async (req, res) => {
     const sortField = req.query.sort || 'name'; // Default sort field
     const sortOrder = req.query.order === 'desc' ? -1 : 1; // Default sort order
 
