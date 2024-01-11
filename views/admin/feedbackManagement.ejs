@@ -29,9 +29,18 @@
 <br>
 <table>
     <tr>
-        <th>Type of Feedback</th>
-        <th>Feedback Details</th>
-        <th>Submission Time</th>
+        <th>Type of Feedback
+            <span class="sort-arrow" onclick="sortTable('typeOfFeedback', 'asc')">&#9650;</span>
+            <span class="sort-arrow" onclick="sortTable('typeOfFeedback', 'desc')">&#9660;</span>
+        </th>
+        <th>Feedback Details
+            <span class="sort-arrow" onclick="sortTable('feedbackDetails', 'asc')">&#9650;</span>
+            <span class="sort-arrow" onclick="sortTable('feedbackDetails', 'desc')">&#9660;</span>
+        </th>
+        <th>Submission Time
+            <span class="sort-arrow" onclick="sortTable('submissionTime', 'asc')">&#9650;</span>
+            <span class="sort-arrow" onclick="sortTable('submissionTime', 'desc')">&#9660;</span>
+        </th>
     </tr>
     <% for (let i = 0; i < feedbackList.length; i++) { %>
         <tr>
@@ -43,5 +52,11 @@
 </table>
     </div>
 </body>
+
+<script>
+    function sortTable(field, order) {
+    window.location.href = `/admin/feedbackManagement?sort=${field}&order=${order}`;
+}
+</script>
 
 </html>

@@ -36,8 +36,14 @@
 
         <table>
             <tr>
-                <th>Email</th>
-                <th>Balance</th>
+                <th>Email
+                    <span class="sort-arrow" onclick="sortTable('email', 'asc')">&#9650;</span>
+                    <span class="sort-arrow" onclick="sortTable('email', 'desc')">&#9660;</span>
+                </th>
+                <th>Balance
+                    <span class="sort-arrow" onclick="sortTable('balance', 'asc')">&#9650;</span>
+                    <span class="sort-arrow" onclick="sortTable('balance', 'desc')">&#9660;</span>
+                </th>
                 <th>Action</th>
             </tr>
             <% for (let i = 0; i < balanceList.length; i++) { %>
@@ -106,6 +112,10 @@
     <div class="overlay" onclick="closeAllBalancePopups()"></div>
 
     <script>
+function sortTable(field, order) {
+    window.location.href = `/admin/paymentBalanceManagement?sort=${field}&order=${order}`;
+}
+
         function showAddBalanceForm() {
             showPopup('addBalancePopup');
         }

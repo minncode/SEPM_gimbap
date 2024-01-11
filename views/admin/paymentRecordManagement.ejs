@@ -33,12 +33,30 @@
         <br>
         <table>
             <tr>
-                <th>Email</th>
-                <th>type</th>
-                <th>Amount</th>
-                <th>Remaining Balance</th>
-                <th>Payment Status</th>
-                <th>Payment Date</th>
+                <th>Email
+                    <span class="sort-arrow" onclick="sortTable('email', 'asc')">&#9650;</span>
+                    <span class="sort-arrow" onclick="sortTable('email', 'desc')">&#9660;</span>
+                </th>
+                <th>Type
+                    <span class="sort-arrow" onclick="sortTable('type', 'asc')">&#9650;</span>
+                    <span class="sort-arrow" onclick="sortTable('type', 'desc')">&#9660;</span>
+                </th>
+                <th>Amount
+                    <span class="sort-arrow" onclick="sortTable('amount', 'asc')">&#9650;</span>
+                    <span class="sort-arrow" onclick="sortTable('amount', 'desc')">&#9660;</span>
+                </th>
+                <th>Remaining Balance
+                    <span class="sort-arrow" onclick="sortTable('remainingBalance', 'asc')">&#9650;</span>
+                    <span class="sort-arrow" onclick="sortTable('remainingBalance', 'desc')">&#9660;</span>
+                </th>
+                <th>Payment Status
+                    <span class="sort-arrow" onclick="sortTable('paymentStatus', 'asc')">&#9650;</span>
+                    <span class="sort-arrow" onclick="sortTable('paymentStatus', 'desc')">&#9660;</span>
+                </th>
+                <th>Payment Date
+                    <span class="sort-arrow" onclick="sortTable('paymentDate', 'asc')">&#9650;</span>
+                    <span class="sort-arrow" onclick="sortTable('paymentDate', 'desc')">&#9660;</span>
+                </th>
                 <th>Admin Note</th>
             </tr>
             <% for (let i = 0; i < paymentRecordList.length; i++) { %>
@@ -64,6 +82,9 @@
     <!-- <div class="overlay" onclick="closeAllRecordPopups()"></div> -->
 
     <script>
+        function sortTable(field, order) {
+    window.location.href = `/admin/paymentRecordManagement?sort=${field}&order=${order}`;
+}
         // // Add or modify JavaScript functions as needed
         // function showAddRecordForm() {
         //     showPopup('addRecordPopup');

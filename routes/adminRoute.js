@@ -588,13 +588,17 @@ router.get('/paymentBalanceManagement', async (req, res) => {
             };
         }
 
-        const balanceList = await PaymentBalance.find(searchQuery);
+        const sortField = req.query.sort || 'email'; // Default sort field
+        const sortOrder = req.query.order === 'desc' ? -1 : 1; // Default sort order
+
+        const balanceList = await PaymentBalance.find(searchQuery).sort({ [sortField]: sortOrder });
         res.render('admin/paymentBalanceManagement', { balanceList });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
     }
 });
+
 // Add Payment Balance
 router.post('/paymentBalanceManagement/add', async (req, res) => {
     const { email, balance, adminNote } = req.body;
@@ -722,7 +726,10 @@ router.get('/paymentRecordManagement', async (req, res) => {
             };
         }
 
-        const paymentRecordList = await PaymentRecord.find(searchQuery);
+        const sortField = req.query.sort || 'email'; // Default sort field
+        const sortOrder = req.query.order === 'desc' ? -1 : 1; // Default sort order
+
+        const paymentRecordList = await PaymentRecord.find(searchQuery).sort({ [sortField]: sortOrder });
         res.render('admin/paymentRecordManagement', { paymentRecordList });
     } catch (err) {
         console.error(err);
@@ -744,7 +751,11 @@ router.get('/feedbackManagement', async (req, res) => {
             };
         }
 
-        const feedbackList = await Feedback.find(searchQuery);
+
+const sortField = req.query.sort || 'submissionTime'; // Default sort field
+        const sortOrder = req.query.order === 'desc' ? -1 : 1; // Default sort order
+
+        const feedbackList = await Feedback.find(searchQuery).sort({ [sortField]: sortOrder });
         res.render('admin/feedbackManagement', { feedbackList });
     } catch (error) {
         console.error(error);
