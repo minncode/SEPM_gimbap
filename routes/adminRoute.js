@@ -66,7 +66,7 @@ router.post('/courseListManagement/add', async (req, res) => {
     const { courseID, courseCode, courseName, semester, credits } = req.body;
 
     try {
-        // Check if the course with the given ID already exists
+        // Check if the course with the given ID already exist
         const existingCourse = await CourseList.findOne({ courseID });
 
         if (existingCourse) {
