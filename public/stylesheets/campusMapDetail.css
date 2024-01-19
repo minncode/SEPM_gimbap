@@ -85,10 +85,12 @@
   .additionalText {
     display: flex;
     padding:5px;
+    
 }
 
 .additionalText p {
     margin-left:10px;
+
 }
 .information {
   font-size: 20px;
