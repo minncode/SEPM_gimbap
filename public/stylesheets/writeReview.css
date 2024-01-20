@@ -92,8 +92,7 @@ h3 {
     border: 1px solid #ccc;
     resize: vertical; /* 사용자가 수직으로만 리사이즈 할 수 있도록 함 */
     background-color: #E3E5E0;
-    text-indent: 5px;
-    padding-top: 5px;
+    padding: 5px;
   }
 
 .comment-box::placeholder {
