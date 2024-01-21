@@ -53,7 +53,11 @@ router.post('/', async (req, res) => {
                 role = req.session.role;
                 image = req.session.image;
                 userName = req.session.name;
-                res.redirect('/main');
+                if (role === 'admin') {
+                    res.redirect('/admin/');
+                } else {
+                    res.redirect('/main');
+                }
             } else {
                 res.render('user/login', { error: 'Incorrect password' });
             }
