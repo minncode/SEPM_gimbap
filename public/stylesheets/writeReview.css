@@ -80,6 +80,7 @@ h3 {
   transition: background-color 0.3s ease;
   margin-right: 20px;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 #submit {
@@ -92,6 +93,7 @@ h3 {
     border: 1px solid #ccc;
     resize: vertical; /* 사용자가 수직으로만 리사이즈 할 수 있도록 함 */
     background-color: #E3E5E0;
+    padding: 5px;
   }
 
 .comment-box::placeholder {

@@ -3,6 +3,8 @@
   border: 1px solid #E3E5E0;
   border-radius: 15px;
   margin-top: 70px;
+  height: 78vh; /* Adjust as needed */
+  overflow-y: auto;
 }
 
 .star-rating-container {
@@ -43,9 +45,7 @@
 .courseContainer h2 {
   margin: 15px;
 }
-.comment-title {
 
-}
 .courseItem {
   display: flex;
   justify-content: space-between;
